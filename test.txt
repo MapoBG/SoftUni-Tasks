@@ -1,1 +1,2 @@
 Creating with Git Bash
+Creating with GitHub Desktop
