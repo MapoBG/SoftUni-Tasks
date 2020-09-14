@@ -59,7 +59,7 @@ function printSortedMusicalList(input) {
     }
 }
 printSortedMusicalList([
-    '3',
+    '0',
     'Fur Elise|Beethoven|A Minor',
     'Moonlight Sonata|Beethoven|C# Minor',
     'Clair de Lune|Debussy|C# Minor',
