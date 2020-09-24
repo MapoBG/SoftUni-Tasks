@@ -1,0 +1,96 @@
+header p{
+    color: #F9690E;
+}
+
+nav ul {
+    text-align: right;
+    margin: 0;
+    padding: 10px;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    padding: 10px 10px;
+    text-decoration: none;
+    color: #F9690E;
+    border-radius: 5px;
+}
+
+body {
+    background-color: #F0F1F5;
+    font-family: "Helvetica", sans-serif;
+    margin: 0;
+}
+
+main {
+    background-image: url(picture.jpg);
+    background-repeat: no-repeat;
+    padding: 20rem;
+    background-position: center;
+}
+
+main h3 {
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 60px;
+}
+
+div {
+    margin: 0;
+    position: absolute;
+    top: 55%;
+    left: 43%;
+    padding: 50px;
+}
+
+div button {
+    color: #FFFFFF;
+    background-color: #F9690E;
+    padding: 22px;
+    border: none;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+button:hover{
+    background: #FFFFFF;
+    color:  #F9690E;
+}
+
+main h3 span {
+    color: #F9690E;
+}
+
+section article {
+    width: 33.16%;
+    display: inline-block;
+    background: #F9690E;
+    color: white;
+}
+section article h3{
+    text-align: center;
+    font-size: 30px;
+    padding-top: 50px;
+}
+section article p {
+    padding: 50px;
+    font-size: 30px;
+}
+
+footer article{
+    width: 49%;
+    padding-top: 30px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+footer article#icons{
+    text-align: right;
+}
+
+span.material-icons{
+    padding:16px;;
+}
