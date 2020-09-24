@@ -1,0 +1,62 @@
+body {
+    max-width: 1600px;
+    padding-left: 150px;
+    font-family: Helvetica, sans-serif;
+}
+
+nav {
+    background-color: gainsboro;
+    padding-left: 220px;
+}
+
+li {
+    display: inline-block;
+    border-style: solid;
+    border-width: 3px;
+    border-color: white;
+    padding: 100px;
+}
+
+li a {
+    text-decoration: none;
+    color: #00d3d4;
+}
+
+section {
+    display: inline-block;
+}
+
+.left {
+    background-color: #555c6f;
+    padding: 0px 260px 0px 20px;
+    color: #b2b6c0;
+
+}
+
+.left h2 {
+    padding: 0px 0px 70px 20px;
+}
+
+.left p {
+    padding: 0px 0px 0px 20px;
+}
+
+.left #copywright{
+    padding: 0px 0px 0px 20px;
+}
+
+.right {
+    background-color: #00d3d4;
+    color: white;
+    padding: 0px 55px 100px 0px;
+}
+
+section.right h2 {
+    width: 20%;
+    padding: 0px 0px 0px 30px;
+}
+
+section.right article {
+    width: 25%;
+    padding: 0px 0px 15px 30px;
+}
