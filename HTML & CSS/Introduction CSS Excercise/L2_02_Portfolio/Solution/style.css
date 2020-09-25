@@ -30,7 +30,6 @@ section {
     background-color: #555c6f;
     padding: 0px 260px 0px 20px;
     color: #b2b6c0;
-
 }
 
 .left h2 {
@@ -41,7 +40,7 @@ section {
     padding: 0px 0px 0px 20px;
 }
 
-.left #copywright{
+.left #copywright {
     padding: 0px 0px 0px 20px;
 }
 
@@ -59,4 +58,16 @@ section.right h2 {
 section.right article {
     width: 25%;
     padding: 0px 0px 15px 30px;
+}
+
+img {
+    padding: 0;
+    position: absolute;
+    right: 200px;
+    top: 300px;
+    inline-size: 10%;
+    border: solid 10px white;
+    width: 200px;
+    height: 200px;
+    z-index: 9999;
 }
