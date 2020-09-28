@@ -2,9 +2,8 @@ function equalSums(arr) {
     let result = [];
 
     for (let i = 0; i < arr.length; i++) {
-        let currentNum = arr[i];
         let sumLeft = arr.slice(0, i);
-        let sumRight = arr.slice(i+1);
+        let sumRight = arr.slice(i + 1);
         if (sumLeft.length === 0) {
             sumLeft = 0;
         } else {
