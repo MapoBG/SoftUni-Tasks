@@ -6,7 +6,7 @@ function ladybugs(input) {
         .map(x => Number(x));
     let field = [];
 
-    // create & populate the filed with bugs;
+    // create & populate the field with bugs;
     for (let i = 0; i < fieldSize; i++) {
         field.push(0);
     }
