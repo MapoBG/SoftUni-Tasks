@@ -1,7 +1,7 @@
 function solve(num1, num2) {
     let result = calcFactorial(num1) / calcFactorial(num2);
 
-    console.log(result);
+    console.log(result.toFixed(2));
 
     function calcFactorial(num) {
         let factorial = [];
