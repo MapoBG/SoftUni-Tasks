@@ -26,14 +26,14 @@ function cookManager() {
         }
     }
 
-    let stock = {
+    const stock = {
         protein: 0,
         carbohydrate: 0,
         fat: 0,
         flavour: 0,
     }
 
-    let commands = {
+    const commands = {
         restock: (microEl, qty) => {
             stock[microEl] += qty;
             return 'Success';
@@ -60,21 +60,23 @@ function cookManager() {
         }
     }
 
-    return ((params) => {
+    return (params) => {
         let [command, item, qty] = params.split(" ");
         return commands[command](item, Number(qty));
-    })
+    }
+
 }
 let manager = cookManager();
-console.log(manager('prepare turkey 1'))
-console.log(manager('restock protein 10'));
-console.log(manager('prepare turkey 1'));
-console.log(manager('restock carbohydrate 10'));
-console.log(manager('prepare turkey 1'));
-console.log(manager('restock fat 10'));
-console.log(manager('prepare turkey 1'));
-console.log(manager('restock flavour 10'));
-console.log(manager('prepare turkey 1'));
-console.log(manager('report'));
+console.log(manager);
+// console.log(manager('prepare turkey 1'))
+// console.log(manager('restock protein 10'));
+// console.log(manager('prepare turkey 1'));
+// console.log(manager('restock carbohydrate 10'));
+// console.log(manager('prepare turkey 1'));
+// console.log(manager('restock fat 10'));
+// console.log(manager('prepare turkey 1'));
+// console.log(manager('restock flavour 10'));
+// console.log(manager('prepare turkey 1'));
+// console.log(manager('report'));
 
 
