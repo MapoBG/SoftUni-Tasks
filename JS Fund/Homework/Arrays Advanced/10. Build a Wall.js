@@ -2,27 +2,29 @@ function calcWallCost(params) {
     params = params.map(Number);
     let dailyConcreteUsage = [];
 
-    while (params.length > 0) {
-        let concrete = 0;
-        for (let i = 0; i < params.length; i++) {
-            let wallSection = params[i];
-            let index = params.indexOf(wallSection);
-            if (wallSection == 30) {
-                params.splice(index, 1);
-                i--;
-            } else {
-                params[index]++;
-                concrete += 195;
-            }
-        }
-
-        if(concrete !== 0){
-            dailyConcreteUsage.push(concrete);
-        }
+    while (params.reduce((a, b) => a + b) < params.length * 30) {
+        params = buildWall(params);
     }
+
     let cost = dailyConcreteUsage.reduce((a, b) => a + b) * 1900;
     console.log(dailyConcreteUsage.join(", "));
     console.log(`${cost} pesos`);
+
+    function buildWall(arr) {
+        let concrete = 0;
+        arr.forEach(wallSection => {
+            let index = arr.indexOf(wallSection);
+            if (wallSection < 30) {
+                arr[index]++;
+                concrete += 195;
+            }
+        });
+
+        if (concrete !== 0) {
+            dailyConcreteUsage.push(concrete);
+        }
+        return arr;
+    }
 }
 calcWallCost([17,
     22,
