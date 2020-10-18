@@ -1,24 +1,26 @@
 function solve() {
-    
+
     function Mage(name) {
-        this.name = name,
-            this.health = 100,
-            this.mana = 100,
-            this.cast = (spell) => {
-                this.mana--;
-                console.log(`${this.name} cast ${spell}`)
-            }
-    };
+        this.name = name
+            this.health = 100
+            this.mana = 100
+    }
+
+    Mage.prototype.cast = function (spell) {
+        this.mana--;
+        console.log(`${this.name} cast ${spell}`);
+    }
 
     function Fighter(name) {
-        this.name = name,
-            this.health = 100,
-            this.stamina = 100,
-            this.fight = () => {
-                this.stamina--;
-                console.log(`${this.name} slashes at the foe!`);
-            }
-    };
+        this.name = name
+            this.health = 100
+            this.stamina = 100
+    }
+
+    Fighter.prototype.fight = function () {
+        this.stamina--;
+        console.log(`${this.name} slashes at the foe!`);
+    }
 
     return {
         mage: (name) => new Mage(name),
