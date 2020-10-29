@@ -3,13 +3,12 @@ function ladybugs(input) {
     let intialBugPlaces = input
         .shift()
         .split(" ")
-        .map(x => Number(x));
-    let field = [];
+        .map(Number);
 
     // create & populate the field with bugs;
-    for (let i = 0; i < fieldSize; i++) {
-        field.push(0);
-    }
+    let field = [];
+    field.length = fieldSize;
+    field.fill(0);
 
     for (let place of intialBugPlaces) {
         if (place < fieldSize) {
