@@ -13,3 +13,4 @@ solution = {
         return (x1 * y2 - y1 * x2);
     },
 }
+solution.add([1, 1], [1, 0]);

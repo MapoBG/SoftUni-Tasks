@@ -39,44 +39,41 @@ function cookManager() {
             return 'Success';
         },
         report: () => {
-            let report = '';
-            for (let el in stock) {
-                report += `${el}=${stock[el]} `;
-            }
-            return report.trim();
+            let report = [];
+            Object.keys(stock).forEach(el => report.push(`${el}=${stock[el]}`));
+            return report.join(" ");
         },
         prepare: (recepie, qty) => {
             let neededIngr = recepies[recepie];
-            for (let ingr in neededIngr){
-                if(stock[ingr] < neededIngr[ingr] * qty){
+            for (const ingr in neededIngr) {
+                if (stock[ingr] < neededIngr[ingr] * qty) {
                     return `Error: not enough ${ingr} in stock`
                 }
             }
-
-            for (let ing in neededIngr){
-                stock[ing] -= neededIngr[ing] * qty;
-            }
+            Object.keys(neededIngr).forEach(ingr => stock[ingr] -= neededIngr[ingr] * qty);
             return 'Success';
         }
     }
 
-    return (params) => {
+    return checkCommands;
+
+    function checkCommands(params) {
         let [command, item, qty] = params.split(" ");
         return commands[command](item, Number(qty));
     }
 
 }
 let manager = cookManager();
-console.log(manager);
-// console.log(manager('prepare turkey 1'))
-// console.log(manager('restock protein 10'));
-// console.log(manager('prepare turkey 1'));
-// console.log(manager('restock carbohydrate 10'));
-// console.log(manager('prepare turkey 1'));
-// console.log(manager('restock fat 10'));
-// console.log(manager('prepare turkey 1'));
-// console.log(manager('restock flavour 10'));
-// console.log(manager('prepare turkey 1'));
-// console.log(manager('report'));
+
+console.log(manager('prepare turkey 1'))
+console.log(manager('restock protein 10'));
+console.log(manager('prepare turkey 1'));
+console.log(manager('restock carbohydrate 10'));
+console.log(manager('prepare turkey 1'));
+console.log(manager('restock fat 10'));
+console.log(manager('prepare turkey 1'));
+console.log(manager('restock flavour 10'));
+console.log(manager('prepare turkey 1'));
+console.log(manager('report'));
 
 

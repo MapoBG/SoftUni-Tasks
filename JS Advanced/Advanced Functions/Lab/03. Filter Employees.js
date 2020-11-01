@@ -1,25 +1,15 @@
 function printInfo(data, criteria) {
     let inputData = JSON.parse(data);
-    let count = 0;
 
-    if (criteria == "all") {
-        inputData.forEach(pInfo => {
-            console.log(`${count}. ${pInfo.first_name} ${pInfo.last_name} - ${pInfo.email}`);
-            count++;
+    inputData
+        .filter(info => filterByCriteria(info, criteria) || criteria == "all")
+        .forEach((pInfo, index) => {
+            console.log(`${index}. ${pInfo.first_name} ${pInfo.last_name} - ${pInfo.email}`);
         });
-    } else {
-        inputData
-            .filter(info => filterByCriteria(info, criteria))
-            .forEach(pInfo => {
-                console.log(`${count}. ${pInfo.first_name} ${pInfo.last_name} - ${pInfo.email}`);
-                count++;
-            });
-    }
 
     function filterByCriteria(obj, criteria) {
         let [keyCriteria, criteriaValue] = criteria.split("-");
         return (obj[keyCriteria] == criteriaValue);
-
     }
 }
 printInfo(`[{

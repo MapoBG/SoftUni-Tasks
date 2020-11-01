@@ -9,8 +9,8 @@ function argumentInfo() {
         }
         argInfo[type] += 1;
     });
-    Object.entries(argInfo)
-        .sort((a, b) => b[1] - a[1])
-        .forEach(e => console.log(`${e[0]} = ${e[1]}`));
+    Object.keys(argInfo)
+        .sort((t1, t2) => argInfo[t2] - argInfo[t1])
+        .forEach(e => console.log(`${e} = ${argInfo[e]}`));
 }
-argumentInfo('cat', 42, function () { console.log('Hello world!'); })
+argumentInfo('cat', 42, 56, function () { console.log('Hello world!'); })
