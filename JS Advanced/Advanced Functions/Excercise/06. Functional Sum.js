@@ -1,9 +1,12 @@
 function add(num) {
 
-    function sum(x = 0) {
+    function sum(x) {
         num += x;
         return sum;
     }
+
+    sum.toString = () => num;
+
     return sum;
 }
 (add(1));
