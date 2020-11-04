@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <input type="text" id="num1" />
+    <input type="text" id="num2" />
+    <input type="text" id="result" readonly />
+    <br>
+    <button id="sumButton">
+        Sum</button>
+    <button id="subtractButton">
+        Subtract</button>
+    <script>
+        function solve() {
+            let firstElement;
+            let secondElement;
+            let resultElement;
+            return {
+                init(selector1, selector2, resultSelector) {
+                    firstElement = document.querySelector(selector1);
+                    secondElement = document.querySelector(selector2);
+                    resultElement = document.querySelector(resultSelector);
+                },
+                add() {
+                    resultElement.value = Number(firstElement.value) + Number(secondElement.value);
+                    return resultElement;
+                },
+                subtract() {
+                    resultElement.value = Number(firstElement.value) - Number(secondElement.value);
+                    return resultElement;
+                }
+            }
+        }
+        // TESTING
+        let commands = solve();
+        commands.init("#num1", "#num2", "#result");
+        let sumBtn = document.getElementById('sumButton').addEventListener('click', commands.add);
+        let subtractBtn = document.getElementById('subtractButton').addEventListener('click', commands.subtract);
+    </script>
+</body>
+
+</html>
