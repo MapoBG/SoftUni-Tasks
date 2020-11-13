@@ -1,5 +1,5 @@
 function solve() {
-    let addBtnEl = document.querySelector("form > div > button").addEventListener('click', getInfo);
+    document.querySelector("form > div > button").addEventListener('click', getInfo);
     let inputEls = Array.from(document.querySelectorAll("form > div > input"));
     let selectEl = document.querySelector("div > select");
     let trainingModulesEl = document.querySelector(".modules");
@@ -20,19 +20,14 @@ function solve() {
         let headerH3El = document.createElement("h3");
         headerH3El.textContent = selectEl.value.toUpperCase() + "-MODULE";
         let divEl = document.createElement("div");
-        divEl.setAttribute("class", "module");
+        divEl.setAttribute("class", 'module');
         divEl.appendChild(headerH3El);
         let ulEl = document.createElement("ul");
         let liEl = document.createElement("li");
-        liEl.setAttribute("class", "flex");
+        liEl.setAttribute("class", 'flex');
         let headerH4El = document.createElement("h4");
-        let dateValue = dateField.value;
+        let dateValue = convertDate(dateField.value);
 
-        while (dateValue.includes("-")) {
-            dateValue = dateValue.replace("-", "/");
-        }
-
-        dateValue = dateValue.replace("T", " - ");
         headerH4El.textContent = `${lectureNameFiled.value} - ${dateValue}`;
         let delBtn = document.createElement("button");
         delBtn.textContent = "Del";
@@ -50,11 +45,14 @@ function solve() {
                     curUlEl.appendChild(liEl);
                     let liElArr = Array.from(curUlEl.querySelectorAll("li"));
                     liElArr.sort((li1, li2) => {
-                        let index1 = li1.querySelector("h4").textContent.indexOf("-") + 2;
-                        let index2 = li2.querySelector("h4").textContent.indexOf("-") + 2;
-                        console.log(li1.querySelector("h4").textContent.slice(index1));
-                        console.log(li2.querySelector("h4").textContent.slice(index2));
-                        li1.querySelector("h4").textContent.slice(index1).localeCompare(li2.querySelector("h4").textContent.slice(index2))
+                        let li1Date = getDate(li1)
+                        li1Date = convertDateToInitialState(li1Date);
+                        li1Date = new Date(li1Date);
+                        let li2Date = getDate(li2)
+                        li2Date = convertDateToInitialState(li2Date);
+                        li2Date = new Date(li2Date);
+
+                        return li1Date.getTime() - li2Date.getTime();
                     })
                     liElArr.forEach(el => curUlEl.appendChild(el))
                 }
@@ -70,13 +68,37 @@ function solve() {
 
         function deleteTraining(e) {
             let liToRemove = e.target.parentElement;
-            if (!liToRemove.nextElementSibling || !liToRemove.previousElementSibling) {
+            if (!liToRemove.nextElementSibling && !liToRemove.previousElementSibling) {
+                let training = liToRemove.parentElement.parentElement.querySelector("h3");
+                training = training.textContent.split("-")[0];
+                let index = modules.map(e => e.toUpperCase()).indexOf(training);
+                modules.splice(index, 1);
                 liToRemove.parentElement.parentElement.remove();
             } else {
                 liToRemove.remove();
             }
+        }
 
+        function convertDate(dateValue) {
+            while (dateValue.includes("-")) {
+                dateValue = dateValue.replace("-", "/");
+            }
+            dateValue = dateValue.replace("T", " - ");
+            return dateValue;
+        }
+
+        function convertDateToInitialState(dateValue) {
+            while (dateValue.includes("/")) {
+                dateValue = dateValue.replace("/", "-");
+            }
+            dateValue = dateValue.replace(" - ", "T");
+            return dateValue;
+        }
+
+        function getDate(liEl) {
+            let index = liEl.querySelector("h4").textContent.indexOf("-") + 2;
+            let dateAndTime = liEl.querySelector("h4").textContent.slice(index);
+            return dateAndTime;
         }
     }
-
 };
