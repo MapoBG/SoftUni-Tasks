@@ -1,0 +1,7 @@
+npm init --yes
+
+npm install --save mocha chai
+("optional" --save-dev mocha chai)
+
+For VS Code:
+Run -> Open config -> Node.js -> CTRL + SPACE -> add Mocha test -> change "tdd" to "bdd" and ${workspacefolder} to ${file}
