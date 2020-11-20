@@ -12,8 +12,17 @@
     <div id="res"></div>
     <script>
         function loadRepos() {
-            const url = `https://api.github.com/users/`;
-            console.log(url);
+        const repoUrl="https://api.github.com/users/testnakov/repos";
+            let divEl = document.getElementById("res");
+
+            let request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    divEl.textContent = this.responseText;
+                }
+            };
+            request.open("GET", repoUrl);
+            request.send();
         }
     </script>
 </body>
