@@ -13,6 +13,7 @@ function attachEvents() {
 
 function getAction(event) {
     event.preventDefault();
+
     if (event.target.textContent == "Play") {
         playGame(event);
     } else if (event.target.textContent == "Delete") {
@@ -26,6 +27,7 @@ function addNewPlayer() {
     if (nameInputEl.value.length < 3) {
         return;
     }
+
     let newPlayer = {
         name: nameInputEl.value,
         money: 500,
@@ -36,12 +38,13 @@ function addNewPlayer() {
         method: "POST",
         body: JSON.stringify(newPlayer),
     })
+        .then(res => res.json())
+        .then(playerKey => updatePlayer(playerKey))
         .then(reloadPlayers)
         .then(nameInputEl.value = "")
 }
 
 function getPlayers(dataObj) {
-
     Object.keys(dataObj).forEach(key => {
         let formEl = document.createElement("form");
         let template = Handlebars.compile(document.getElementById("player-template").innerHTML);
@@ -54,6 +57,7 @@ function getPlayers(dataObj) {
 
 function reloadPlayers() {
     playersEl.innerHTML = "";
+
     fetch(baseURL + ".json")
         .then(res => res.json())
         .then(players => getPlayers(players))
@@ -62,6 +66,7 @@ reloadPlayers();
 
 function deletePlayer(event) {
     let playerID = event.path[1].id;
+
     fetch(baseURL + `${playerID}.json`, {
         method: "DELETE",
     })
@@ -71,12 +76,11 @@ function deletePlayer(event) {
 function playGame(event) {
     let playerID = event.path[1].id;
 
-    clearInterval(canvas.intervalId)
+    clearInterval(canvas.intervalId);
 
     canvas.style.display = "block";
     saveBtn.style.display = "inline-block"
     reloadBtn.style.display = "inline-block"
-
 
     fetch(baseURL + `${playerID}.json`)
         .then(res => res.json())
