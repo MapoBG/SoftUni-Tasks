@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Students</title>
     <link rel="stylesheet" href="./styles.css">
+    <script src="./node_modules/handlebars/dist/handlebars.min.js"></script>
+    <script src="./createStudents.js"></script>
+    <script src="./app.js" defer></script>
 </head>
 
 <body>
@@ -20,7 +23,17 @@
         </thead>
         <tbody></tbody>
     </table>
-    <script src="./app.js"></script>
+
+<script type="text/x-handlebars-template" id="student-template">
+    <tr>
+        <td>{{ID}}</td>
+        <td>{{FirstName}}</td>
+        <td>{{LastName}}</td>
+        <td>{{FacultyNumber}}</td>
+        <td>{{Grade}}</td>
+    </tr>
+</script>
+
 </body>
 
 </html>
