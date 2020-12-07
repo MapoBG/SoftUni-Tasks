@@ -21,8 +21,10 @@
         
         if(infoEl.style.display == "none"){
             infoEl.style.display = "block";
+            event.target.textContent = "Hide status code"
         } else {
             infoEl.style.display = "none";
+            event.target.textContent = "Show status code"
         }
     }
 })()
