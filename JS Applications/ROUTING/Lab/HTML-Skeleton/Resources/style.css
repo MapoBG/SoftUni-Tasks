@@ -1,0 +1,36 @@
+.container {
+    display: none;
+}
+
+nav {
+    padding-top: 50px;
+    text-align: center;
+}
+
+nav li {
+    display: inline-block;
+}
+
+img {
+    width: 150px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+}
+
+.pull-right {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
