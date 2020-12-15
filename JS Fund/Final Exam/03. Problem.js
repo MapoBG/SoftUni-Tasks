@@ -44,7 +44,7 @@ function solve(input) {
 
         commands[command](petersBlog, userName, likes);
         currentLine = input.shift();
-    };
+    }
 
     let followers = Object.keys(petersBlog);
     console.log(`${followers.length} followers`);
@@ -56,8 +56,8 @@ function solve(input) {
         .forEach(person => {
             let score = petersBlog[person].likes + petersBlog[person].comments;
             console.log(`${person}: ${score}`);
-        })
-};
+        });
+}
 
 solve([
     'New follower: gosho',

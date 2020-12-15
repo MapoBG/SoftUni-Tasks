@@ -54,6 +54,7 @@ function solve(input) {
                 let char = substring[i];
                 sum += char.charCodeAt();
             }
+
             console.log(sum);
             return text;
         },
@@ -67,9 +68,8 @@ function solve(input) {
         text = commands[command](text, arg1, arg2);
 
         currentLine = input.shift();
-    };
-};
-
+    }
+}
 
 solve([
     'ILikeSharan',

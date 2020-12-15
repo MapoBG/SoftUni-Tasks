@@ -15,7 +15,7 @@ function solve([number, ...inputs]) {
         console.log(`Password: ${password}`);
     };
 
-};
+}
 
 solve([
     '3',
