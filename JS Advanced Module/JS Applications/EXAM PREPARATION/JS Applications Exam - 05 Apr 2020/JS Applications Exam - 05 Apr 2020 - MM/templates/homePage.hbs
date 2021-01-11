@@ -1,0 +1,52 @@
+{{> header}}
+
+{{#if user}}
+<!-- Home -->
+<div class="content">
+    <section class="js">
+        <h2>JavaScript</h2>
+        <div class="articles">
+            {{#each JavaScript}}
+            {{> article}}
+            {{else}}
+            <!-- No articles message -->
+            <h3 class="no-articles">No articles yet</h3>
+            {{/each}}
+        </div>
+    </section>
+    <section class="CSharp">
+        <h2>C#</h2>
+        <div class="articles">
+            {{#each CSharp}}
+            {{> article}}
+            {{else}}
+            <!-- No articles message -->
+            <h3 class="no-articles">No articles yet</h3>
+            {{/each}}
+        </div>
+    </section>
+    <section class="Java">
+        <h2>Java</h2>
+        <div class="articles">
+            {{#each Java}}
+            {{> article}}
+            {{else}}
+            <!-- No articles message -->
+            <h3 class="no-articles">No articles yet</h3>
+            {{/each}}
+        </div>
+    </section>
+    <section class="Pyton">
+        <h2>Pyton</h2>
+        <div class="articles">
+            {{#each Python}}
+            {{> article}}
+            {{else}}
+            <!-- No articles message -->
+            <h3 class="no-articles">No articles yet</h3>
+            {{/each}}
+        </div>
+    </section>
+</div>
+{{/if}}
+{{> footer}}
