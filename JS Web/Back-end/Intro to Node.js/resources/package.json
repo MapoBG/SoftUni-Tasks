@@ -1,0 +1,14 @@
+{
+  "name": "cats-catalogue",
+  "version": "0.0.1",
+  "description": "Catalogue with cats",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cats",
+    "catalogue"
+  ],
+  "author": "MM",
+  "license": "ISC"
+}
