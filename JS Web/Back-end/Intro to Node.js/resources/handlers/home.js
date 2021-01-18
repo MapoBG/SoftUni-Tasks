@@ -15,7 +15,20 @@ module.exports = (req, res) => {
                 return errorHandler(err, res);
             }
 
-            dataHandler(data, res, pathname);
+            let modifiedCats = cats.map((cat) => `<li>
+            <img src="${path.join("./content/images/" + cat.image)}" alt="${cat.name}">
+            <h3>${cat.name}</h3>
+            <p><span>Breed: </span>${cat.breed}</p>
+            <p><span>Description: </span>${cat.description}</p>
+            <ul class="buttons">
+            <li class="btn edit"><a href="/editCat/${cat.id}">Change Info</a></li>
+            <li class="btn delete"><a href="/catShelter/${cat.id}">New Home</a></li>
+            </ul>
+        </li>`);
+
+            let modifiedData = data.toString().replace("{{cats}}", modifiedCats);
+
+            dataHandler(modifiedData, res, pathname);
         });
     } else {
         return true;

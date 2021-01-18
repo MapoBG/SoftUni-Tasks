@@ -10,5 +10,8 @@
     "catalogue"
   ],
   "author": "MM",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "formidable": "^1.2.2"
+  }
 }

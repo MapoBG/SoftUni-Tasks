@@ -1,18 +1,19 @@
 function solve([width, height, x, y]) {
     let matrix = [];
-    matrix.length = height;
-    matrix = matrix.fill([]);
+    matrix[height - 1] = [];
+    matrix.fill(0);
+    matrix = matrix.map(e => e = []);
 
     matrix.forEach(row => {
-        row.length = width;
-        row = row.fill(undefined)
+        row[width - 1] = undefined;
+        row.fill(undefined);
     })
-
-
-
-    console.log();
     matrix[x][y] = 1;
-    console.log();
+
+    
+
+    console.log(matrix.join("\n"));
+
 }
 
 solve([4, 4, 0, 0])
