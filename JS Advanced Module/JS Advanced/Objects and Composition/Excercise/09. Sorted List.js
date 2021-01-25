@@ -1,26 +1,28 @@
 function createSortedList() {
-    const arr = [];
 
     const result = {
+        arr: [],
         add(element) {
-            arr.push(element);
+            this.arr.push(element);
+            this.arr.sort((a, b) => a - b);
         },
         remove(index) {
-            if (index < 0 || index >= arr.length) {
+            if (index < 0 || index >= this.arr.length) {
                 throw new Error("Incorrect index");
             }
 
-            arr.splice(index, 1);
+            this.arr.splice(index, 1).sort((a, b) => a - b);
         },
         get(index) {
-            if (index < 0 || index >= arr.length) {
+            if (index < 0 || index >= this.arr.length) {
                 throw new Error("Incorrect index");
             }
 
-            return arr[index];
+            return this.arr[index];
         },
-
-        size: arr
+        get size() {
+            return this.arr.length;
+        }
     };
 
     return result;
@@ -46,3 +48,4 @@ for (let i = 0; i < expectedArray.length; i++) {
     // expect(myList.get(i)).to.equal(expectedArray[i], "Array wasn't sorted");
 }
 myList.get(5)
+console.log(myList.hasOwnProperty("size"));

@@ -1,9 +1,9 @@
 function solve() {
 
     function Mage(name) {
-        this.name = name
-            this.health = 100
-            this.mana = 100
+        this.name = name;
+        this.health = 100;
+        this.mana = 100;
     }
 
     Mage.prototype.cast = function (spell) {
@@ -12,9 +12,9 @@ function solve() {
     }
 
     function Fighter(name) {
-        this.name = name
-            this.health = 100
-            this.stamina = 100
+        this.name = name;
+        this.health = 100;
+        this.stamina = 100;
     }
 
     Fighter.prototype.fight = function () {
