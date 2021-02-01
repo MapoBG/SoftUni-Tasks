@@ -1,27 +1,27 @@
 function createSortedList() {
+    const arr = [];
 
     const result = {
-        arr: [],
         add(element) {
-            this.arr.push(element);
-            this.arr.sort((a, b) => a - b);
+            arr.push(element);
+            arr.sort((a, b) => a - b);
         },
         remove(index) {
-            if (index < 0 || index >= this.arr.length) {
+            if (index < 0 || index >= arr.length) {
                 throw new Error("Incorrect index");
             }
 
-            this.arr.splice(index, 1).sort((a, b) => a - b);
+            arr.splice(index, 1).sort((a, b) => a - b);
         },
         get(index) {
-            if (index < 0 || index >= this.arr.length) {
+            if (index < 0 || index >= arr.length) {
                 throw new Error("Incorrect index");
             }
 
-            return this.arr[index];
+            return arr[index];
         },
         get size() {
-            return this.arr.length;
+            return arr.length;
         }
     };
 
