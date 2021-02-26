@@ -2,18 +2,22 @@ async function toggle() {
     const res = await fetch("http://localhost:3030/jsonstore/advanced/articles/list");
     const titles = await res.json();
 
-    const accordionEl = document.getElementById("accordion");
+    const accordionEl = document.getElementById("main");
     accordionEl.innerHTML = "";
 
     titles.forEach(title => {
-        const article = createEl("div", title.title, { class: "head" },
-            createEl("span", "More", { class: "button", id: title._id }));
+        const article = createEl("div", "", { class: "accordion" },
+            createEl("div", "", { class: "head" },
+                createEl("span", title.title),
+                createEl("button", "More", { class: "button", id: title._id })));
 
         accordionEl.appendChild(article);
     });
 }
 
-function createEl(type, text, attributes, ...elements) {
+toggle();
+
+function createEl(type, text, attributes = {}, ...elements) {
     const result = document.createElement(type);
 
     if (text) {
@@ -44,12 +48,12 @@ async function showInfo(e) {
         const articleRes = await fetch(`http://localhost:3030/jsonstore/advanced/articles/details/${buttonEl.id}`);
         const articleInfo = await articleRes.json();
 
-        const extra = createEl("div", "", { id: "extra" },
+        const extra = createEl("div", "", { class: "extra" },
             createEl("p", articleInfo.content, {}));
 
         extra.style.display = "block";
 
-        buttonEl.parentElement.parentElement.insertBefore(extra, buttonEl.parentElement.nextElementSibling);
+        buttonEl.parentElement.parentElement.appendChild(extra);
 
     } else {
         buttonEl.textContent = "More";

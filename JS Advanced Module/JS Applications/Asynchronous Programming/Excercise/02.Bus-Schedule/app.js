@@ -7,16 +7,22 @@ function solve() {
     let nextStop = "depot";
 
     async function depart() {
-        const response = await fetch(`http://localhost:3030/jsonstore/bus/schedule/${nextStop}`);
-        const data = await response.json();
+        try {
+            const response = await fetch(`http://localhost:3030/jsonstore/bus/schedule/${nextStop}`);
+            const data = await response.json();
 
-        currentStop = data.name;
-        nextStop = data.next;
+            currentStop = data.name;
+            nextStop = data.next;
 
-        infoEl.textContent = `Next stop ${currentStop}`;
+            infoEl.textContent = `Next stop ${currentStop}`;
 
-        departBtnEl.disabled = true;
-        arriveBtnEl.disabled = false;
+            departBtnEl.disabled = true;
+            arriveBtnEl.disabled = false;
+        } catch (error) {
+            infoEl.textContent = "Error";
+            departBtnEl.disabled = true;
+            arriveBtnEl.disabled = true;
+        }
     }
 
     function arrive() {

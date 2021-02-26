@@ -12,7 +12,7 @@ async function getInfo() {
 
         Object.keys(data.buses).forEach(busId => {
             const liEl = document.createElement("li");
-            liEl.textContent = `Bus ${busId} arrives is ${data.buses[busId]}`;
+            liEl.textContent = `Bus ${busId} arrives in ${data.buses[busId]} minutes`;
             ulBusesEl.appendChild(liEl);
         });
     } catch (error) {

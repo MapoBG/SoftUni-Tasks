@@ -16,16 +16,21 @@ async function getWeather() {
 
         const result = data.find(e => e.name == searchLocation);
 
+        const [cRes, fRes] = await Promise.all([
+            fetch(`http://localhost:3030/jsonstore/forecaster/today/${result.code}`),
+            fetch(`http://localhost:3030/jsonstore/forecaster/upcoming/${result.code}`)
+        ]);
+
+        const [conditionsData, forecastData] = await Promise.all([cRes.json(), fRes.json()]);
+
         const conditions = {
             "Sunny": "☀", // ☀
             "Partly sunny": "⛅", // ⛅
             "Overcast": "☁", // ☁
             "Rain": "☂", // ☂
             "Degrees": "°"   // °
-        }
+        };
 
-        const cRes = await fetch(`http://localhost:3030/jsonstore/forecaster/today/${result.code}`);
-        const conditionsData = await cRes.json();
         let icon = conditions[conditionsData.forecast.condition];
 
         const currentConditions = createEl("div", "", ["forecasts"],
@@ -40,9 +45,6 @@ async function getWeather() {
         currentDivEl.appendChild(currentConditions);
 
         forecastDiv.style.display = "";
-
-        const fRes = await fetch(`http://localhost:3030/jsonstore/forecaster/upcoming/${result.code}`);
-        const forecastData = await fRes.json();
 
         const aheadDiv = createEl("div", "", ["forecast-info"]);
 
@@ -70,7 +72,7 @@ async function getWeather() {
         clearForecast(upcomingEl);
 
         forecastDiv.style.display = "";
-        textNode = document.createTextNode("Error");
+        const textNode = document.createTextNode("Error");
         currentDivEl.appendChild(textNode);
     }
 }
@@ -86,10 +88,7 @@ function createEl(type, text, classNames, ...elements) {
         classNames.forEach(c => result.classList.add(c));
     }
 
-    if (elements) {
-        elements.forEach(e => result.appendChild(e));
-    }
-
+    elements.forEach(e => result.appendChild(e));
     return result;
 }
 
