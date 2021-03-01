@@ -9,6 +9,8 @@ async function loadPosts() {
     const res = await fetch("http://localhost:3030/jsonstore/blog/posts");
     const posts = await res.json();
 
+    document.getElementById("posts").innerHTML = "";
+
     Object
         .values(posts)
         .forEach(p => {
@@ -18,6 +20,7 @@ async function loadPosts() {
 
             document.getElementById("posts").appendChild(optionEl);
         });
+
 }
 
 async function viewPost() {
