@@ -1,4 +1,5 @@
 import { delegateAction } from "./util.js";
+import { addLikeToDB, getLikes, getMovie, getUserLikes } from "./api/data.js";
 
 let main;
 let section;
@@ -19,24 +20,12 @@ export async function showDetails(movieId) {
     main.appendChild(section);
 }
 
-async function getMovie(movieId) {
-    const res = await fetch("http://localhost:3030/data/movies/" + movieId);
-    const movie = await res.json();
-
-    return movie;
-}
-
 async function createMovieCard(movie) {
     const userId = sessionStorage.getItem("userId");
     const controls = [];
 
-    const [userLikeRes, totalLikesRes] = await Promise.all([
-        fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${movie._id}%22%20and%20_ownerId%3D%22${userId}%22`),
-        fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${movie._id}%22&distinct=_ownerId&count`)
-    ]);
-
-    let userLike = await userLikeRes.json();
-    const likes = await totalLikesRes.json();
+    let userLike = await getUserLikes(movie._id, userId);
+    const likes = await getLikes(movie._id);
 
     userLike = userLike.filter(l => l._ownerId == userId)[0];
 
@@ -75,11 +64,7 @@ async function createMovieCard(movie) {
 }
 
 export async function likeMovie(movieId) {
-    const res = await fetch("http://localhost:3030/data/likes", {
-        method: "post",
-        headers: { "Content-Type": "application/json", "X-Authorization": sessionStorage.getItem("userToken") },
-        body: JSON.stringify({ movieId })
-    });
+    await addLikeToDB({ movieId });
 
     showDetails(movieId);
 }

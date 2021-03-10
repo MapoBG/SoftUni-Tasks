@@ -1,3 +1,4 @@
+import { getMovies } from "./api/data.js";
 import { showDetails } from "./details.js";
 
 let main;
@@ -44,13 +45,6 @@ export async function showHome() {
         [...document.querySelectorAll("nav .user")].forEach(e => e.style.display = "none");
         [...document.querySelectorAll("nav .guest")].forEach(e => e.style.display = "block");
     }
-}
-
-async function getMovies() {
-    const res = await fetch("http://localhost:3030/data/movies");
-    const movies = await res.json();
-
-    return movies;
 }
 
 function createMovieCard(movie) {

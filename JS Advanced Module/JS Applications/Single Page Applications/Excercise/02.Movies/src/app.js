@@ -4,6 +4,7 @@ import { setupLogin, showLogin } from "./login.js";
 import { setupRegister, showRegister } from "./register.js";
 import { setupCreate, showCreate } from "./create.js";
 import { setupEdit } from "./edit.js";
+import { logout } from "./api/data.js";
 
 const main = document.querySelector("main");
 
@@ -41,13 +42,11 @@ function setupNav() {
 
     document.getElementById("add-movie-button").addEventListener("click", () => showCreate());
 
-    document.getElementById("logoutLink").addEventListener("click", async () => {
-        await fetch("http://localhost:3030/users/logout", {
-            method: "post",
-            headers: { "X-Authorization": sessionStorage.getItem("userToken") }
-        });
-        
-        sessionStorage.clear();
-        showLogin();
-    });
+    document.getElementById("logoutLink").addEventListener("click", redirectLogout);
+}
+
+async function redirectLogout() {
+    await logout();
+
+    showLogin();
 }

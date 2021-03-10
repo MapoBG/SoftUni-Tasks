@@ -1,3 +1,4 @@
+import { register } from "./api/data.js";
 import { showHome } from "./home.js";
 
 let main;
@@ -26,19 +27,7 @@ async function onSubmit(e) {
         throw new Error(alert("Passwords don't match."));
     }
 
-    const res = await fetch("http://localhost:3030/users/register", {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: emailEl.value, password: passwordEl.value })
-    });
+    await register({ email: emailEl.value, password: passwordEl.value });
 
-    if (res.ok) {
-        const data = await res.json();
-
-        sessionStorage.setItem("userToken", data.accessToken);
-        sessionStorage.setItem("userEmail", data.email);
-        sessionStorage.setItem("userId", data._id);
-
-        showHome();
-    }
+    showHome();
 }

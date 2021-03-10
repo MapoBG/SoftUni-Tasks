@@ -1,3 +1,4 @@
+import { editMovieInDB, getMovie } from "./api/data.js";
 import { showDetails } from "./details.js";
 
 let main;
@@ -16,8 +17,7 @@ export async function showEdit(movieId) {
     main.innerHTML = "";
     main.appendChild(section);
 
-    const res = await fetch("http://localhost:3030/data/movies/" + movieId);
-    const movie = await res.json();
+    const movie = await getMovie(movieId);
 
     const [titleEl, descriptionEl, imageEl] = formEl.elements;
 
@@ -33,11 +33,7 @@ async function editMovie(e) {
 
     const [titleEl, descriptionEl, imageEl] = e.target;
 
-    await fetch("http://localhost:3030/data/movies/" + movieId, {
-        method: "put",
-        headers: { "Content-Type": "application/json", "X-Authorization": sessionStorage.getItem("userToken") },
-        body: JSON.stringify({ title: titleEl.value, description: descriptionEl.value, img: imageEl.value })
-    });
+    await editMovieInDB(movieId, { title: titleEl.value, description: descriptionEl.value, img: imageEl.value });
 
     showDetails(movieId);
 }

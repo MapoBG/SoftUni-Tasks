@@ -1,3 +1,4 @@
+import { addMovieToDB } from "./api/data.js";
 import { showHome } from "./home.js";
 
 let main;
@@ -24,11 +25,13 @@ async function createNewMovie(e) {
         throw new Error(alert("All fields must be filled."));
     }
 
-    await fetch("http://localhost:3030/data/movies", {
-        method: "post",
-        headers: { "Content-Type": "application/json", "X-Authorization": sessionStorage.getItem("userToken") },
-        body: JSON.stringify({ title: titleEl.value, description: descrEl.value, img: imgEl.value })
-    });
+    const movieInfo = {
+        title: titleEl.value,
+        description: descrEl.value,
+        img: imgEl.value
+    };
+
+    await addMovieToDB(movieInfo);
 
     showHome();
 }

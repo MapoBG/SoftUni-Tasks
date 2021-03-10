@@ -1,3 +1,4 @@
+import { login } from "./api/data.js";
 import { showHome } from "./home.js";
 
 let main;
@@ -23,22 +24,7 @@ async function onSubmit(e) {
 
     const [emailEl, passwordEl] = e.target.elements;
 
-    const res = await fetch("http://localhost:3030/users/login", {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: emailEl.value, password: passwordEl.value })
-    });
+    await login({ email: emailEl.value, password: passwordEl.value });
 
-    if (res.ok) {
-        const data = await res.json();
-
-        sessionStorage.setItem("userToken", data.accessToken);
-        sessionStorage.setItem("userEmail", data.email);
-        sessionStorage.setItem("userId", data._id);
-
-        showHome();
-    } else {
-        const data = await res.json();
-        alert(data.message);
-    }
+    showHome();
 }
