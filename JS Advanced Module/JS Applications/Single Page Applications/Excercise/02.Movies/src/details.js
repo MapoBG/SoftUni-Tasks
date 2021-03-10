@@ -1,5 +1,6 @@
-import { delegateAction } from "./util.js";
 import { addLikeToDB, getLikes, getMovie, getUserLikes } from "./api/data.js";
+import { showEdit } from "./edit.js";
+import { deleteMovie } from "./delete.js";
 
 let main;
 let section;
@@ -61,6 +62,18 @@ async function createMovieCard(movie) {
     divEl.querySelector(".col-md-4.text-center").addEventListener("click", delegateAction);
 
     return divEl;
+}
+
+export function delegateAction(e) {
+    const movieId = e.target.dataset.id;
+
+    if (e.target.classList.contains("btn-danger")) {
+        deleteMovie(movieId);
+    } else if (e.target.classList.contains("btn-warning")) {
+        showEdit(movieId);
+    } else if (e.target.classList.contains("btn-primary")) {
+        likeMovie(movieId);
+    }
 }
 
 export async function likeMovie(movieId) {

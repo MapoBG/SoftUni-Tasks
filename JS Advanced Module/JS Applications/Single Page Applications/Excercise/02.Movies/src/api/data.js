@@ -21,12 +21,12 @@ export async function addMovieToDB(movieData) {
     return await api.post(host + moviesEP, movieData);
 }
 
-export async function deleteMovieToDB(movieId) {
+export async function deleteMovieFromDB(movieId) {
     return await api.del(host + moviesEP + "/" + movieId);
 }
 
 export async function getMovie(movieId) {
-    return await api.get(host + moviesEP + "/" + movieId)
+    return await api.get(host + moviesEP + "/" + movieId);
 }
 
 export async function getMovies() {

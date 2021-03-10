@@ -33,5 +33,7 @@ async function createNewMovie(e) {
 
     await addMovieToDB(movieInfo);
 
+    e.target.reset();
+
     showHome();
 }
