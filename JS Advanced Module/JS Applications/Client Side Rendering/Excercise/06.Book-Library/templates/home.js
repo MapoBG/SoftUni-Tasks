@@ -1,7 +1,4 @@
-import { html, render } from "../node_modules/lit-html/lit-html.js";
-import { getAllBookds } from "./data.js";
-
-const main = document.getElementById("main");
+import { html } from "../../node_modules/lit-html/lit-html.js";
 
 const bookTemplate = (book, id) => html`
 <tr>
@@ -13,8 +10,8 @@ const bookTemplate = (book, id) => html`
     </td>
 </tr>`;
 
-const homeTemplate = (data) => html`
-<button id="loadBooks">HOME</button>
+export const homeTemplate = (data) => html`
+<button id="loadBooks">LOAD ALL BOOKS</button>
 <table>
     <thead>
         <tr>
@@ -27,8 +24,3 @@ const homeTemplate = (data) => html`
         ${data.map(([id, book]) => bookTemplate(book, id))}
     </tbody>
 </table>`;
-
-export async function renderHome() {
-    const data = await getAllBookds();
-    render(homeTemplate(data), main);
-}
