@@ -7,34 +7,32 @@ const rowTemplate = (data, match) => html`
    <td>${data.course}</td>
 </tr>`;
 
-const main = document.querySelector("tbody");
-
-async function solve() {
-   document.querySelector('#searchBtn').addEventListener('click', onClick);
+async function onLoad() {
+   document.querySelector('#searchBtn').addEventListener('click', search);
 
    let data = await getData();
 
-   data = Object.values(data);
-
    update(data);
 
-   async function onClick() {
+   async function search() {
       const searchParam = document.getElementById("searchField").value.toLowerCase();
 
       update(data, searchParam);
    }
 }
 
-solve();
+onLoad();
+
+function update(data, match = "") {
+   const main = document.querySelector("tbody");
+   const result = data.map(e => rowTemplate(e, match));
+
+   render(result, main);
+}
 
 async function getData() {
    const res = await fetch("http://localhost:3030/jsonstore/advanced/table");
    const data = await res.json();
 
-   return data;
-}
-
-function update(data, match = "") {
-   const result = data.map(e => rowTemplate(e, match));
-   render(result, main);
+   return Object.values(data);
 }
