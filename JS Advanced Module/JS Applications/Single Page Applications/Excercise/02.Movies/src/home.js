@@ -21,16 +21,6 @@ export async function showHome() {
     main.innerHTML = "";
     main.appendChild(section);
 
-    const movies = await getMovies();
-    const cards = movies.map(createMovieCard);
-
-    const fragment = document.createDocumentFragment();
-
-    cards.forEach(element => { fragment.appendChild(element) });
-
-    container.innerHTML = "";
-    container.appendChild(fragment);
-
     const email = sessionStorage.getItem("userEmail");
 
     if (email) {
@@ -45,6 +35,16 @@ export async function showHome() {
         [...document.querySelectorAll("nav .user")].forEach(e => e.style.display = "none");
         [...document.querySelectorAll("nav .guest")].forEach(e => e.style.display = "block");
     }
+
+    const movies = await getMovies();
+    const cards = movies.map(createMovieCard);
+
+    const fragment = document.createDocumentFragment();
+
+    cards.forEach(element => fragment.appendChild(element));
+
+    container.innerHTML = "";
+    container.appendChild(fragment);
 }
 
 function createMovieCard(movie) {

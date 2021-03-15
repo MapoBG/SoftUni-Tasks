@@ -11,8 +11,8 @@ const main = document.querySelector("main");
 const links = {
     "homeLink": showHome,
     "loginLink": showLogin,
+    "logoutLink": redirectLogout,
     "registerLink": showRegister,
-    "add-movie-button": showCreate
 }
 
 setupSection("home-page", setupHome);
@@ -41,8 +41,6 @@ function setupNav() {
     });
 
     document.getElementById("add-movie-button").addEventListener("click", () => showCreate());
-
-    document.getElementById("logoutLink").addEventListener("click", redirectLogout);
 }
 
 async function redirectLogout() {
