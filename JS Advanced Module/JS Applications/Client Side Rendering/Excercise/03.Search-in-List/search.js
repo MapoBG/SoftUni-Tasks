@@ -21,6 +21,8 @@ function search() {
    const matches = liEls.filter(e => e.textContent.toLowerCase().includes(searchParam));
 
    matches.forEach(e => e.classList.add("active"));
+
+   document.getElementById("result").textContent = `${matches.length} matches found`;
 }
 
 

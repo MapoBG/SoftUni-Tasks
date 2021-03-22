@@ -49,14 +49,14 @@ const createTemplate = (data, onSubmit, validMake, validModel, validYear, validD
 </form>`;
 
 export async function createPage(ctx) {
-    const createPage = createTemplate(onSubmit);
+    const createPage = createTemplate(null, onSubmit);
 
     renderView(createPage);
     document.getElementById("createLink").classList.add("active");
 
     async function onSubmit(e) {
         e.preventDefault();
-    
+
         const data = checkFormData(e.target, createTemplate, onSubmit);
     
         await addItem(data);

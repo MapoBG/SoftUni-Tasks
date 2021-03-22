@@ -46,7 +46,6 @@ export function setAddSection() {
     document.getElementById("add-form").addEventListener("submit", addNewBook);
 }
 
-
 export async function setEditSection(id) {
     const book = await getBook(id);
 
