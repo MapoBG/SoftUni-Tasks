@@ -8,7 +8,6 @@ export function renderView(view, ctx) {
 }
 
 function setNav(user) {
-    // document.querySelector(".site-logo").classList.remove("active");
     const userLinks = [...document.querySelectorAll(".user")];
     const guestLinks = [...document.querySelectorAll(".guest")];
     userLinks.forEach(e => e.classList.remove("active"));
