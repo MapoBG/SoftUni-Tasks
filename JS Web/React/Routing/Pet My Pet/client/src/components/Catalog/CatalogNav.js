@@ -12,7 +12,7 @@ const CatalogNav = () => {
                 <li><NavLink to="/catalog/Other">Other</NavLink></li>
             </ul>
 
-            <style jsx>{`
+            <style jsx="true">{`
             .active {
                 background-color: rgb(248 215 107) !important;
                 color: black !important;

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const PetItem = ({data}) => {
+const PetCard = ({data}) => {
 
     return (
         <li className="otherPet">
@@ -9,7 +9,7 @@ const PetItem = ({data}) => {
             <p className="img"><img src={data.imageURL} alt="" /></p>
             <p className="description">{data.description}</p>
             <div className="pet-info">
-                <a href="#"><button className="button"><i className="fas fa-heart"></i> Pet</button></a>
+                <a href="/pet"><button className="button"><i className="fas fa-heart"></i> Pet</button></a>
                 <Link to={`/pets/details/${data.id}`}><button className="button">Details</button></Link>
                 <i className="fas fa-heart"></i> <span> {data.likes}</span>
             </div>
@@ -17,4 +17,4 @@ const PetItem = ({data}) => {
     );
 };
 
-export default PetItem;
+export default PetCard;

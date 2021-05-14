@@ -6,12 +6,30 @@ const getAll = (query) => {
     return fetch(api.pets + query.slice(0, query.length - 1))
         .then(res => res.json())
         .catch(err => console.log(err));
-}
+};
 
 const getOne = (id) => {
     return fetch(api.pets + `/${id}`)
         .then(res => res.json())
         .catch(err => console.log(err));
-}
+};
 
-export { getAll, getOne };
+const createPet = (form) => {
+    const petInfo = {
+        name: form.name.value,
+        description: form.description.value,
+        imageURL: form.imageURL.value,
+        category: form.category.value,
+        likes: 0,
+    };
+
+    return fetch(api.pets, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(petInfo)
+    });
+};
+
+export { getAll, getOne, createPet };

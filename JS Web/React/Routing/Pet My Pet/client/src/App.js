@@ -7,6 +7,7 @@ import Welcome from './components/Welcome';
 import './App.css';
 import Catalog from './components/Catalog/Catalog';
 import PetDetails from './components/Catalog/PetDetails';
+import AddPet from './components/Catalog/AddPet';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Switch>
           <Route path="/" component={Welcome} exact/>
           <Route path="/catalog" component={Catalog} exact/>
+          <Route path="/catalog/add-pet" component={AddPet} exact/>
           <Route path="/catalog/:category" component={Catalog} />
           <Route path="/pets/details/:petId" component={PetDetails} />
         </Switch>

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { getAll } from '../../services/petsServices';
 
 import CatalogNav from './CatalogNav';
-import PetItem from './PetItem';
+import PetCard from './PetCard';
 
 class Catalog extends Component {
     constructor(props) {
@@ -34,7 +34,7 @@ class Catalog extends Component {
                 <h1>Catalog</h1>
                 <CatalogNav />
                 <ul className="other-pets-list">
-                    {this.state.pets.map(p => <PetItem key={p.id} data={p} />)}
+                    {this.state.pets.map(p => <PetCard key={p.id} data={p} />)}
                 </ul>
             </section>
         );

@@ -8,8 +8,8 @@ const Header = () => {
                 <section className="navbar-dashboard">
                     <div className="first-bar">
                         <Link to="/catalog">Pets Catalog</Link>
-                        <NavLink className="button" to="/my-pets">My Pets</NavLink>
-                        <NavLink className="button" to="/add-pet">Add Pet</NavLink>
+                        <NavLink className="button" to="/catalog/my-pets">My Pets</NavLink>
+                        <NavLink className="button" to="/catalog/add-pet">Add Pet</NavLink>
                     </div>
                     <div className="second-bar">
                         <ul>
@@ -24,6 +24,12 @@ const Header = () => {
                         <li><NavLink to="/login"><i className="fas fa-sign-in-alt"></i> Login</NavLink></li>
                     </ul>
                 </section>
+                <style jsx="true">{`
+            .active {
+                background-color: rgb(248 215 107) !important;
+                color: black !important;
+            }
+            `}</style>
             </nav>
         </header>
     );

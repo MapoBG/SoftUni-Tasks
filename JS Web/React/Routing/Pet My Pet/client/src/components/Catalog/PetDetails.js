@@ -12,7 +12,7 @@ const PetDetails = ({ match }) => {
     return (
         <section class="detailsOtherPet">
             <h3>{pet.name}</h3>
-            <p>Pet counter: {pet.likes} <a href="#"><button class="button"><i class="fas fa-heart"></i>
+            <p>Pet counter: {pet.likes} <a href="/pet"><button class="button"><i class="fas fa-heart"></i>
                     Pet</button></a>
             </p>
             <p class="img"><img src={pet.imageURL} alt="" /></p>
