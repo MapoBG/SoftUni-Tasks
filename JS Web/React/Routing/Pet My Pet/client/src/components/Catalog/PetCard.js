@@ -10,7 +10,7 @@ const PetCard = ({data}) => {
             <p className="description">{data.description}</p>
             <div className="pet-info">
                 <a href="/pet"><button className="button"><i className="fas fa-heart"></i> Pet</button></a>
-                <Link to={`/pets/details/${data.id}`}><button className="button">Details</button></Link>
+                <Link to={`/catalog/details/${data.id}`}><button className="button">Details</button></Link>
                 <i className="fas fa-heart"></i> <span> {data.likes}</span>
             </div>
         </li>

@@ -32,4 +32,33 @@ const createPet = (form) => {
     });
 };
 
-export { getAll, getOne, createPet };
+const updatePetDescr = (form, petId) => {
+    const petDescr = {
+        description: form.description.value
+    };
+
+    return fetch(api.pets + `/${petId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(petDescr)
+    });
+};
+
+const updatePetLikes = (pet) => {
+    const petDescr = {
+        likes: ++pet.likes
+    };
+
+    return fetch(api.pets + `/${pet.id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(petDescr)
+    });
+};
+
+export { getAll, getOne, createPet, updatePetDescr, updatePetLikes };
+

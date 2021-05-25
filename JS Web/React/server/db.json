@@ -38,7 +38,7 @@
       "description": "This is my parrot Koko. He is one year old. He likes to sing a lot.",
       "imageURL": "https://cdn.omlet.co.uk/images/originals/fischer's-lovebird.jpg",
       "category": "Parrot",
-      "likes": "2",
+      "likes": 30,
       "_acl": {
         "creator": "5bb088003e67d9190597f9a6"
       },
