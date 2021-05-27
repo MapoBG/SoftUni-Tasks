@@ -9,6 +9,7 @@ import AddPet from './components/Catalog/AddPet';
 import PetEdit from './components/Catalog/PetEdit';
 
 import './App.css';
+import DemoComponent from './DemoComponent';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/catalog/:category" component={Catalog} exact />
           <Route path="/catalog/details/:petId" exact component={PetDetails} />
           <Route path="/catalog/edit/:petId" component={PetEdit} />
+          <Route path="/demo" component={DemoComponent} />
         </Switch>
       </main>
 
