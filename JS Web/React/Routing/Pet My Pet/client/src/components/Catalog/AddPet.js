@@ -15,7 +15,7 @@ class AddPet extends Component {
     onSubmitHandler(e, props) {
         e.preventDefault();
         createPet(e.target)
-            .then(props.history.push("/"))
+            .then(props.history.push("/"));
     }
 
     render() {
