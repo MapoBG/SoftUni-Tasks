@@ -1,48 +1,47 @@
 const { URL } = require("url");
-const fs = require("fs");
+const fs = require("fs/promises");
 const path = require("path");
-
-const catsDB = require("../data/catsDb.json");
-const breedsDB = require("../data/breedsDb.json");
-let { homePage } = require("../views/homePage");
-const css = require("../styles/siteCss");
-let addCatPage = require("../views/addCat");
-const addBreedPage = require("../views/addBreed");
 
 const catTemplate = require("../views/catTemplate");
 const breedTemplate = require("../views/breedsOptionTemplate")
 
 const myUrl = 'http://localhost:5555';
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     const pathname = new URL(req.url, myUrl).pathname;
+
+    let catsDB = await fs.readFile("./data/catsDb.json", "utf-8");
+    let catsData = JSON.parse(catsDB);
+    let breedsDB = await fs.readFile("./data/breedsDb.json", "utf-8");
+    let breedsData = JSON.parse(breedsDB);
 
     res.writeHead(200, {
         "Content-Type": "text/html"
     });
 
     if (pathname == "/") {
-        homePage = homePage.replace("{{cats}}", catsDB
+        let homePageHtml = await fs.readFile("./views/homePage.html", "utf-8");
+        let homePage = homePageHtml.replace("{{cats}}", catsData
             .filter((c) => c.deleted == false)
             .map(c => catTemplate(c)).join(""));
         res.write(homePage);
-        res.end();
     } else if (pathname == "/content/styles/site.css") {
         res.writeHead(200, {
             "Content-Type": "text/css"
         });
-        res.write(css);
-        res.end();
+        let styleCss = await fs.readFile("./content/styles/site.css", "utf-8");
+        res.write(styleCss);
     } else if (pathname == "/cats/add-breed") {
+        let addBreedPage = await fs.readFile("./views/addBreed.html", "utf-8");
         res.write(addBreedPage);
-        res.end();
     } else if (pathname == "/cats/add-cat") {
-        addCatPage = addCatPage.replace("{{breeds}}", breedsDB
+        let addCatPageHtml = await fs.readFile("./views/addCat.html", "utf-8");
+        addCatPage = addCatPageHtml.replace("{{breeds}}", breedsData
             .sort((b1, b2) => b1.breed.localeCompare(b2.breed))
             .map(b => breedTemplate(b)).join(""));
         res.write(addCatPage);
-        res.end();
     } else {
         return true;
     }
+    res.end();
 }
