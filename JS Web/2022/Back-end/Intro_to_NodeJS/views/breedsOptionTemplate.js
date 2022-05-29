@@ -1,2 +1,2 @@
 module.exports = (breed) => 
-`<option value=${breed}>${breed}</option>`;
+`<option value=${breed.replaceAll(" ", "_")}>${breed}</option>`;
