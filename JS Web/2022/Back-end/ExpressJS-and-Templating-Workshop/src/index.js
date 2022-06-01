@@ -5,6 +5,7 @@ const router = require("./routes");
 const app = express();
 const port = 5000;
 
+app.use(express.urlencoded({ extended: false }));//enables form data reading
 app.use("/public", express.static("public"));// static/public files setup(/scr/public/...)
 
 app.engine('hbs', exphbs.engine({ extname: 'hbs' }));
