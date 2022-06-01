@@ -1,0 +1,2 @@
+"start": "nodemon ./src/index.js" - for main path to be in main dir(requires more setup for files paths)
+"start": cd ./src && "nodemon index.js" - for main path to be in /src dir(easier to use files pathing)
