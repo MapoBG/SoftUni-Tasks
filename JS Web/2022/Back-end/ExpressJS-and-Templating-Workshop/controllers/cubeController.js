@@ -1,5 +1,6 @@
 const cubeRouter = require("express").Router();
 const fs = require("fs/promises");
+const path = require("path");
 
 const cubesDb = require("../src/cubesDB.json");
 
@@ -15,12 +16,11 @@ cubeRouter.post("/create", (req, res) => {
 
     cubeInfo.id = cubesDb.length + 1;
     cubesDb.push(cubeInfo);
-    fs.writeFile("./src/cubesDB.json", JSON.stringify(cubesDb, "", 4))
+    fs.writeFile(path.resolve("src", "cubesDB.json"), JSON.stringify(cubesDb, "", 4))
         .then(() => {
             res.redirect("/");
         })
         .catch((err) => res.send(err));
 });
-
 
 module.exports = cubeRouter;
