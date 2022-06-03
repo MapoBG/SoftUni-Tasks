@@ -1,26 +1,26 @@
 const cubeRouter = require("express").Router();
-const fs = require("fs/promises");
-const path = require("path");
 
-const cubesDb = require("../src/cubesDB.json");
-
+const dataService = require("../src/services/dataService");
 
 cubeRouter.get("/create", (req, res) => {
     res.render("create");
 });
 
+cubeRouter.get("/details/:id", (req, res) => {
+    const cubeId = req.params.id;
+    res.render("details", dataService.getOne(cubeId));
+})
+
 cubeRouter.post("/create", (req, res) => {
     const cubeInfo = req.body;
 
     //Validate(create validation func & import it here)
-
-    cubeInfo.id = cubesDb.length + 1;
-    cubesDb.push(cubeInfo);
-    fs.writeFile(path.resolve("src", "cubesDB.json"), JSON.stringify(cubesDb, "", 4))
+    
+    dataService.saveData(cubeInfo)
         .then(() => {
             res.redirect("/");
         })
-        .catch((err) => res.send(err));
+        .catch((err) => res.send(err + "This is Error!"));
 });
 
 module.exports = cubeRouter;
