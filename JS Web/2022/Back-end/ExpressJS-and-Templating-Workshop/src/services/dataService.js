@@ -14,19 +14,14 @@ exports.getOne = (cubeId) => {
     return cubesDb.find(cube => cube.id == cubeId);
 };
 
-exports.getAll = async () => cubesDb;
+exports.getAll = async (search = "", fromInput, toInput) => {
+    const from = Number(fromInput) || 0;
+    const to = Number(toInput) || 6;
 
-exports.search = async (searchParams) => {
-    if (!searchParams.search) {
-        searchParams.search == false;
-    }
+    const result = cubesDb
+        .filter(cube => {
+            return cube.difficultyLevel >= from && cube.difficultyLevel <= to && (cube.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) || cube.description.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+        });
 
-    if (!searchParams.from) {
-        searchParams.from = 0;
-    }
-
-    if (!searchParams.to) {
-        searchParams.to = Number.MAX_SAFE_INTEGER;
-    }
-    return searchParams;
+    return result;
 };

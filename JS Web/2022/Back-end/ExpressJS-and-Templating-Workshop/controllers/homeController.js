@@ -2,23 +2,10 @@ const homeRouter = require("express").Router();
 const dataService = require("../src/services/dataService");
 
 homeRouter.get("/", (req, res) => {
-    dataService.getAll()
+    let { search, from, to } = req.query;
+    dataService.getAll(search, from, to)
         .then((cubesData) => {
-            if (req.query.search || req.query.from || req.query.to) {
-                dataService.search(req.query)
-                    .then((params) => {
-                        cubesData = cubesData
-                            .filter(cube => {
-                                cube.difficultyLevel = Number(cube.difficultyLevel);
-                                return cube.difficultyLevel >= params.from && cube.difficultyLevel <= params.to && (cube.name.toLocaleLowerCase().includes(params.search.toLocaleLowerCase()) || cube.description.toLocaleLowerCase().includes(params.search.toLocaleLowerCase()))
-                            });
-                        // console.log(cubesData);
-                        res.render("index", { cubesData });
-                    });
-                // console.log(cubesData);
-            } else {
-                res.render("index", { cubesData });
-            }
+            res.render("index", { cubesData, search, from, to });
         })
         .catch((err) => res.send(err + "This is Error!"));
 });
