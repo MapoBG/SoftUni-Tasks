@@ -1,5 +1,8 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const mongoose = require("mongoose");
+
+const connectToDB = require("./config/dataBase");
 const router = require("./routes");
 
 const app = express();
@@ -12,4 +15,10 @@ app.engine('hbs', exphbs.engine({ extname: 'hbs' }));
 app.set('view engine', 'hbs');
 app.set("views", "./src/views");// should be used with "start": "nodemon ./src/index.js" - remove with "start": cd ./src && "nodemon index.js"
 
-app.use(router).listen(port, () => console.log(`Server is listening on port ${port}...`));
+app.use(router);
+
+connectToDB()
+    .then(() => {
+        app.listen(port, () => console.log(`Server is listening on port ${port}...`));
+    })
+    .catch((err) => console.log(err));

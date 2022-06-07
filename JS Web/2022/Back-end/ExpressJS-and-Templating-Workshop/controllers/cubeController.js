@@ -6,16 +6,18 @@ cubeRouter.get("/create", (req, res) => {
     res.render("create");
 });
 
-cubeRouter.get("/details/:id", (req, res) => {
+cubeRouter.get("/details/:id", async (req, res) => {
     const cubeId = req.params.id;
-    res.render("details", dataService.getOne(cubeId));
+    const cube = await dataService.getOne(cubeId);
+
+    res.render("details", cube);
 })
 
 cubeRouter.post("/create", (req, res) => {
     const cubeInfo = req.body;
 
     //Validate(create validation func & import it here)
-    
+
     dataService.saveData(cubeInfo)
         .then(() => {
             res.redirect("/");

@@ -3,11 +3,10 @@ const dataService = require("../src/services/dataService");
 
 homeRouter.get("/", (req, res) => {
     let { search, from, to } = req.query;
+
     dataService.getAll(search, from, to)
-        .then((cubesData) => {
-            res.render("index", { cubesData, search, from, to });
-        })
-        .catch((err) => res.send(err + "This is Error!"));
+        .then((cubesData) => res.render("index", { cubesData, search, from, to }))
+        .catch((err) => res.send("This is Error!\n" + err));
 });
 
 homeRouter.get("/about", (req, res) => res.render("about"));
