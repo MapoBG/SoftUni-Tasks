@@ -1,14 +1,24 @@
-exports.saveData = async (newItem) => newItem.save();
+const Accessory = require("../models/Accessory");
+const Cube = require("../models/Cube");
 
-exports.getOne = async (cubeId) => await Cube.findById(cubeId).lean();
+exports.saveData = (itemInfo, itemType) => {
+    constructor = {
+        Cube,
+        Accessory
+    };
 
-exports.getOneDetailed = async (cubeId) => await Cube.findById(cubeId);
+    return constructor[itemType].create(itemInfo);
+};
 
-exports.getAll = async (search = "", fromInput, toInput) => {
+exports.getOne = (cubeId) => Cube.findById(cubeId);
+
+// exports.getOneDetailed = (cubeId) => Cube.findById(cubeId);
+
+exports.getAll = (search = "", fromInput, toInput) => {
     const from = Number(fromInput) || 0;
     const to = Number(toInput) || 6;
 
-    const result = await Cube.find().lean();
+    const result = Cube.find();
 
     // const result = cubesDb
     //     .filter(cube => {

@@ -1,22 +1,20 @@
 const accRouter = require("express").Router();
 
 const dataService = require("../src/services/dataService");
-const Accessory = require("../src/models/Accessory");
 
 accRouter.get("/create", (req, res) => res.render("createAccessory"));
 
 accRouter.get("/attach/:id", async (req, res) => {
-    const cube = await dataService.getOne(req.params.id);
+    const cube = await dataService.getOne(req.params.id).lean();
 
     res.render("attachAccessory", cube);
 });
 
 accRouter.post("/create", (req, res) => {
-    const newAccessory = new Accessory(req.body);
 
     //Validate(create validation func & import it here)
 
-    dataService.saveData(newAccessory)
+    dataService.saveData(req.body, "Accessory")
         .then(() => {
             res.redirect("/");
         })
