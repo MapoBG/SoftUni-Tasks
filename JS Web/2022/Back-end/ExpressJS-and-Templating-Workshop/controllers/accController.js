@@ -22,4 +22,13 @@ accRouter.post("/create", (req, res) => {
         .catch((err) => res.send(err + "This is Error!"));
 });
 
+accRouter.post("/attach/:cubeId", (req, res) => {
+
+    dataService.attachAcc(req.params.cubeId, req.body.accessory)
+        .then(() => {
+            res.redirect("/");
+        })
+        .catch((err) => res.send(err + "This is Error!"));
+});
+
 module.exports = accRouter;

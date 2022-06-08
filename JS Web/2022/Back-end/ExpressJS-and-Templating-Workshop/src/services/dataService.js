@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const Accessory = require("../models/Accessory");
 const Cube = require("../models/Cube");
 
@@ -22,4 +23,12 @@ exports.getAll = (itemType, search = "", fromInput, toInput) => {
     //     });
 
     return result;
+};
+
+exports.attachAcc = async (cubeId, accId) => {
+    const cubeObjId = mongoose.Types.ObjectId(cubeId);
+    const accObjId = mongoose.Types.ObjectId(accId);
+
+    await Cube.updateMany({ _id: cubeId }, { $push: { accessories: accObjId } });
+    await Accessory.updateMany({ _id: accId }, { $push: { cubes: cubeObjId } });
 };
