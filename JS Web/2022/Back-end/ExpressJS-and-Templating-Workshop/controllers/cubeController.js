@@ -10,6 +10,13 @@ cubeRouter.get("/details/:id", async (req, res) => {
     res.render("details", cube);
 });
 
+cubeRouter.get("/attach-accessories/:cubeId", async (req, res) => {
+    const cube = await dataService.getOne(req.params.cubeId).lean();
+    const accessories = await dataService.getFiltered(cube.accessories).lean();
+
+    res.render("attachAccessory", { cube, accessories });
+});
+
 cubeRouter.post("/create", (req, res) => {
 
     //Validate(create validation func & import it here)

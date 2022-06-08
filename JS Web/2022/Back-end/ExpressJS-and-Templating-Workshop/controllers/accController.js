@@ -4,13 +4,6 @@ const dataService = require("../src/services/dataService");
 
 accRouter.get("/create", (req, res) => res.render("createAccessory"));
 
-accRouter.get("/attach/:cubeId", async (req, res) => {
-    const cube = await dataService.getOne(req.params.cubeId).lean();
-    const accessories = await dataService.getFiltered(cube.accessories).lean();
-    
-    res.render("attachAccessory", { cube, accessories });
-});
-
 accRouter.post("/create", (req, res) => {
 
     //Validate(create validation func & import it here)
