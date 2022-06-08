@@ -23,10 +23,11 @@ accRouter.post("/create", (req, res) => {
 });
 
 accRouter.post("/attach/:cubeId", (req, res) => {
+    const cubeId = req.params.cubeId;
 
-    dataService.attachAcc(req.params.cubeId, req.body.accessory)
+    dataService.attachAcc(cubeId, req.body.accessory)
         .then(() => {
-            res.redirect("/");
+            res.redirect(`/cubes/details/${cubeId}`);
         })
         .catch((err) => res.send(err + "This is Error!"));
 });
