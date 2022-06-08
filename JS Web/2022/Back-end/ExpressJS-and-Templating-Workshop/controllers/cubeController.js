@@ -5,7 +5,7 @@ const dataService = require("../src/services/dataService");
 cubeRouter.get("/create", (req, res) => res.render("create"));
 
 cubeRouter.get("/details/:id", async (req, res) => {
-    const cube = await dataService.getOne(req.params.id).lean();
+    const cube = await dataService.getOneDetailed(req.params.id).lean();
 
     res.render("details", cube);
 });

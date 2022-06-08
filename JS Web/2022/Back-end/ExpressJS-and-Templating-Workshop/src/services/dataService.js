@@ -11,6 +11,8 @@ exports.saveData = (itemType, itemInfo) => constructors[itemType].create(itemInf
 
 exports.getOne = (cubeId) => Cube.findById(cubeId);
 
+exports.getOneDetailed = (cubeId) => Cube.findById(cubeId).populate("accessories");
+
 exports.getAll = (itemType, search = "", fromInput, toInput) => {
     const from = Number(fromInput) || 0;
     const to = Number(toInput) || 6;
