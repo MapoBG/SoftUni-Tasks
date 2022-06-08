@@ -6,11 +6,9 @@ const constructors = {
     Accessory
 };
 
-exports.saveData = (itemInfo, itemType) => constructors[itemType].create(itemInfo);
+exports.saveData = (itemType, itemInfo) => constructors[itemType].create(itemInfo);
 
 exports.getOne = (cubeId) => Cube.findById(cubeId);
-
-// exports.getOneDetailed = (cubeId) => Cube.findById(cubeId);
 
 exports.getAll = (itemType, search = "", fromInput, toInput) => {
     const from = Number(fromInput) || 0;

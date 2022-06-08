@@ -14,7 +14,7 @@ cubeRouter.post("/create", (req, res) => {
 
     //Validate(create validation func & import it here)
 
-    dataService.saveData(req.body, "Cube")
+    dataService.saveData("Cube", req.body)
         .then(() => {
             res.redirect("/");
         })

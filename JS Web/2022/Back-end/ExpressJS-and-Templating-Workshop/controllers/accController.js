@@ -15,7 +15,7 @@ accRouter.post("/create", (req, res) => {
 
     //Validate(create validation func & import it here)
 
-    dataService.saveData(req.body, "Accessory")
+    dataService.saveData("Accessory", req.body)
         .then(() => {
             res.redirect("/");
         })
