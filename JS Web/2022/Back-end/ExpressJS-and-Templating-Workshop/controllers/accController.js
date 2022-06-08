@@ -6,8 +6,8 @@ accRouter.get("/create", (req, res) => res.render("createAccessory"));
 
 accRouter.get("/attach/:cubeId", async (req, res) => {
     const cube = await dataService.getOne(req.params.cubeId).lean();
-    const accessories = await dataService.getAll("Accessory").lean();
-
+    const accessories = await dataService.getFiltered(cube.accessories).lean();
+    
     res.render("attachAccessory", { cube, accessories });
 });
 

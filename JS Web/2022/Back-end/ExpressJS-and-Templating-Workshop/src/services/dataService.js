@@ -9,10 +9,6 @@ const constructors = {
 
 exports.saveData = (itemType, itemInfo) => constructors[itemType].create(itemInfo);
 
-exports.getOne = (cubeId) => Cube.findById(cubeId);
-
-exports.getOneDetailed = (cubeId) => Cube.findById(cubeId).populate("accessories");
-
 exports.getAll = (itemType, search = "", fromInput, toInput) => {
     const from = Number(fromInput) || 0;
     const to = Number(toInput) || 6;
@@ -27,6 +23,10 @@ exports.getAll = (itemType, search = "", fromInput, toInput) => {
     return result;
 };
 
+exports.getOne = (cubeId) => Cube.findById(cubeId);
+
+exports.getOneDetailed = (cubeId) => Cube.findById(cubeId).populate("accessories");
+
 exports.attachAcc = async (cubeId, accId) => {
     const cubeObjId = mongoose.Types.ObjectId(cubeId);
     const accObjId = mongoose.Types.ObjectId(accId);
@@ -34,3 +34,5 @@ exports.attachAcc = async (cubeId, accId) => {
     await Cube.updateMany({ _id: cubeId }, { $push: { accessories: accObjId } });
     await Accessory.updateMany({ _id: accId }, { $push: { cubes: cubeObjId } });
 };
+
+exports.getFiltered = (accIds) => Accessory.find({ _id: { $nin: accIds } });
