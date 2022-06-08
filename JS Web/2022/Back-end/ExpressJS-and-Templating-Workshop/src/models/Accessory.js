@@ -15,9 +15,12 @@ const accShema = new mongoose.Schema({
         required: true,
         match: /^http/
     },
-    cubes: {
-        type: Array
-    }
+    cubes: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "Cube"
+        }
+    ]
 });
 
 module.exports = Accessory = mongoose.model('Accessory', accShema);

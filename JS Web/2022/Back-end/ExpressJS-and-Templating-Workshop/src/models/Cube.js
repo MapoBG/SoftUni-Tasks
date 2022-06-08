@@ -21,9 +21,12 @@ const cubeShema = new mongoose.Schema({
         min: 1,
         max: 6
     },
-    accessories: {
-        type: Array
-    }
+    accessories: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "Accessory"
+        }
+    ]
 });
 
 module.exports = Cube = mongoose.model('Cube', cubeShema);
