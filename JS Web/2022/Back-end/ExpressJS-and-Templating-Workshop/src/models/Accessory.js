@@ -15,6 +15,9 @@ const accShema = new mongoose.Schema({
         required: true,
         match: /^http/
     },
+    cubes: {
+        type: Array
+    }
 });
 
 module.exports = Accessory = mongoose.model('Accessory', accShema);

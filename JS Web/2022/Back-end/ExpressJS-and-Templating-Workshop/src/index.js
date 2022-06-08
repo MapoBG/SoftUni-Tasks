@@ -1,6 +1,5 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
-const mongoose = require("mongoose");
 
 const connectToDB = require("./config/dataBase");
 const router = require("./routes");

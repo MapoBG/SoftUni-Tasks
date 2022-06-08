@@ -20,6 +20,9 @@ const cubeShema = new mongoose.Schema({
         required: true,
         min: 1,
         max: 6
+    },
+    accessories: {
+        type: Array
     }
 });
 

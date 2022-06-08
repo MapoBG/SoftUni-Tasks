@@ -1,15 +1,8 @@
-const fs = require("fs/promises");
-const path = require("path");
-
-const Cube = require("../models/Cube");
-
-exports.saveData = async (cubeInfo) => {
-    const newCube = new Cube(cubeInfo);
-
-    newCube.save();
-};
+exports.saveData = async (newItem) => newItem.save();
 
 exports.getOne = async (cubeId) => await Cube.findById(cubeId).lean();
+
+exports.getOneDetailed = async (cubeId) => await Cube.findById(cubeId);
 
 exports.getAll = async (search = "", fromInput, toInput) => {
     const from = Number(fromInput) || 0;
