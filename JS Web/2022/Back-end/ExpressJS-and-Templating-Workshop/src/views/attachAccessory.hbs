@@ -5,13 +5,13 @@
     <h1>Attach a new accessory</h1>
     <div class="form">
         <h2>{{cube.name}}</h2>
-        <img class="cube" src="{{imageUrl}}">
+        <img class="cube" src="{{cube.imageUrl}}">
         {{#if accessories}}
         <form method="POST">
             <label for="accessory">Accessories</label>
             <select id="accessory" name="accessory" />
             {{#each accessories}}
-            <option value={{this}}>{{this}}</option>
+            <option value={{this._id}}>{{this.name}}</option>
             {{/each}}
             </select>
             <input type="submit" value="Attach">

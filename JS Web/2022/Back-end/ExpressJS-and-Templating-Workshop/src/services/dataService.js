@@ -12,11 +12,11 @@ exports.getOne = (cubeId) => Cube.findById(cubeId);
 
 // exports.getOneDetailed = (cubeId) => Cube.findById(cubeId);
 
-exports.getAll = (search = "", fromInput, toInput) => {
+exports.getAll = (itemType, search = "", fromInput, toInput) => {
     const from = Number(fromInput) || 0;
     const to = Number(toInput) || 6;
 
-    const result = Cube.find();
+    const result = constructors[itemType].find();
 
     // const result = cubesDb
     //     .filter(cube => {

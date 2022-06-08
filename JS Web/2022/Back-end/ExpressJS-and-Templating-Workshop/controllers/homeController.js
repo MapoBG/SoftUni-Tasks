@@ -4,7 +4,7 @@ const dataService = require("../src/services/dataService");
 homeRouter.get("/", (req, res) => {
     let { search, from, to } = req.query;
 
-    dataService.getAll(search, from, to)
+    dataService.getAll("Cube", search, from, to)
         .lean()
         .then((cubesData) => res.render("index", { cubesData, search, from, to }))
         .catch((err) => res.send("This is Error!\n" + err));
