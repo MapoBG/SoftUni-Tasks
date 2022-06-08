@@ -13,9 +13,12 @@ exports.getAll = (itemType, search = "", fromInput, toInput) => {
     const from = Number(fromInput) || 0;
     const to = Number(toInput) || 6;
 
-    const result = constructors[itemType].find();
+    const regEx = new RegExp(search, "i");
 
-    // const result = cubesDb
+    const result = constructors[itemType].find({ $or: [{ name: regEx }, { description: regEx }] })
+        .where("difficultyLevel").lte(to).gte(from)
+
+    // const result = allCubes
     //     .filter(cube => {
     //         return cube.difficultyLevel >= from && cube.difficultyLevel <= to && (cube.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) || cube.description.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
     //     });
