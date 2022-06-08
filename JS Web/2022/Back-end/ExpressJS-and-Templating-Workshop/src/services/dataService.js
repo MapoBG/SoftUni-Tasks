@@ -1,14 +1,12 @@
 const Accessory = require("../models/Accessory");
 const Cube = require("../models/Cube");
 
-exports.saveData = (itemInfo, itemType) => {
-    constructor = {
-        Cube,
-        Accessory
-    };
-
-    return constructor[itemType].create(itemInfo);
+const constructors = {
+    Cube,
+    Accessory
 };
+
+exports.saveData = (itemInfo, itemType) => constructors[itemType].create(itemInfo);
 
 exports.getOne = (cubeId) => Cube.findById(cubeId);
 
