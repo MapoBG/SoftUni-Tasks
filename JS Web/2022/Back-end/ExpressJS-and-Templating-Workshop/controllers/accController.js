@@ -15,14 +15,4 @@ accRouter.post("/create", (req, res) => {
         .catch((err) => res.send(err + "This is Error!"));
 });
 
-accRouter.post("/attach/:cubeId", (req, res) => {
-    const cubeId = req.params.cubeId;
-
-    dataService.attachAcc(cubeId, req.body.accessory)
-        .then(() => {
-            res.redirect(`/cubes/details/${cubeId}`);
-        })
-        .catch((err) => res.send(err + "This is Error!"));
-});
-
 module.exports = accRouter;

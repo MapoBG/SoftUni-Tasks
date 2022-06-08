@@ -4,6 +4,17 @@ const dataService = require("../src/services/dataService");
 
 cubeRouter.get("/create", (req, res) => res.render("create"));
 
+cubeRouter.post("/create", (req, res) => {
+
+    //Validate(create validation func & import it here)
+
+    dataService.saveData("Cube", req.body)
+        .then(() => {
+            res.redirect("/");
+        })
+        .catch((err) => res.send(err + "This is Error!"));
+});
+
 cubeRouter.get("/details/:id", async (req, res) => {
     const cube = await dataService.getOneDetailed(req.params.id).lean();
 
@@ -17,13 +28,12 @@ cubeRouter.get("/attach-accessories/:cubeId", async (req, res) => {
     res.render("attachAccessory", { cube, accessories });
 });
 
-cubeRouter.post("/create", (req, res) => {
+cubeRouter.post("/attach-accessories/:cubeId", (req, res) => {
+    const cubeId = req.params.cubeId;
 
-    //Validate(create validation func & import it here)
-
-    dataService.saveData("Cube", req.body)
+    dataService.attachAcc(cubeId, req.body.accessory)
         .then(() => {
-            res.redirect("/");
+            res.redirect(`/cubes/details/${cubeId}`);
         })
         .catch((err) => res.send(err + "This is Error!"));
 });
