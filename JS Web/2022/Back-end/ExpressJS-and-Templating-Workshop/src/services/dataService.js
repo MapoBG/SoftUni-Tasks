@@ -49,4 +49,6 @@ exports.getOneWithOptions = async (cubeId) => {
     cube.options = createOptions(cube.difficultyLevel);
 
     return cube;
-}
+};
+
+exports.update = (cubeId, cubeData) => Cube.findByIdAndUpdate(cubeId, cubeData);
