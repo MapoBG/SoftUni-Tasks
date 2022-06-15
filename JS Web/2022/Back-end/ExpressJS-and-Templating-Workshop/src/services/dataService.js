@@ -4,7 +4,7 @@ const Cube = require("../models/Cube");
 
 const constructors = {
     Cube,
-    Accessory
+    Accessory,
 };
 
 exports.saveData = (itemType, itemInfo) => constructors[itemType].create(itemInfo);
