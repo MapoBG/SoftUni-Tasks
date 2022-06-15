@@ -4,21 +4,25 @@ const userService = require("../src/services/userService");
 userRouter.get("/login", (req, res) => res.render("user/loginPage"));
 
 userRouter.post("/login", async (req, res) => {
+    const token = await userService.loginUser(req.body);
 
+    if (!token) {
+        return res.redirect("/404");
+    }
+
+    res.cookie("session", token);
+    
+    res.redirect("/");
 });
 
 userRouter.get("/register", (req, res) => res.render("user/registerPage"));
 
 userRouter.post("/register", async (req, res) => {
-    const password = req.body.password;
-    const repeatPassword = req.body.repeatPassword;
-    const username = req.body.username;
+    const newUser = await userService.createUser(req.body);
 
-    if (!password === repeatPassword) {
-        return false;
+    if (!newUser) {
+        return res.redirect("/404");
     }
-
-    await userService.createUser({ username, password });
 
     res.redirect("/user/login");
 });
