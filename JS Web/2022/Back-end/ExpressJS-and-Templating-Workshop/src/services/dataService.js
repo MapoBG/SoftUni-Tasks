@@ -1,6 +1,9 @@
 const { default: mongoose } = require("mongoose");
+
 const Accessory = require("../models/Accessory");
 const Cube = require("../models/Cube");
+
+const createOptions = require("./Utils/utils");
 
 const constructors = {
     Cube,
@@ -39,3 +42,11 @@ exports.attachAcc = async (cubeId, accId) => {
 };
 
 exports.getFiltered = (accIds) => Accessory.find({ _id: { $nin: accIds } });
+
+exports.getOneWithOptions = async (cubeId) => {
+    const cube = await Cube.findById(cubeId).lean();
+
+    cube.options = createOptions(cube.difficultyLevel);
+
+    return cube;
+}

@@ -15,8 +15,8 @@ cubeRouter.post("/create", (req, res) => {
         .catch((err) => res.send(err + "This is Error!"));
 });
 
-cubeRouter.get("/details/:id", async (req, res) => {
-    const cube = await dataService.getOneDetailed(req.params.id).lean();
+cubeRouter.get("/details/:cubeId", async (req, res) => {
+    const cube = await dataService.getOneDetailed(req.params.cubeId).lean();
 
     res.render("details", cube);
 });
@@ -36,6 +36,12 @@ cubeRouter.post("/attach-accessories/:cubeId", (req, res) => {
             res.redirect(`/cubes/details/${cubeId}`);
         })
         .catch((err) => res.send(err + "This is Error!"));
+});
+
+cubeRouter.get("/edit/:cubeId", async (req, res) => {
+    const cube = await dataService.getOneWithOptions(req.params.cubeId);
+
+    res.render("editCubePage", { cube });
 });
 
 module.exports = cubeRouter;
