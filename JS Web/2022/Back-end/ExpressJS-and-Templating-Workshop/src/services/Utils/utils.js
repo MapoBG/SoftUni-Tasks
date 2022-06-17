@@ -1,4 +1,4 @@
-const createOptions = (difficulty) => {
+exports.createOptions = (difficulty) => {
     return [
         { content: "1 - Very Easy", value: "1" },
         { content: "2 - Easy", value: "2" },
@@ -8,5 +8,3 @@ const createOptions = (difficulty) => {
         { content: "6 - Hardcore", value: "6" }
     ].map(x => x.value == difficulty ? { ...x, selected: "selected" } : x);
 };
-
-module.exports = createOptions;

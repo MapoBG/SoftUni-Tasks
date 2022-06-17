@@ -1,5 +1,7 @@
 const userRouter = require("express").Router();
+
 const userService = require("../src/services/userService");
+const { sessionName } = require("../src/config/constants");
 
 userRouter.get("/login", (req, res) => res.render("user/loginPage"));
 
@@ -10,8 +12,8 @@ userRouter.post("/login", async (req, res) => {
         return res.redirect("/404");
     }
 
-    res.cookie("session", token);
-    
+    res.cookie(sessionName, token, { httpOnly: true });
+
     res.redirect("/");
 });
 

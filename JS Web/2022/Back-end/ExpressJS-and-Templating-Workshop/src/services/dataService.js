@@ -3,7 +3,7 @@ const { default: mongoose } = require("mongoose");
 const Accessory = require("../models/Accessory");
 const Cube = require("../models/Cube");
 
-const createOptions = require("./Utils/utils");
+const { createOptions } = require("./Utils/utils");
 
 const constructors = {
     Cube,
@@ -43,12 +43,25 @@ exports.attachAcc = async (cubeId, accId) => {
 
 exports.getFiltered = (accIds) => Accessory.find({ _id: { $nin: accIds } });
 
-exports.getOneWithOptions = async (cubeId) => {
+exports.getOneWithOptions = async (cubeId, userId) => {
     const cube = await Cube.findById(cubeId).lean();
+
+    if (cube.creator != userId) {
+        throw new Error("Invalid User!");
+    }
 
     cube.options = createOptions(cube.difficultyLevel);
 
     return cube;
 };
 
-exports.update = (cubeId, cubeData) => Cube.findByIdAndUpdate(cubeId, cubeData);
+exports.update = async (cubeId, userId, cubeData) => {
+    const isValid = await this.getOneWithOptions(cubeId, userId);
+
+    if (!isValid) {
+        throw new Error("Invalid User!");
+    }
+
+    return Cube.findByIdAndUpdate(cubeId, cubeData).lean();
+
+};

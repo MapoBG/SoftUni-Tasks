@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 
 const connectToDB = require("./config/dataBase");
 const router = require("./routes");
+const { auth } = require("./middlewares/userMiddleware");
 
 const app = express();
 const port = 5000;
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));//enables form data reading
 app.use("/public", express.static("public"));// static/public files setup(/scr/public/...)
 
 app.use(cookieParser());
+app.use(auth);
 app.engine('hbs', exphbs.engine({ extname: 'hbs' }));
 app.set('view engine', 'hbs');
 app.set("views", "./src/views");// should be used with "start": "nodemon ./src/index.js" - remove with "start": cd ./src && "nodemon index.js"

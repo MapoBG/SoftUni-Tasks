@@ -1,10 +1,13 @@
 const cubeRouter = require("express").Router();
 
+const { isAuth } = require("../src/middlewares/userMiddleware");
 const dataService = require("../src/services/dataService");
 
-cubeRouter.get("/create", (req, res) => res.render("create"));
+cubeRouter.get("/create", isAuth, (req, res) => res.render("create"));
 
 cubeRouter.post("/create", (req, res) => {
+    const cubeInfo = req.body;
+    cubeInfo.creator = req.user._id;
 
     //Validate(create validation func & import it here)
 
@@ -39,21 +42,37 @@ cubeRouter.post("/attach-accessories/:cubeId", (req, res) => {
 });
 
 cubeRouter.get("/edit/:cubeId", async (req, res) => {
-    const cube = await dataService.getOneWithOptions(req.params.cubeId);
+    try {
+        const cube = await dataService.getOneWithOptions(req.params.cubeId, req.user._id);
 
-    res.render("editCubePage", { cube });
+        res.render("editCubePage", { cube });
+    } catch (error) {
+        res.redirect("/404");
+    }
 });
 
 cubeRouter.post("/edit/:cubeId", async (req, res) => {
-    const cube = await dataService.update(req.params.cubeId, req.body).lean();
+    try {
+        const cube = await dataService.update(req.params.cubeId, req.user._id, req.body);
 
-    res.redirect(`/cubes/details/${cube._id}`);
+        res.redirect(`/cubes/details/${cube._id}`);
+    } catch (error) {
+        res.redirect("/404");
+    }
 });
 
 cubeRouter.get("/delete/:cubeId", async (req, res) => {
-    const cube = await dataService.getOneWithOptions(req.params.cubeId);
-    // console.log(cube);
-    res.render("deleteCubePage", { cube });
+    try {
+        const cube = await dataService.getOneWithOptions(req.params.cubeId, req.user._id);
+
+        res.render("deleteCubePage", { cube });
+    } catch (error) {
+        res.redirect("/404");
+    }
+});
+
+cubeRouter.post("/delete/:cubeId", (req, res) => {
+
 });
 
 module.exports = cubeRouter;

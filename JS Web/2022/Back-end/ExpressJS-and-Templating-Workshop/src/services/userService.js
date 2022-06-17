@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
-const { secret, saltRounds } = require("../config/hash");
+const { secret, saltRounds } = require("../config/constants");
 
 exports.createUser = async ({ username, password, repeatPassword }) => {
 
