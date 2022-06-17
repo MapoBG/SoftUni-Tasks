@@ -3,6 +3,18 @@ const userRouter = require("express").Router();
 const userService = require("../src/services/userService");
 const { sessionName } = require("../src/config/constants");
 
+userRouter.get("/register", (req, res) => res.render("user/registerPage"));
+
+userRouter.post("/register", async (req, res) => {
+    const newUser = await userService.createUser(req.body);
+
+    if (!newUser) {
+        return res.redirect("/404");
+    }
+
+    res.redirect("/user/login");
+});
+
 userRouter.get("/login", (req, res) => res.render("user/loginPage"));
 
 userRouter.post("/login", async (req, res) => {
@@ -17,16 +29,10 @@ userRouter.post("/login", async (req, res) => {
     res.redirect("/");
 });
 
-userRouter.get("/register", (req, res) => res.render("user/registerPage"));
-
-userRouter.post("/register", async (req, res) => {
-    const newUser = await userService.createUser(req.body);
-
-    if (!newUser) {
-        return res.redirect("/404");
-    }
-
-    res.redirect("/user/login");
+userRouter.get("/logout", (req, res) => {
+    res.clearCookie(sessionName);
+    
+    res.redirect("/");
 });
 
 module.exports = userRouter;

@@ -8,3 +8,11 @@ exports.createOptions = (difficulty) => {
         { content: "6 - Hardcore", value: "6" }
     ].map(x => x.value == difficulty ? { ...x, selected: "selected" } : x);
 };
+
+exports.isOwner = (cubeOwner, userId) => {
+    if (cubeOwner == userId) {
+        return true;
+    } else {
+        return false;
+    }
+}
