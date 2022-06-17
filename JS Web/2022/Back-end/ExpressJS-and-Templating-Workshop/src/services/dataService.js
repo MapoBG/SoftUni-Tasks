@@ -62,6 +62,8 @@ exports.update = async (cubeId, userId, cubeData) => {
         throw new Error("Invalid User!");
     }
 
-    return Cube.findByIdAndUpdate(cubeId, cubeData).lean();
+    return Cube.findByIdAndUpdate(cubeId, cubeData, { runValidators: true }).lean();
 
 };
+
+exports.delete = (cubeId) => Cube.findByIdAndDelete(cubeId);

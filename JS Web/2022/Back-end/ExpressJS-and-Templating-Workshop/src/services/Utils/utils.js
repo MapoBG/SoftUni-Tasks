@@ -9,10 +9,4 @@ exports.createOptions = (difficulty) => {
     ].map(x => x.value == difficulty ? { ...x, selected: "selected" } : x);
 };
 
-exports.isOwner = (cubeOwner, userId) => {
-    if (cubeOwner == userId) {
-        return true;
-    } else {
-        return false;
-    }
-}
+exports.isOwner = (cubeOwner, userId) => cubeOwner == userId;
