@@ -1,7 +1,7 @@
 const express = require('express');
 const exhbs = require('express-handlebars');
 
-const { port } = require('./config/config');
+const { port } = require('./config/env');
 const router = require('./routes');
 
 const app = express();
