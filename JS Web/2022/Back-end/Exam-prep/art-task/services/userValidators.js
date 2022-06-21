@@ -19,9 +19,9 @@ exports.registrationValidator = (userData) => {
         result.msgs.push('Passwords doesn\'t match!');
     }
 
-    if (userData.address.length > 20) {
+    if (userData.address.length > 20 || !userData.address) {
         result.isValid = false;
-        result.msgs.push('Address should be a maximum of 20 characters long!');
+        result.msgs.push('Address is required and should be maximum 20 characters long!');
     }
 
     return result;

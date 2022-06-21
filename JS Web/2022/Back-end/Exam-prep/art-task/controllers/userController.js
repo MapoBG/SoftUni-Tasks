@@ -28,7 +28,7 @@ userRouter.post("/register", async (req, res) => {
 
         res.render('home');
     } catch (error) {
-        res.locals.error = error;
+        res.locals.errors = [error._message];
 
         return res.render('user/register', { userData });
     }
