@@ -1,6 +1,7 @@
 const express = require('express');
 const exhbs = require('express-handlebars');
 
+const connectToDB = require('./config/db');
 const { port } = require('./config/env');
 const router = require('./routes');
 
@@ -14,5 +15,11 @@ app.engine('hbs', exhbs.engine({ extname: 'hbs' }));
 app.set('view engine', 'hbs');
 
 app.use(router);
+
+connectToDB()
+    .then(() => {
+        console.log('Connected to DB!');
+    })
+    .catch((error) => error.message = 'Something went wrong. Please try again.');
 
 app.listen(port, () => console.log(`Server is listening on port ${port}...`));
