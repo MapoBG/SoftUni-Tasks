@@ -1,6 +1,12 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { saltRounds } = require('../config/env');
 
 const User = require('../models/User');
 
-exports.create = userData => User.create(userData);
+exports.create = async (userData) => {
+    userData.password = await bcrypt.hash(userData.password, saltRounds);
+
+    const newUser = await User.create(userData);
+
+    return newUser;
+}
