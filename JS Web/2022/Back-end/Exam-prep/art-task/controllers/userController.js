@@ -1,23 +1,23 @@
 const userRouter = require('express').Router();
 
 const { sessionName } = require('../config/env');
-const { isAuth } = require('../middleware/userMiddleware');
+const { isAuth, isGuest } = require('../middleware/userMiddleware');
 const { createUser } = require('../services/userServices');
 const { registrationValidator, loginValidator } = require('../services/userValidators');
 const { createToken, resetValues } = require('../services/utils');
 
-userRouter.get("/register", (req, res) => res.render('user/register'));
+userRouter.get("/register", isGuest, (req, res) => res.render('user/register'));
 
-userRouter.post("/register", async (req, res) => {
+userRouter.post("/register", isGuest, async (req, res) => {
     const userData = req.body;
     const result = registrationValidator(userData);
 
-    if (!result.isValid) {
-        res.locals.errors = result.msgs;
-        resetValues(result);
+    // if (!result.isValid) {
+    //     res.locals.errors = result.msgs;
+    //     resetValues(result);
 
-        return res.render('user/register', { userData });
-    }
+    //     return res.render('user/register', { userData });
+    // }
 
     try {
         const newUser = await createUser(userData);
@@ -32,9 +32,9 @@ userRouter.post("/register", async (req, res) => {
     }
 });
 
-userRouter.get("/login", (req, res) => res.render('user/login'));
+userRouter.get("/login", isGuest, (req, res) => res.render('user/login'));
 
-userRouter.post("/login", async (req, res) => {
+userRouter.post("/login", isGuest, async (req, res) => {
     const userData = req.body;
 
     try {

@@ -6,6 +6,7 @@ const connectToDB = require('./config/db');
 const { port } = require('./config/env');
 const { auth } = require('./middleware/userMiddleware');
 const router = require('./routes');
+const { errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 
@@ -16,9 +17,10 @@ app.engine('hbs', exhbs.engine({ extname: 'hbs' }));
 app.set('view engine', 'hbs');
 
 app.use(cookieParser());
-app.use(auth);
 
+app.use(auth);
 app.use(router);
+app.use(errorHandler);
 
 connectToDB()
     .then(() => {

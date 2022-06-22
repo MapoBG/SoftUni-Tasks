@@ -12,7 +12,9 @@ exports.auth = (req, res, next) => {
             req.user = decodedToken;
             res.locals.user = decodedToken;
         } catch (error) {
-            return res.redirect("user/404");
+            res.clearCookie(sessionName);
+
+            return res.redirect('/user/login');
         }
     }
 
@@ -25,4 +27,12 @@ exports.isAuth = (req, res, next) => {              //route guard
     }
 
     next();
-}
+};
+
+exports.isGuest = (req, res, next) => {              //route guard
+    if (req.user) {
+        return res.redirect("/");
+    }
+
+    next();
+};
