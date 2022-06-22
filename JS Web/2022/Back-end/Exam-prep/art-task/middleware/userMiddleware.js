@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const { secret, sessionName } = require('../config/env');
 
 exports.auth = (req, res, next) => {
-    console.log(req.cookies);
     const token = req.cookies[sessionName];
 
     if (token) {
