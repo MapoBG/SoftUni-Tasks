@@ -1,9 +1,12 @@
-exports.registrationValidator = (userData) => {
-    const result = {
-        isValid: true,
-        msgs: []
-    };
+const bcrypt = require('bcrypt');
+const { getUser } = require('./userServices');
 
+const result = {
+    isValid: true,
+    msgs: []
+};
+
+exports.registrationValidator = (userData) => {
     if (userData.username.length < 4) {
         result.isValid = false;
         result.msgs.push('Username should be at least 4 characters long!');
@@ -25,4 +28,23 @@ exports.registrationValidator = (userData) => {
     }
 
     return result;
+};
+
+exports.loginValidator = async (userData) => {
+    try {
+        const user = await getUser(userData.username);
+        const isValid = await bcrypt.compare(userData.password, user.password);
+
+        if (!isValid) {
+            result.isValid = false;
+            result.msgs = ['Incorrect name or password!'];
+        }
+
+        return { result, user };
+    } catch (error) {
+        result.isValid = false;
+        result.msgs = ['Incorrect name or password!'];
+
+        return { result };
+    }
 };
