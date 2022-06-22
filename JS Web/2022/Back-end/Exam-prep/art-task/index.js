@@ -12,11 +12,11 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
-app.use(cookieParser());
-app.use(auth);
-
 app.engine('hbs', exhbs.engine({ extname: 'hbs' }));
 app.set('view engine', 'hbs');
+
+app.use(cookieParser());
+app.use(auth);
 
 app.use(router);
 

@@ -5,9 +5,7 @@ const { createUser } = require('../services/userServices');
 const { registrationValidator, loginValidator } = require('../services/userValidators');
 const { createToken, resetValues } = require('../services/utils');
 
-userRouter.get("/register", (req, res) => {
-    res.render('user/register');
-});
+userRouter.get("/register", (req, res) => res.render('user/register'));
 
 userRouter.post("/register", async (req, res) => {
     const userData = req.body;
@@ -34,9 +32,7 @@ userRouter.post("/register", async (req, res) => {
     }
 });
 
-userRouter.get("/login", (req, res) => {
-    res.render('user/login');
-});
+userRouter.get("/login", (req, res) => res.render('user/login'));
 
 userRouter.post("/login", async (req, res) => {
     const userData = req.body;
