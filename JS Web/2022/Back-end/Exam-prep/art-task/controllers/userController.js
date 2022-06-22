@@ -1,6 +1,7 @@
 const userRouter = require('express').Router();
 
 const { sessionName } = require('../config/env');
+const { isAuth } = require('../middleware/userMiddleware');
 const { createUser } = require('../services/userServices');
 const { registrationValidator, loginValidator } = require('../services/userValidators');
 const { createToken, resetValues } = require('../services/utils');
@@ -23,7 +24,6 @@ userRouter.post("/register", async (req, res) => {
         const token = await createToken(newUser);
 
         res.cookie(sessionName, token, { httpOnly: true })
-
         res.redirect('/');
     } catch (error) {
         res.locals.errors = [error.message];
@@ -50,7 +50,6 @@ userRouter.post("/login", async (req, res) => {
         const token = await createToken(user);
 
         res.cookie(sessionName, token, { httpOnly: true });
-
         res.redirect('/');
     } catch (error) {
         res.locals.errors = [error.message];
@@ -59,9 +58,8 @@ userRouter.post("/login", async (req, res) => {
     }
 });
 
-userRouter.get('/logout', async (req, res) => {
+userRouter.get('/logout', isAuth, async (req, res) => {
     res.clearCookie(sessionName);
-
     res.redirect('/');
 });
 
