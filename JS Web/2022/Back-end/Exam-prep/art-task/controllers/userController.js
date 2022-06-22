@@ -26,7 +26,7 @@ userRouter.post("/register", async (req, res) => {
 
         res.cookie(sessionName, token, { httpOnly: true })
 
-        res.render('home');
+        res.redirect('/');
     } catch (error) {
         res.locals.errors = [error.message];
 
@@ -53,9 +53,9 @@ userRouter.post("/login", async (req, res) => {
 
         const token = await createToken(user);
 
-        res.cookie(sessionName, token, { httpOnly: true })
+        res.cookie(sessionName, token, { httpOnly: true });
 
-        res.render('home');
+        res.redirect('/');
     } catch (error) {
         res.locals.errors = [error.message];
 
