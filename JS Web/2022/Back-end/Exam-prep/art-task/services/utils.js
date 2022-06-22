@@ -15,6 +15,12 @@ exports.hashPassword = (password) => {
     return hashedPassword;
 };
 
+exports.comparePasswords = async (password, hashedPassword) => {
+    const isValid = await bcrypt.compare(password, hashedPassword);
+
+    return isValid;
+}
+
 exports.resetValues = (result) => {
     result.isValid = true;
     result.msgs = [];

@@ -1,5 +1,5 @@
-const bcrypt = require('bcrypt');
 const { getUser } = require('./userServices');
+const { comparePasswords } = require('./utils');
 
 const result = {
     isValid: true,
@@ -33,7 +33,7 @@ exports.registrationValidator = (userData) => {
 exports.loginValidator = async (userData) => {
     try {
         const user = await getUser(userData.username);
-        const isValid = await bcrypt.compare(userData.password, user.password);
+        const isValid = await comparePasswords(userData.password, user.password);
 
         if (!isValid) {
             result.isValid = false;
