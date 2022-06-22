@@ -1,9 +1,9 @@
 const userRouter = require('express').Router();
 
 const { sessionName } = require('../config/env');
-const { create } = require('../services/userServices');
-const { registrationValidator } = require('../services/userValidators');
-const { createToken } = require('../services/utils');
+const { createUser } = require('../services/userServices');
+const { registrationValidator, loginValidator } = require('../services/userValidators');
+const { createToken, resetValues } = require('../services/utils');
 
 userRouter.get("/register", (req, res) => {
     res.render('user/register');
@@ -15,27 +15,52 @@ userRouter.post("/register", async (req, res) => {
 
     if (!result.isValid) {
         res.locals.errors = result.msgs;
+        resetValues(result);
 
         return res.render('user/register', { userData });
     }
 
     try {
-        const newUser = await create(userData);
-
-        const token = createToken(newUser);
+        const newUser = await createUser(userData);
+        const token = await createToken(newUser);
 
         res.cookie(sessionName, token, { httpOnly: true })
 
         res.render('home');
     } catch (error) {
-        res.locals.errors = [error._message];
+        res.locals.errors = [error.message];
 
-        return res.render('user/register', { userData });
+        res.render('user/register', { userData });
     }
 });
 
 userRouter.get("/login", (req, res) => {
     res.render('user/login');
+});
+
+userRouter.post("/login", async (req, res) => {
+    const userData = req.body;
+
+    try {
+        const { result, user } = await loginValidator(userData);
+
+        if (!result.isValid) {
+            res.locals.errors = result.msgs;
+            resetValues(result);
+
+            return res.render('user/login', { userData });
+        }
+
+        const token = await createToken(user);
+
+        res.cookie(sessionName, token, { httpOnly: true })
+
+        res.render('home');
+    } catch (error) {
+        res.locals.errors = [error.message];
+
+        res.render('user/login', { userData });
+    }
 });
 
 module.exports = userRouter;
