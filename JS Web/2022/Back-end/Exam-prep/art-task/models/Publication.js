@@ -24,4 +24,6 @@ const publicationSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User'
     }
-})
+});
+
+module.exports = Publication = mongoose.model('Publication', publicationSchema);
