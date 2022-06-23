@@ -3,15 +3,18 @@ const mongoose = require('mongoose');
 const publicationSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        minLength: [6, 'Title should be at least 6 characters long']
     },
     paintingTechnique: {
         type: String,
-        required: true
+        required: true,
+        maxLength: [15, 'Painting technique should be max 15 characters long']
     },
     artPicture: {
         type: String,
-        required: true
+        required: true,
+        match: /^https?:\/\//
     },
     certificate: {
         type: String,

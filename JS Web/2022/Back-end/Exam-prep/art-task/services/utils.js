@@ -9,11 +9,11 @@ exports.createToken = async (newUser) => {
     return token;
 };
 
-exports.hashPassword = (password) => {
-    const hashedPassword = bcrypt.hash(password, saltRounds);
+// exports.hashPassword = (password) => {
+//     const hashedPassword = bcrypt.hash(password, saltRounds);
 
-    return hashedPassword;
-};
+//     return hashedPassword;
+// };
 
 exports.comparePasswords = async (password, hashedPassword) => {
     const isValid = await bcrypt.compare(password, hashedPassword);
