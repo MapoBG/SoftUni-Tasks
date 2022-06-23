@@ -10,7 +10,7 @@ userRouter.get("/register", isGuest, (req, res) => res.render('user/register'));
 
 userRouter.post("/register", isGuest, async (req, res) => {
     const userData = req.body;
-    const result = registrationValidator(userData);
+    // const result = registrationValidator(userData);
 
     // if (!result.isValid) {
     //     res.locals.errors = result.msgs;
@@ -18,6 +18,12 @@ userRouter.post("/register", isGuest, async (req, res) => {
 
     //     return res.render('user/register', { userData });
     // }
+
+    if (userData.password !== userData.repassword) {
+        res.locals.errors = ['Passwords should match'];
+
+        return res.render('user/register', { userData });
+    }
 
     try {
         const newUser = await createUser(userData);
