@@ -14,16 +14,20 @@ const publicationSchema = new mongoose.Schema({
         required: true
     },
     certificate: {
-        type: String,       //default values???
+        type: String,
+        required: true,
+        enum: ['Yes', 'No']       //default values
     },
     author: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
     },
-    sharedBy: {
-        type: mongoose.Types.ObjectId,
-        ref: 'User'
-    }
+    sharedBy: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 });
 
 module.exports = Publication = mongoose.model('Publication', publicationSchema);
