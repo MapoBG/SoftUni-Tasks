@@ -35,24 +35,11 @@ publicationsRouter.get('/details/:publicationId', async (req, res) => {
 
     try {
         const publication = await getOne(publicationId).lean();
-        publication.isAuthor = publication.author.username === req.user?.username;
 
-        publication.isShared = publication.sharedBy == req.user._id;        //TODO - problem with the shared array.....
+        publication.isAuthor = publication.author.username === req.user?.username;
+        publication.isShared = publication.sharedBy.find(x => x._id == req.user?._id);        
 
         res.render('-publications-/details', publication);
-    } catch (error) {
-        res.locals.errors = [error.message];
-        res.render('user/404');
-    }
-});
-
-publicationsRouter.get('/share/:publicationId', isAuth, async (req, res) => {
-    const publicationId = req.params.publicationId;
-
-    try {
-        await sharePublication(publicationId, req.user._id);
-
-        res.redirect(`/publications/details/${publicationId}`);
     } catch (error) {
         res.locals.errors = [error.message];
         res.render('user/404');
