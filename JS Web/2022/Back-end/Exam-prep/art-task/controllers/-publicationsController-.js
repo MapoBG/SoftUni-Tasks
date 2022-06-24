@@ -1,12 +1,12 @@
-const publicationRouter = require('express').Router();
+const publicationsRouter = require('express').Router();
 
 const { isAuth } = require('../middlewares/userMiddleware');
-const { createPublication, getAll, getOne, sharePublication } = require('../services/-publicationServices-');
+const { createPublication, getAll, getOne, sharePublication } = require('../services/-publicationsServices-');
 
 
-publicationRouter.get('/create', isAuth, (req, res) => res.render('-publications-/create'));
+publicationsRouter.get('/create', isAuth, (req, res) => res.render('-publications-/create'));
 
-publicationRouter.post('/create', async (req, res) => {
+publicationsRouter.post('/create', async (req, res) => {
     const publicationData = { ...req.body, author: req.user._id };
 
     try {
@@ -19,7 +19,7 @@ publicationRouter.post('/create', async (req, res) => {
     }
 });
 
-publicationRouter.get('/gallery', async (req, res) => {
+publicationsRouter.get('/gallery', async (req, res) => {
     try {
         const publications = await getAll().lean();
 
@@ -30,13 +30,13 @@ publicationRouter.get('/gallery', async (req, res) => {
     }
 });
 
-publicationRouter.get('/details/:publicationId', async (req, res) => {
+publicationsRouter.get('/details/:publicationId', async (req, res) => {
     const publicationId = req.params.publicationId;
 
     try {
         const publication = await getOne(publicationId).lean();
         publication.isAuthor = publication.author.username === req.user?.username;
-        console.log(publication.sharedBy);
+
         publication.isShared = publication.sharedBy == req.user._id;        //TODO - problem with the shared array.....
 
         res.render('-publications-/details', publication);
@@ -46,7 +46,7 @@ publicationRouter.get('/details/:publicationId', async (req, res) => {
     }
 });
 
-publicationRouter.get('/share/:publicationId', async (req, res) => {
+publicationsRouter.get('/share/:publicationId', async (req, res) => {
     const publicationId = req.params.publicationId;
 
     try {
@@ -59,4 +59,4 @@ publicationRouter.get('/share/:publicationId', async (req, res) => {
     }
 });
 
-module.exports = publicationRouter;
+module.exports = publicationsRouter;
