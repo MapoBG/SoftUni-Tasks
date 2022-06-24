@@ -2,11 +2,16 @@ const publicationInteractionsRouter = require('express').Router();
 
 const { isAuth } = require('../middlewares/userMiddleware');
 const { sharePublication, deletePublication, getOne, updatePublication } = require('../services/-publicationsServices-');
+const { isCorrectUser, shareCorrectUser } = require('../services/userValidators');
 
 publicationInteractionsRouter.get('/share/:publicationId', isAuth, async (req, res) => {
     const publicationId = req.params.publicationId;
 
     try {
+        const publication = await getOne(req.params.publicationId);
+
+        shareCorrectUser(req.user._id, publication.author);
+
         await sharePublication(publicationId, req.user._id);
 
         res.redirect(`/publications/details/${publicationId}`);
@@ -18,6 +23,10 @@ publicationInteractionsRouter.get('/share/:publicationId', isAuth, async (req, r
 
 publicationInteractionsRouter.get('/delete/:publicationId', isAuth, async (req, res) => {
     try {
+        const publication = await getOne(req.params.publicationId);
+
+        isCorrectUser(req.user._id, publication.author);
+
         await deletePublication(req.params.publicationId);
 
         res.redirect('/publications/gallery');
@@ -31,6 +40,8 @@ publicationInteractionsRouter.get('/edit/:publicationId', isAuth, async (req, re
     try {
         const publication = await getOne(req.params.publicationId);
 
+        isCorrectUser(req.user._id, publication.author);
+
         res.render('-publications-/edit', publication);
     } catch (error) {
         res.locals.errors = [error.message];
@@ -43,6 +54,10 @@ publicationInteractionsRouter.post('/edit/:publicationId', isAuth, async (req, r
     const publicationId = req.params.publicationId;
 
     try {
+        const publication = await getOne(req.params.publicationId);
+
+        isCorrectUser(req.user._id, publication.author);
+
         await updatePublication(publicationId, publicationData);
 
         res.redirect(`/publications/details/${publicationId}`);

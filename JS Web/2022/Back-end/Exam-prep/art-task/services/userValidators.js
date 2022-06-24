@@ -48,3 +48,15 @@ exports.loginValidator = async (userData) => {
         return { result };
     }
 };
+
+exports.isCorrectUser = (currentUser, user) => {
+    if (currentUser != user) {               //check if current user == author of publication
+        throw { message: 'Invalid user' };
+    }
+}
+
+exports.shareCorrectUser = (currentUser, user) => {
+    if (currentUser == user) {               //check if current user != author of publication
+        throw { message: 'Invalid user' };
+    }
+}
