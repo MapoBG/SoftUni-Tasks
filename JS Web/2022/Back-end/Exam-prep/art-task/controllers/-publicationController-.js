@@ -35,7 +35,8 @@ publicationRouter.get('/details/:publicationId', async (req, res) => {
 
     try {
         const publication = await getOne(publicationId).lean();
-
+        publication.isAuthor = publication.author.username === req.user.username;
+        
         res.render('-publications-/details', publication);
     } catch (error) {
         res.locals.errors = [error.message];
