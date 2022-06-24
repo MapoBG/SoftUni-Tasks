@@ -21,7 +21,7 @@ cubeRouter.post("/create", (req, res) => {
 
 cubeRouter.get("/details/:cubeId", async (req, res) => {
     const cube = await dataService.getOneDetailed(req.params.cubeId).lean();
-    cube.isOwner = isOwner(cube.creator, req.user?._id);
+    cube.isOwner = cube.creator == req.user?._id;
 
     res.render("details", cube);
 });
