@@ -1,7 +1,7 @@
 const publicationRouter = require('express').Router();
 
 const { isAuth } = require('../middlewares/userMiddleware');
-const { createPublication, getAll, getOne } = require('../services/-publicationServices-');
+const { createPublication, getAll, getOne, sharePublication } = require('../services/-publicationServices-');
 
 
 publicationRouter.get('/create', isAuth, (req, res) => res.render('-publications-/create'));
@@ -35,9 +35,24 @@ publicationRouter.get('/details/:publicationId', async (req, res) => {
 
     try {
         const publication = await getOne(publicationId).lean();
-        publication.isAuthor = publication.author.username === req.user.username;
-        
+        publication.isAuthor = publication.author.username === req.user?.username;
+        console.log(publication.sharedBy);
+        publication.isShared = publication.sharedBy == req.user._id;        //TODO - problem with the shared array.....
+
         res.render('-publications-/details', publication);
+    } catch (error) {
+        res.locals.errors = [error.message];
+        res.render('user/404');
+    }
+});
+
+publicationRouter.get('/share/:publicationId', async (req, res) => {
+    const publicationId = req.params.publicationId;
+
+    try {
+        await sharePublication(publicationId, req.user._id);
+
+        res.redirect(`/publications/details/${publicationId}`);
     } catch (error) {
         res.locals.errors = [error.message];
         res.render('user/404');

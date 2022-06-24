@@ -5,3 +5,5 @@ exports.createPublication = async (publicationData) => Publication.create(public
 exports.getAll = () => Publication.find();
 
 exports.getOne = (publicationId) => Publication.findById(publicationId).populate('author');
+
+exports.sharePublication = (publicationId, userId) => Publication.findByIdAndUpdate(publicationId, { $push: { sharedBy: userId } });
