@@ -1,7 +1,5 @@
 const Publication = require('../models/Publication');
 
-exports.createPublication = async (publicationData) => {
-    const newPublication = await Publication.create(publicationData);
+exports.createPublication = async (publicationData) => Publication.create(publicationData);
 
-    return newPublication;
-};
+exports.getAll = () => Publication.find();
