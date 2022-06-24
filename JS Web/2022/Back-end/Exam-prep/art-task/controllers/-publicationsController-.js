@@ -1,7 +1,7 @@
 const publicationsRouter = require('express').Router();
 
 const { isAuth } = require('../middlewares/userMiddleware');
-const { createPublication, getAll, getOne, sharePublication } = require('../services/-publicationsServices-');
+const { createPublication, getAll, getOneDetailed } = require('../services/-publicationsServices-');
 
 
 publicationsRouter.get('/create', isAuth, (req, res) => res.render('-publications-/create'));
@@ -34,10 +34,10 @@ publicationsRouter.get('/details/:publicationId', async (req, res) => {
     const publicationId = req.params.publicationId;
 
     try {
-        const publication = await getOne(publicationId).lean();
+        const publication = await getOneDetailed(publicationId).lean();
 
         publication.isAuthor = publication.author.username === req.user?.username;
-        publication.isShared = publication.sharedBy.find(x => x._id == req.user?._id);        
+        publication.isShared = publication.sharedBy.find(x => x._id == req.user?._id);
 
         res.render('-publications-/details', publication);
     } catch (error) {
