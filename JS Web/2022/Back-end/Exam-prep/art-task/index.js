@@ -4,9 +4,9 @@ const exhbs = require('express-handlebars');
 
 const connectToDB = require('./config/db');
 const { port } = require('./config/env');
-const { auth } = require('./middleware/userMiddleware');
 const router = require('./routes');
-const { errorHandler } = require('./middleware/errorMiddleware');
+const { auth } = require('./middlewares/userMiddleware');
+const { errorHandler } = require('./middlewares/errorMiddleware');
 
 const app = express();
 

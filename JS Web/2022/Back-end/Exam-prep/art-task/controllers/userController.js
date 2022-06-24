@@ -1,7 +1,7 @@
 const userRouter = require('express').Router();
 
 const { sessionName } = require('../config/env');
-const { isAuth, isGuest } = require('../middleware/userMiddleware');
+const { isAuth, isGuest } = require('../middlewares/userMiddleware');
 const { createUser } = require('../services/userServices');
 const { registrationValidator, loginValidator } = require('../services/userValidators');
 const { createToken, resetValues } = require('../services/utils');

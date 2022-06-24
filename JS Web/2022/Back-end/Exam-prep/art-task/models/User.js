@@ -8,7 +8,7 @@ const userShema = new mongoose.Schema({
         type: String,
         required: [true, 'Username is required and should be at least 4 characters long'],
         minLength: [4, 'Username should be at least 4 characters long'],
-        unique: [true, 'Username is already in use']
+        // unique: [true, 'Username is already in use']
     },
     password: {
         type: String,
@@ -20,10 +20,12 @@ const userShema = new mongoose.Schema({
         required: [true, 'Address is required and should be maximum 20 characters long'],
         maxLength: [20, 'Address should be no more than 20 characters long']
     },
-    myPublications: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Publication'
-    }
+    myPublications: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'Publication'
+        }
+    ]
 });
 
 userShema.pre('save', function (next) {           // use this to hash pwrd in Model before saving it in the DB 
