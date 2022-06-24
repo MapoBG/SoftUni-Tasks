@@ -1,6 +1,6 @@
 const homeRouter = require('./controllers/homeController');
 const userRouter = require('./controllers/userController');
-const publicationRouter = require('./controllers/publicationController');
+const publicationRouter = require('./controllers/-publicationController-');
 
 const router = require('express').Router();
 

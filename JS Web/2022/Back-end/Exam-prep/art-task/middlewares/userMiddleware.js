@@ -23,7 +23,7 @@ exports.auth = (req, res, next) => {
 
 exports.isAuth = (req, res, next) => {              //route guard
     if (!req.user) {
-        return res.redirect("user/login");
+        return res.redirect("/user/login");
     }
 
     next();
