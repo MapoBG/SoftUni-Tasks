@@ -19,7 +19,7 @@ const publicationSchema = new mongoose.Schema({
     certificate: {
         type: String,
         required: [true, 'Certificate is required'],
-        enum: {                      //default values
+        enum: {                                     //default values
             values: ['Yes', 'No'],
             message: 'Certificate should be either "Yes" or "No"'
         }

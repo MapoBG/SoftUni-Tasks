@@ -3,7 +3,6 @@ const publicationRouter = require('express').Router();
 const { isAuth } = require('../middlewares/userMiddleware');
 const { createPublication } = require('../services/-publicationServices-');
 
-publicationRouter.use(isAuth);
 
 publicationRouter.get('/create', (req, res) => res.render('-publications-/create'));
 
@@ -17,6 +16,10 @@ publicationRouter.post('/create', async (req, res) => {
 
         res.render('-publications-/create', { publicationData });
     }
+});
+
+publicationRouter.get('/gallery', (req, res) => {
+    res.render('-publications-/gallery');
 });
 
 module.exports = publicationRouter;
