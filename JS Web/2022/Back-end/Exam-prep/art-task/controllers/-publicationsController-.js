@@ -6,7 +6,7 @@ const { createPublication, getAll, getOne, sharePublication } = require('../serv
 
 publicationsRouter.get('/create', isAuth, (req, res) => res.render('-publications-/create'));
 
-publicationsRouter.post('/create', async (req, res) => {
+publicationsRouter.post('/create', isAuth, async (req, res) => {
     const publicationData = { ...req.body, author: req.user._id };
 
     try {
@@ -46,7 +46,7 @@ publicationsRouter.get('/details/:publicationId', async (req, res) => {
     }
 });
 
-publicationsRouter.get('/share/:publicationId', async (req, res) => {
+publicationsRouter.get('/share/:publicationId', isAuth, async (req, res) => {
     const publicationId = req.params.publicationId;
 
     try {
