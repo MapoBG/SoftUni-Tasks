@@ -11,7 +11,7 @@ const publicationSchema = new mongoose.Schema({
         required: true,
         maxLength: [15, 'Painting technique should be max 15 characters long']
     },
-    artPicture: {
+    picture: {
         type: String,
         required: true,
         match: /^https?:\/\//
