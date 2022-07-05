@@ -1,16 +1,17 @@
 const publicationInteractionsRouter = require('express').Router();
 
+const { preloadPublication } = require('../middlewares/publicationMiddleware');
 const { isAuth } = require('../middlewares/userMiddleware');
 const { sharePublication, deletePublication, getOne, updatePublication } = require('../services/-publicationsServices-');
 const { isCorrectUser, shareCorrectUser } = require('../services/userValidators');
 
-publicationInteractionsRouter.get('/share/:publicationId', isAuth, async (req, res) => {
+publicationInteractionsRouter.use(isAuth);
+
+publicationInteractionsRouter.get('/share/:publicationId', preloadPublication, async (req, res) => {
     const publicationId = req.params.publicationId;
 
     try {
-        const publication = await getOne(req.params.publicationId);
-
-        shareCorrectUser(req.user._id, publication.author);
+        shareCorrectUser(req.user._id, req.publication.author);
 
         await sharePublication(publicationId, req.user._id);
 
@@ -21,11 +22,9 @@ publicationInteractionsRouter.get('/share/:publicationId', isAuth, async (req, r
     }
 });
 
-publicationInteractionsRouter.get('/delete/:publicationId', isAuth, async (req, res) => {
+publicationInteractionsRouter.get('/delete/:publicationId', preloadPublication, async (req, res) => {
     try {
-        const publication = await getOne(req.params.publicationId);
-
-        isCorrectUser(req.user._id, publication.author);
+        isCorrectUser(req.user._id, req.publication.author);
 
         await deletePublication(req.params.publicationId);
 
@@ -36,27 +35,23 @@ publicationInteractionsRouter.get('/delete/:publicationId', isAuth, async (req, 
     }
 });
 
-publicationInteractionsRouter.get('/edit/:publicationId', isAuth, async (req, res) => {
+publicationInteractionsRouter.get('/edit/:publicationId', preloadPublication, async (req, res) => {
     try {
-        const publication = await getOne(req.params.publicationId);
+        isCorrectUser(req.user._id, req.publication.author);
 
-        isCorrectUser(req.user._id, publication.author);
-
-        res.render('-publications-/edit', publication);
+        res.render('-publications-/edit', req.publication);
     } catch (error) {
         res.locals.errors = [error.message];
         res.render('user/404');
     }
 });
 
-publicationInteractionsRouter.post('/edit/:publicationId', isAuth, async (req, res) => {
+publicationInteractionsRouter.post('/edit/:publicationId', preloadPublication, async (req, res) => {
     const publicationData = req.body;
     const publicationId = req.params.publicationId;
 
     try {
-        const publication = await getOne(req.params.publicationId);
-
-        isCorrectUser(req.user._id, publication.author);
+        isCorrectUser(req.user._id, req.publication.author);
 
         await updatePublication(publicationId, publicationData);
 
