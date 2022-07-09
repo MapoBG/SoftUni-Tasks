@@ -1,7 +1,9 @@
-export const openUserWindowHandler = (setFunction) => {
-    setFunction(oldState => true);
-};
+export const getFormData = (e) => {
+    e.preventDefault();
 
-export const closeUserWindowHandler = (setFunction) => {
-    setFunction(oldState => false);
+    const formData = new FormData(e.target);
+    const { firstName, lastName, email, phoneNumber, imageUrl, ...address } = Object.fromEntries(formData);
+    const userData = { firstName, lastName, email, phoneNumber, imageUrl, address };
+
+    return userData;
 };

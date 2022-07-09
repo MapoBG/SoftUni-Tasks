@@ -1,4 +1,4 @@
-export const AddEditUser = ({ onClose }) => {
+export const AddEditUser = ({ onSave, onClose }) => {
     return (
         <div className="overlay">
             <div className="backdrop"></div>
@@ -15,7 +15,7 @@ export const AddEditUser = ({ onClose }) => {
                             </svg>
                         </button>
                     </header>
-                    <form>
+                    <form onSubmit={onSave}>
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="firstName">First name</label>

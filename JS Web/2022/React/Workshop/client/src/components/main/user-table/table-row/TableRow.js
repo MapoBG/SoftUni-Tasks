@@ -1,6 +1,9 @@
 export const TableRow = ({ user }) => {
-    const img = user.imageUrl || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+    const img = user.imageUrl || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
+    const date = new Date(user.createdAt);
+    const createdAt = date.toDateString().slice(4);
+    
     return (
         <tr>
             <td>
@@ -10,8 +13,8 @@ export const TableRow = ({ user }) => {
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
             <td>{user.email}</td>
-            <td>{user.phone}</td>
-            <td>{user.dateCreated}</td>
+            <td>{user.phoneNumber}</td>
+            <td>{createdAt}</td>
 
             <td className="actions">
                 <button className="btn edit-btn" title="Edit">

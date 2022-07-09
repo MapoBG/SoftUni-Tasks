@@ -14,7 +14,8 @@ export const Main = () => {
         getAll()
             .then((result) => {
                 setUsers(result.users);
-            });
+            })
+            .catch((err) => err);
     }, []);
 
     return (

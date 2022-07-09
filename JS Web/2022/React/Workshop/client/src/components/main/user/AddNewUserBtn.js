@@ -1,17 +1,16 @@
 //TODO...
 import { useState } from "react";
 
-import { closeUserWindowHandler, openUserWindowHandler } from "../../../services/utils";
 import { AddEditUser } from "./AddEditUser";
-
+import { createUser, closeUserWindowHandler, openUserWindowHandler } from "../../../services/userServices";
 
 export const AddNewUserBtn = () => {
-    const [createUser, setCreateUser] = useState(false);
+    const [user, setCreateUser] = useState(false);
 
     return (
         <>
             <button className="btn-add btn" onClick={() => openUserWindowHandler(setCreateUser)}>Add new user</button>
-            {createUser && <AddEditUser onClose={() => closeUserWindowHandler(setCreateUser)} />}
+            {user && <AddEditUser onSave={(e) => createUser(e, setCreateUser)} onClose={() => closeUserWindowHandler(setCreateUser)} />}
         </>
     );
 };
