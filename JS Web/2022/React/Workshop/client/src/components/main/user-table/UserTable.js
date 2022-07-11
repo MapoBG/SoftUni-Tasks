@@ -1,12 +1,32 @@
+import { useState } from "react";
+
+import { closeUserWindowHandler, editUser, getById } from "../../../services/userServices";
+import { AddEditUser } from "../user/AddEditUser";
+import { UserDetails } from "../user/UserDetails";
 import { Overlaps } from "./overlaps/Overlaps";
 import { TableRow } from "./table-row/TableRow";
 
 export const UserTable = ({ users }) => {
+    const [userEdit, setEditUser] = useState(false);
+    const [userDetails, setUserDetails] = useState(false);
+
+    const detailsClickHandler = (userId) => {
+        getById(userId)
+            .then(res => setUserDetails(oldState => res))
+    };
+
+    const editClickHandler = (userId) => {
+        getById(userId)
+            .then(res => setEditUser(oldState => res))
+    }
+
     return (
         <div className="table-wrapper">
             {/* <!-- Overlap components  --> */}
-
             {<Overlaps users={users} /> && users.length}
+
+            {userDetails && <UserDetails user={userDetails} onClose={() => closeUserWindowHandler(setUserDetails)} />}
+            {userEdit && <AddEditUser user={userEdit} onSave={(e) => editUser(e, setEditUser, userEdit._id)} onClose={() => closeUserWindowHandler(setEditUser)} />}
 
             <table className="table">
                 <thead>
@@ -64,7 +84,7 @@ export const UserTable = ({ users }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(u => <TableRow key={u._id} user={u} />)}
+                    {users.map(u => <TableRow key={u._id} user={u} onDetailsClick={detailsClickHandler} onEditClick={editClickHandler} />)}
                 </tbody>
             </table>
         </div>

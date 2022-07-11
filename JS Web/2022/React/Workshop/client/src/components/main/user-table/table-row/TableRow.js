@@ -1,15 +1,8 @@
-import {  useState } from "react";
-
-import { closeUserWindowHandler, editUser, openUserWindowHandler } from "../../../../services/userServices";
-import { AddEditUser } from "../../user/AddEditUser";
-
-export const TableRow = ({ user }) => {
+export const TableRow = ({ user, onDetailsClick, onEditClick }) => {
     const img = user.imageUrl || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
     const date = new Date(user.createdAt);
     const createdAt = date.toDateString().slice(4);
-
-    const [userEdit, setEditUser] = useState(false);
 
     return (
         <tr>
@@ -23,10 +16,8 @@ export const TableRow = ({ user }) => {
             <td>{user.phoneNumber}</td>
             <td>{createdAt}</td>
 
-            {userEdit && <AddEditUser user={user} onSave={(e) => editUser(e, setEditUser, user._id)} onClose={() => closeUserWindowHandler(setEditUser)} />}
-
             <td className="actions">
-                <button className="btn edit-btn" title="Edit" onClick={() => openUserWindowHandler(setEditUser)}>
+                <button className="btn edit-btn" title="Edit" onClick={() => onEditClick(user._id)}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square"
                         className="svg-inline--fa fa-pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 532 512">
@@ -44,7 +35,7 @@ export const TableRow = ({ user }) => {
                         </path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info">
+                <button className="btn info-btn" title="Info" onClick={() => onDetailsClick(user._id)}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info" className="svg-inline--fa fa-info"
                         role="img" xmlns="http://www.w3.org/2000/svg" viewBox="-150 0 512 612">
                         <path fill="currentColor"
