@@ -2,11 +2,10 @@ import { Overlaps } from "./overlaps/Overlaps";
 import { TableRow } from "./table-row/TableRow";
 
 export const UserTable = ({ users }) => {
-
     return (
         <div className="table-wrapper">
             {/* <!-- Overlap components  --> */}
-            
+
             {<Overlaps users={users} /> && users.length}
 
             <table className="table">
