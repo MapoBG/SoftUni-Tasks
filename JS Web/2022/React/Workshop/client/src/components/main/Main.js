@@ -18,12 +18,16 @@ export const Main = () => {
             .catch((err) => err);
     }, []);
 
+    const addedUserHandler = (newUser) => {
+        setUsers(oldUsers => [...oldUsers, newUser]);
+    };
+
     return (
         <main className="main">
             <section className="card users-container">
                 <SearchBar />
                 <UserTable users={users} />
-                <AddNewUserBtn />
+                <AddNewUserBtn addNewUser={addedUserHandler} />
                 <Pagination />
             </section>
         </main >
