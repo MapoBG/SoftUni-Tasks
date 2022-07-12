@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getById } from "../../../services/userServices";
+import { getUserById } from "../../../services/userServices";
 
 export const AddEditUser = ({ onSave, onClose, user }) => {
 
@@ -7,7 +7,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
 
     useEffect(() => {
         if (user) {
-            getById(user._id)
+            getUserById(user._id)
                 .then((user) => setUser(user))
                 .catch(err => err)
         }

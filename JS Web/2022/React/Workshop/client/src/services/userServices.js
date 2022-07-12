@@ -9,7 +9,7 @@ export const getAll = async () => {
     return result;
 };
 
-export const getById = async (id) => {
+export const getUserById = async (id) => {
     const res = await fetch(baseUrl + `/${id}`);
     const result = await res.json();
 

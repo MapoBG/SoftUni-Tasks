@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { closeUserWindowHandler, editUser, getById } from "../../../services/userServices";
+import { closeUserWindowHandler, editUser, getUserById } from "../../../services/userServices";
 import { AddEditUser } from "../user/AddEditUser";
 import { UserDetails } from "../user/UserDetails";
 import { Overlaps } from "./overlaps/Overlaps";
@@ -11,12 +11,12 @@ export const UserTable = ({ users }) => {
     const [userDetails, setUserDetails] = useState(false);
 
     const detailsClickHandler = (userId) => {
-        getById(userId)
+        getUserById(userId)
             .then(res => setUserDetails(oldState => res))
     };
 
     const editClickHandler = (userId) => {
-        getById(userId)
+        getUserById(userId)
             .then(res => setEditUser(oldState => res))
     }
 
