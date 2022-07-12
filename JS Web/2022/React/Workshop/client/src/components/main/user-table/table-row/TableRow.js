@@ -1,4 +1,4 @@
-export const TableRow = ({ user, onDetailsClick, onEditClick }) => {
+export const TableRow = ({ user, onActionClick }) => {
     const img = user.imageUrl || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
     const date = new Date(user.createdAt);
@@ -17,7 +17,7 @@ export const TableRow = ({ user, onDetailsClick, onEditClick }) => {
             <td>{createdAt}</td>
 
             <td className="actions">
-                <button className="btn edit-btn" title="Edit" onClick={() => onEditClick(user._id)}>
+                <button className="btn edit-btn" title="Edit" onClick={() => onActionClick(user._id, "Edit")}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square"
                         className="svg-inline--fa fa-pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 532 512">
@@ -35,7 +35,7 @@ export const TableRow = ({ user, onDetailsClick, onEditClick }) => {
                         </path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info" onClick={() => onDetailsClick(user._id)}>
+                <button className="btn info-btn" title="Info" onClick={() => onActionClick(user._id, "Details")}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info" className="svg-inline--fa fa-info"
                         role="img" xmlns="http://www.w3.org/2000/svg" viewBox="-150 0 512 612">
                         <path fill="currentColor"

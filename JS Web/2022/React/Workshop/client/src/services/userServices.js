@@ -16,7 +16,7 @@ export const getUserById = async (id) => {
     return result.user;
 }
 
-export const createUser = async (event, setFunction) => {
+export const createUser = async (event, setFunction, actionType) => {
     const newUser = getFormData(event);
     const res = await fetch(baseUrl, {
         method: 'POST',
@@ -28,13 +28,14 @@ export const createUser = async (event, setFunction) => {
 
     const result = await res.json();
 
-    closeUserWindowHandler(setFunction);
+    closeUserWindowHandler(setFunction, actionType);
 
     return result;
 };
 
-export const editUser = async (event, setFunction, userId) => {
+export const editUser = async (event, userId, setFunction, actionType) => {
     const newUser = getFormData(event);
+
     const res = await fetch(baseUrl + `/${userId}`, {
         method: 'PUT',
         headers: {
@@ -45,15 +46,15 @@ export const editUser = async (event, setFunction, userId) => {
 
     const result = await res.json();
 
-    closeUserWindowHandler(setFunction);
+    closeUserWindowHandler(setFunction, actionType);
 
     return result.user;
 };
 
-export const openUserWindowHandler = (setFunction) => {
-    setFunction(true);
+export const openUserWindowHandler = (setFunction, actionType) => {
+    setFunction(oldState => ({ ...oldState, [actionType]: true }));
 };
 
-export const closeUserWindowHandler = (setFunction) => {
-    setFunction(false);
+export const closeUserWindowHandler = (setFunction, actionType) => {
+    setFunction(oldState => ({ ...oldState, [actionType]: false }));
 };
