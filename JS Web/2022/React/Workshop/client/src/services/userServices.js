@@ -32,7 +32,7 @@ export const createUser = async (event, setFunction, actionType, addNewUser) => 
 
     addNewUser(result.user);
 
-    return result;
+    return result.user;
 };
 
 export const editUser = async (event, userId, setFunction, actionType) => {

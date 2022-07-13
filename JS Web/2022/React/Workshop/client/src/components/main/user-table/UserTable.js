@@ -8,21 +8,21 @@ import { Overlaps } from "./overlaps/Overlaps";
 import { TableRow } from "./table-row/TableRow";
 
 export const UserTable = ({ users }) => {
-    const [userAction, setUserAction] = useState({ 'Edit': false, 'Details': false, 'Delete': false });
+    const [userActions, setUserAction] = useState({ 'Edit': false, 'Details': false, 'Delete': false });
 
     const actionClickHandler = (userId, actionType) => {
         getUserById(userId)
-            .then(res => setUserAction(oldState => ({ ...oldState, [actionType]: res })))
+            .then(user => setUserAction(oldUserActions => ({ ...oldUserActions, [actionType]: user })))
     }
 
     return (
         <div className="table-wrapper">
             {/* <!-- Overlap components  --> */}
-            {!users.length && <Overlaps users={users} /> }
+            {(!users || users.length < 1) && <Overlaps users={users} />}
 
-            {userAction.Details && <UserDetails user={userAction.Details} onClose={() => closeUserWindowHandler(setUserAction, 'Details')} />}
-            {userAction.Delete && <UserDelete user={userAction.Delete} onDelete={() => deleteUser(userAction.Delete._id, setUserAction, 'Delete')} onClose={() => closeUserWindowHandler(setUserAction, 'Delete')} />}
-            {userAction.Edit && <AddEditUser user={userAction.Edit} onSave={(e) => editUser(e, userAction.Edit._id, setUserAction, 'Edit')} onClose={() => closeUserWindowHandler(setUserAction, 'Edit')} />}
+            {userActions.Details && <UserDetails user={userActions.Details} onClose={() => closeUserWindowHandler(setUserAction, 'Details')} />}
+            {userActions.Delete && <UserDelete user={userActions.Delete} onDelete={() => deleteUser(userActions.Delete._id, setUserAction, 'Delete')} onClose={() => closeUserWindowHandler(setUserAction, 'Delete')} />}
+            {userActions.Edit && <AddEditUser user={userActions.Edit} onSave={(e) => editUser(e, userActions.Edit._id, setUserAction, 'Edit')} onClose={() => closeUserWindowHandler(setUserAction, 'Edit')} />}
 
             <table className="table">
                 <thead>
@@ -80,7 +80,7 @@ export const UserTable = ({ users }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(u => <TableRow key={u._id} user={u} onActionClick={actionClickHandler} />)}
+                    {users?.map(u => <TableRow key={u._id} user={u} onActionClick={actionClickHandler} />)}
                 </tbody>
             </table>
         </div>

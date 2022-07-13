@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { AddNewUserBtn } from "./user/AddNewUserBtn";
 import { Pagination } from "./pagination/Pagination";
@@ -8,18 +8,18 @@ import { getAll } from "../../services/userServices";
 
 
 export const Main = () => {
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState(null);
 
     useEffect(() => {
         getAll()
             .then((result) => {
-                setUsers(result.users);
+                setUsers(oldUsers => result.users);
             })
             .catch((err) => err);
     }, []);
 
     const addedUserHandler = (newUser) => {
-        setUsers(oldUsers => [...oldUsers, newUser]);
+        setUsers(oldUsers => ([...oldUsers, newUser]));
     };
 
     return (

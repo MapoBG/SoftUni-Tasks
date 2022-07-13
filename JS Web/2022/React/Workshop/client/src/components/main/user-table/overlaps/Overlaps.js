@@ -1,15 +1,17 @@
-import { NoUsers } from '../../errors/NoUsers';
+import { NoUsers } from './errors/NoUsers';
+import { LoadingSpinner } from './LoadingSpinner';
 
 export const Overlaps = ({ users }) => {
+
     return (
         <div className="loading-shade">
             {/* <!-- No users added yet  --> */}
-            {users.length ? null : <NoUsers />}
+            {!users
+                ? <LoadingSpinner />
+                : <NoUsers />
+            }
 
             {/* <!-- Loading spinner  --> */}
-            <div className="spinner"></div>
-
-
 
             {/* <!-- No content overlap component  -->
 
