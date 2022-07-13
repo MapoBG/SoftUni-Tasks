@@ -15,18 +15,42 @@ export const Main = () => {
             .then((result) => {
                 setUsers(oldUsers => result.users);
             })
-            .catch((err) => err);
+            .catch(err => err);
     }, []);
 
     const addedUserHandler = (newUser) => {
         setUsers(oldUsers => ([...oldUsers, newUser]));
     };
 
+    const updatedUserHandler = (updatedUser) => {
+        updatedUser
+            .then(newUser => {
+                setUsers(oldUsers => {
+                    const newUsers = oldUsers.map(u => u._id === newUser._id ? newUser : u)
+
+                    return newUsers;
+                });
+            })
+            .catch(err => err);
+    };
+
+    const deletedUserHandler = (deletedUser) => {
+        deletedUser
+            .then(user => {
+                setUsers(oldUsers => {
+                    const index = oldUsers.findIndex(u => u._id === user.userId);
+                    oldUsers.splice(index, 1);
+                    
+                    return oldUsers;
+                })
+            })
+    }
+
     return (
         <main className="main">
             <section className="card users-container">
                 <SearchBar />
-                <UserTable users={users} />
+                <UserTable users={users} updateUser={updatedUserHandler} deleteUserUpdate={deletedUserHandler} />
                 <AddNewUserBtn addNewUser={addedUserHandler} />
                 <Pagination />
             </section>

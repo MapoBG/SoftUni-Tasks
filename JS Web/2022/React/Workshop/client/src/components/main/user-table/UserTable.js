@@ -7,7 +7,7 @@ import { UserDetails } from "../user/UserDetails";
 import { Overlaps } from "./overlaps/Overlaps";
 import { TableRow } from "./table-row/TableRow";
 
-export const UserTable = ({ users }) => {
+export const UserTable = ({ users, updateUser, deleteUserUpdate }) => {
     const [userActions, setUserAction] = useState({ 'Edit': false, 'Details': false, 'Delete': false });
 
     const actionClickHandler = (userId, actionType) => {
@@ -21,8 +21,8 @@ export const UserTable = ({ users }) => {
             {(!users || users.length < 1) && <Overlaps users={users} />}
 
             {userActions.Details && <UserDetails user={userActions.Details} onClose={() => closeUserWindowHandler(setUserAction, 'Details')} />}
-            {userActions.Delete && <UserDelete user={userActions.Delete} onDelete={() => deleteUser(userActions.Delete._id, setUserAction, 'Delete')} onClose={() => closeUserWindowHandler(setUserAction, 'Delete')} />}
-            {userActions.Edit && <AddEditUser user={userActions.Edit} onSave={(e) => editUser(e, userActions.Edit._id, setUserAction, 'Edit')} onClose={() => closeUserWindowHandler(setUserAction, 'Edit')} />}
+            {userActions.Delete && <UserDelete user={userActions.Delete} onDelete={() => deleteUserUpdate(deleteUser(userActions.Delete._id, setUserAction, 'Delete'))} onClose={() => closeUserWindowHandler(setUserAction, 'Delete')} />}
+            {userActions.Edit && <AddEditUser user={userActions.Edit} onSave={(e) => updateUser(editUser(e, userActions.Edit._id, setUserAction, 'Edit'))} onClose={() => closeUserWindowHandler(setUserAction, 'Edit')} />}
 
             <table className="table">
                 <thead>
