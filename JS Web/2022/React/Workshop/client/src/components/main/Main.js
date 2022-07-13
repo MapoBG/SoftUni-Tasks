@@ -18,8 +18,10 @@ export const Main = () => {
             .catch(err => setUsers(err));
     }, []);
 
-    const addedUserHandler = (newUser) => {
-        setUsers(oldUsers => ([...oldUsers, newUser]));
+    const addedUserHandler = (createdUser) => {
+        createdUser
+            .then(user => setUsers(oldUsers => [...oldUsers, user]))
+            .catch(err => setUsers(err));
     };
 
     const updatedUserHandler = (updatedUser) => {

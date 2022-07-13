@@ -16,7 +16,7 @@ export const getUserById = async (id) => {
     return result.user;
 }
 
-export const createUser = async (event, setFunction, actionType, addNewUser) => {
+export const createUser = async (event, setFunction, actionType) => {
     const newUser = getFormData(event);
     const res = await fetch(baseUrl, {
         method: 'POST',
@@ -29,8 +29,6 @@ export const createUser = async (event, setFunction, actionType, addNewUser) => 
     const result = await res.json();
 
     closeUserWindowHandler(setFunction, actionType);
-
-    addNewUser(result.user);
 
     return result.user;
 };
