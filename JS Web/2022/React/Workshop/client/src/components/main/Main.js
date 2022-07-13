@@ -15,7 +15,7 @@ export const Main = () => {
             .then((result) => {
                 setUsers(oldUsers => result.users);
             })
-            .catch(err => err);
+            .catch(err => setUsers(err));
     }, []);
 
     const addedUserHandler = (newUser) => {
@@ -26,12 +26,12 @@ export const Main = () => {
         updatedUser
             .then(newUser => {
                 setUsers(oldUsers => {
-                    const newUsers = oldUsers.map(u => u._id === newUser._id ? newUser : u)
+                    const newUsers = oldUsers.map(user => user._id === newUser._id ? newUser : user)
 
                     return newUsers;
                 });
             })
-            .catch(err => err);
+            .catch(err => setUsers(err));
     };
 
     const deletedUserHandler = (deletedUser) => {
@@ -44,7 +44,7 @@ export const Main = () => {
                     return oldUsers;
                 });
             })
-            .catch(err => err);
+            .catch(err => setUsers(err));
     };
 
     return (
