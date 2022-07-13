@@ -1,37 +1,27 @@
 import { useState } from "react";
 
-import { closeUserWindowHandler, editUser, getUserById } from "../../../services/userServices";
+import { closeUserWindowHandler, deleteUser, editUser, getUserById } from "../../../services/userServices";
 import { AddEditUser } from "../user/AddEditUser";
+import { UserDelete } from "../user/UserDelete";
 import { UserDetails } from "../user/UserDetails";
 import { Overlaps } from "./overlaps/Overlaps";
 import { TableRow } from "./table-row/TableRow";
 
 export const UserTable = ({ users }) => {
     const [userAction, setUserAction] = useState({ 'Edit': false, 'Details': false, 'Delete': false });
-    // const [userEdit, setEditUser] = useState(false);
-    // const [userDetails, setUserDetails] = useState(false);
 
     const actionClickHandler = (userId, actionType) => {
         getUserById(userId)
             .then(res => setUserAction(oldState => ({ ...oldState, [actionType]: res })))
     }
 
-    // const detailsClickHandler = (userId) => {
-    //     getUserById(userId)
-    //         .then(res => setUserDetails(oldState => res))
-    // };
-
-    // const editClickHandler = (userId) => {
-    //     getUserById(userId)
-    //         .then(res => setEditUser(oldState => res))
-    // }
-
     return (
         <div className="table-wrapper">
             {/* <!-- Overlap components  --> */}
-            {<Overlaps users={users} /> && users.length}
+            {!users.length && <Overlaps users={users} /> }
 
             {userAction.Details && <UserDetails user={userAction.Details} onClose={() => closeUserWindowHandler(setUserAction, 'Details')} />}
+            {userAction.Delete && <UserDelete user={userAction.Delete} onDelete={() => deleteUser(userAction.Delete._id, setUserAction, 'Delete')} onClose={() => closeUserWindowHandler(setUserAction, 'Delete')} />}
             {userAction.Edit && <AddEditUser user={userAction.Edit} onSave={(e) => editUser(e, userAction.Edit._id, setUserAction, 'Edit')} onClose={() => closeUserWindowHandler(setUserAction, 'Edit')} />}
 
             <table className="table">

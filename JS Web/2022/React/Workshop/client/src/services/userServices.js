@@ -27,10 +27,10 @@ export const createUser = async (event, setFunction, actionType, addNewUser) => 
     });
 
     const result = await res.json();
-    
-    addNewUser(result.user);
 
     closeUserWindowHandler(setFunction, actionType);
+
+    addNewUser(result.user);
 
     return result;
 };
@@ -52,6 +52,19 @@ export const editUser = async (event, userId, setFunction, actionType) => {
 
     return result.user;
 };
+
+export const deleteUser = async (userId, setFunction, actionType) => {
+
+    const res = await fetch(baseUrl + `/${userId}`, {
+        method: 'DELETE',
+    });
+
+    const result = await res.json();
+
+    closeUserWindowHandler(setFunction, actionType);
+
+    return result
+}
 
 export const openUserWindowHandler = (setFunction, actionType) => {
     setFunction(oldState => ({ ...oldState, [actionType]: true }));
