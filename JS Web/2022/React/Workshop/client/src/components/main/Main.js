@@ -40,11 +40,12 @@ export const Main = () => {
                 setUsers(oldUsers => {
                     const index = oldUsers.findIndex(u => u._id === user.userId);
                     oldUsers.splice(index, 1);
-                    
+
                     return oldUsers;
-                })
+                });
             })
-    }
+            .catch(err => err);
+    };
 
     return (
         <main className="main">
