@@ -2,14 +2,37 @@ import { useEffect, useState } from "react";
 import { getUserById } from "../../../services/userServices";
 
 export const AddEditUser = ({ onSave, onClose, user }) => {
+    const [formValues, setFormValues] = useState({
+        ///alt+shift+i to select & vwrite in all rows at once
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        imageUrl: '',
+        country: '',
+        city: '',
+        street: '',
+        streetNumber: ''
+    });
 
-    const [detailedUser, setUser] = useState({});
+    const valueChangeHandler = (e) => {
+        setFormValues(oldState => {
+            let result = { ...oldState, [e.target.name]: e.target.value };
+            return result;
+        });
+    };
 
     useEffect(() => {
         if (user) {
             getUserById(user._id)
-                .then((user) => setUser(user))
-                .catch(err => err)
+                .then((user) => setFormValues(oldValues => {
+                    const { country, city, street, streetNumber } = user.address;
+                    const { firstName, lastName, email, phoneNumber, imageUrl } = user;
+                    const formatedUser = { country, city, street, streetNumber, firstName, lastName, email, phoneNumber, imageUrl };
+
+                    return formatedUser;
+                }))
+                .catch(err => err);
         }
 
     }, [user]);
@@ -36,7 +59,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                                 <label htmlFor="firstName">First name</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-user"></i></span>
-                                    <input id="firstName" name="firstName" type="text" defaultValue={detailedUser.firstName} />
+                                    <input id="firstName" name="firstName" type="text" value={formValues.firstName} onChange={valueChangeHandler} />
                                 </div>
                                 <p className="form-error">
                                     First name should be at least 3 characters long!
@@ -46,7 +69,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                                 <label htmlFor="lastName">Last name</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-user"></i></span>
-                                    <input id="lastName" name="lastName" type="text" defaultValue={detailedUser.lastName} />
+                                    <input id="lastName" name="lastName" type="text" value={formValues.lastName} onChange={valueChangeHandler} />
                                 </div>
                                 <p className="form-error">
                                     Last name should be at least 3 characters long!
@@ -59,7 +82,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                                 <label htmlFor="email">Email</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-envelope"></i></span>
-                                    <input id="email" name="email" type="text" defaultValue={detailedUser.email} />
+                                    <input id="email" name="email" type="text" value={formValues.email} onChange={valueChangeHandler} />
                                 </div>
                                 <p className="form-error">Email is not valid!</p>
                             </div>
@@ -67,7 +90,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                                 <label htmlFor="phoneNumber">Phone number</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-phone"></i></span>
-                                    <input id="phoneNumber" name="phoneNumber" type="text" defaultValue={detailedUser.phoneNumber} />
+                                    <input id="phoneNumber" name="phoneNumber" type="text" value={formValues.phoneNumber} onChange={valueChangeHandler} />
                                 </div>
                                 <p className="form-error">Phone number is not valid!</p>
                             </div>
@@ -77,7 +100,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                             <label htmlFor="imageUrl">Image Url</label>
                             <div className="input-wrapper">
                                 <span><i className="fa-solid fa-image"></i></span>
-                                <input id="imageUrl" name="imageUrl" type="text" defaultValue={detailedUser.imageUrl} />
+                                <input id="imageUrl" name="imageUrl" type="text" value={formValues.imageUrl} onChange={valueChangeHandler} />
                             </div>
                             <p className="form-error">ImageUrl is not valid!</p>
                         </div>
@@ -87,7 +110,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                                 <label htmlFor="country">Country</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-map"></i></span>
-                                    <input id="country" name="country" type="text" defaultValue={detailedUser.address?.country} />
+                                    <input id="country" name="country" type="text" value={formValues.country} onChange={valueChangeHandler} />
                                 </div>
                                 <p className="form-error">
                                     Country should be at least 2 characters long!
@@ -97,7 +120,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                                 <label htmlFor="city">City</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-city"></i></span>
-                                    <input id="city" name="city" type="text" defaultValue={detailedUser.address?.city} />
+                                    <input id="city" name="city" type="text" value={formValues.city} onChange={valueChangeHandler} />
                                 </div>
                                 <p className="form-error">
                                     City should be at least 3 characters long!
@@ -110,7 +133,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                                 <label htmlFor="street">Street</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-map"></i></span>
-                                    <input id="street" name="street" type="text" defaultValue={detailedUser.address?.street} />
+                                    <input id="street" name="street" type="text" value={formValues.street} onChange={valueChangeHandler} />
                                 </div>
                                 <p className="form-error">
                                     Street should be at least 3 characters long!
@@ -120,7 +143,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                                 <label htmlFor="streetNumber">Street number</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-house-chimney"></i></span>
-                                    <input id="streetNumber" name="streetNumber" type="text" defaultValue={detailedUser.address?.streetNumber} />
+                                    <input id="streetNumber" name="streetNumber" type="text" value={formValues.streetNumber} onChange={valueChangeHandler} />
                                 </div>
                                 <p className="form-error">
                                     Street number should be a positive number!
