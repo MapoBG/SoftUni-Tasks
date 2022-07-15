@@ -15,13 +15,6 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
         streetNumber: ''
     });
 
-    const valueChangeHandler = (e) => {
-        setFormValues(oldState => {
-            let result = { ...oldState, [e.target.name]: e.target.value };
-            return result;
-        });
-    };
-
     useEffect(() => {
         if (user) {
             getUserById(user._id)
@@ -34,8 +27,24 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                 }))
                 .catch(err => err);
         }
-
     }, [user]);
+
+
+    const valueChangeHandler = (e) => {
+        setFormValues(oldState => {
+            let result = { ...oldState, [e.target.name]: e.target.value };
+            return result;
+        });
+    };
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        const { firstName, lastName, email, phoneNumber, imageUrl, ...address } = formValues;
+        const userData = { firstName, lastName, email, phoneNumber, imageUrl, address };
+
+        onSave(userData);
+    }
 
     return (
         <div className="overlay">
@@ -53,7 +62,7 @@ export const AddEditUser = ({ onSave, onClose, user }) => {
                             </svg>
                         </button>
                     </header>
-                    <form onSubmit={onSave}>
+                    <form onSubmit={submitHandler}>
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="firstName">First name</label>

@@ -1,4 +1,4 @@
-import { getFormData } from "./utils";
+// import { getFormData } from "./utils";
 
 const baseUrl = 'http://localhost:3005/api/users';
 
@@ -16,8 +16,9 @@ export const getUserById = async (id) => {
     return result.user;
 }
 
-export const createUser = async (event, setFunction, actionType) => {
-    const newUser = getFormData(event);
+export const createUser = async (newUser, setFunction, actionType) => {
+    // const newUser = getFormData(event);
+
     const res = await fetch(baseUrl, {
         method: 'POST',
         headers: {
@@ -33,8 +34,8 @@ export const createUser = async (event, setFunction, actionType) => {
     return result.user;
 };
 
-export const editUser = async (event, userId, setFunction, actionType) => {
-    const newUser = getFormData(event);
+export const editUser = async (newUser, userId, setFunction, actionType) => {
+    // const newUser = getFormData(event);
 
     const res = await fetch(baseUrl + `/${userId}`, {
         method: 'PUT',
