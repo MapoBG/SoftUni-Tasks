@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export const GameItem = ({ game }) => {
+export const CatalogItem = ({ game }) => {
     return (
         <div className="allGames">
             <div className="allGames-info">

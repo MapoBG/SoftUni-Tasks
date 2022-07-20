@@ -1,4 +1,4 @@
-import { GameItem } from "./game-item/GameItem";
+import { CatalogItem } from "./catalog-item/CatalogItem";
 
 export const Catalog = ({ games }) => {
     return (
@@ -7,7 +7,7 @@ export const Catalog = ({ games }) => {
             {/* Display div: with information about every game (if any) */}
             {/* Display paragraph: If there is no games  */}
             {games.length > 0
-                ? games.map(game => <GameItem key={game._id} game={game} />)
+                ? games.map(game => <CatalogItem key={game._id} game={game} />)
                 : <h3 className="no-articles">No articles yet</h3>
             }
         </section>

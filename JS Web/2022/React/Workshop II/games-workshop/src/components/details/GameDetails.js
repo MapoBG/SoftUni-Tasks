@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 export const GameDetails = ({ games }) => {
     const { gameId } = useParams();
     const game = games.filter(g => g._id === gameId)[0]
-    console.log(game);
+
     return (
         <section id="game-details">
             <h1>Game Details</h1>
