@@ -9,6 +9,7 @@ import { Create } from './components/create/Create';
 import { Home } from './components/home/Home';
 import { Login } from './components/login/Login';
 import { Register } from './components/register/Register';
+import { GameDetails } from './components/details/GameDetails';
 
 function App() {
   const [games, setGames] = useState([]);
@@ -27,6 +28,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/create-game' element={<Create />} />
           <Route path='/games-catalog' element={<Catalog games={games} />} />
+          <Route path='/details/:gameId' element={<GameDetails games={games} />} />
         </Routes>
       </main>
     </div>

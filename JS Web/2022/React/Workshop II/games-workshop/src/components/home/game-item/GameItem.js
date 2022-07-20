@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 export const GameItem = ({ gameData }) => {
-    console.log(gameData);
     return (
         <div className="game">
             <div className="image-wrap">
