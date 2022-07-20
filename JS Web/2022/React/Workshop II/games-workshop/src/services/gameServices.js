@@ -1,8 +1,8 @@
 import { baseUrl } from "../env/constants";
 
-const baseGamesUrl = baseUrl + '/data/games';
+const gamesUrl = baseUrl + '/games';
 
 export const getAll = () => {
-    return fetch(baseGamesUrl)
+    return fetch(gamesUrl)
         .then(res => res.json())
 };
