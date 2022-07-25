@@ -1,7 +1,7 @@
 import { TwinSpin } from 'react-cssfx-loading';
 import Transition from './Transition';
 
-function Loading() {
+const Loading = () => {
   return (
     <Transition className="Loading">
       <TwinSpin
