@@ -12,10 +12,10 @@ export const Home = () => {
     useEffect(() => {
         gameServices.getAll()
             .then(result => {
-                setGames(result.results)
-                setIsLoading(false)
+                setGames(result.results);
+                setIsLoading(false);
             })
-    }, [])
+    }, []);
 
     return (
         isLoading

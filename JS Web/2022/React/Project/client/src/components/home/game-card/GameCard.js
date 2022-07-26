@@ -32,7 +32,6 @@ const platformIcons = {
 
 export const GameCard = (props) => {
     const { game, cartItems, addToCart } = props;
-    console.log(game);
     const releasedDate = new Date(game.released).toLocaleDateString();
     const genreList = game.genres.map(({ name }) => name).join(', ');
     const [isHovered, setIsHovered] = useState(false);
