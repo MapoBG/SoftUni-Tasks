@@ -36,7 +36,7 @@ export const GameCard = (props) => {
     const genreList = game.genres.map(({ name }) => name).join(', ');
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
-    const navigateToGame = () => navigate(`/games/${game.id}`);
+    const navigateToGame = () => navigate(`/game-details/${game.id}`);
 
     return (
         <div className="GameCard">

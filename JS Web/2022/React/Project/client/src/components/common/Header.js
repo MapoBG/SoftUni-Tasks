@@ -7,7 +7,7 @@ import SearchBar from '../utils/Searchbar';
 
 function Header() {
     const navigate = useNavigate();
-    const navigateToHome = () => navigate('/');
+    const navigateToHome = () => navigate('/');;
 
     return (
         <Headroom upTolerance={1}>
@@ -16,11 +16,8 @@ function Header() {
                 direction="down"
                 distance={20}
             >
-                <Button
-                    className="Logo"
-                    onClick={navigateToHome}
-                >
-                    <RiGameFill /> GameStore
+                <Button className="Logo" handleClick={navigateToHome}>
+                    <RiGameFill /> Games
                 </Button>
                 <SearchBar />
             </Transition>
