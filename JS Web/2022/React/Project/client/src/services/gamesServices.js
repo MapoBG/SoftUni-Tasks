@@ -11,7 +11,8 @@ export const getGameById = async (gameId) => {
     const result = await res.json();
 
     result.short_screenshots = await getScreenshots(gameId);
-    result.short_screenshots.push(result.background_image)
+    result.short_screenshots.unshift({ id: 10001, image: result.background_image });
+
     return result;
 };
 
