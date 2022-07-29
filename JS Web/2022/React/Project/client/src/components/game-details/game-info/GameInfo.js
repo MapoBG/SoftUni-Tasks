@@ -6,7 +6,7 @@ import Transition from '../../utils/Transition';
 import Button from '../../utils/Button';
 
 
-function Info({ game }) {
+const GameInfo = ({ game }) => {
   const {
     name,
     description_raw,
@@ -68,6 +68,6 @@ function Info({ game }) {
       </motion.div>
     </Transition>
   );
-}
+};
 
-export default Info;
+export default GameInfo;

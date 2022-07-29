@@ -5,7 +5,7 @@ import { BackgroundImage } from 'react-image-and-background-image-fade';
 // import NavBar from '../../components/NavBar';
 import { RiAddLine, RiCheckLine } from 'react-icons/ri';
 import { getGameById } from '../../services/gamesServices';
-import Info from './game-info/GameInfo';
+import GameInfo from './game-info/GameInfo';
 import Transition from '../utils/Transition';
 import Button from '../utils/Button';
 import Loading from '../utils/Loading';
@@ -45,7 +45,7 @@ function GameDetails({ cartItems=[], addToCart }) {
                             </div>
                         ))}
                     </Carousel>
-                    <Info game={game} />
+                    <GameInfo game={game} />
                     <div className="Price">
                         ${game.price}
                         {cartItems.find((item) => item.id === gameId)
