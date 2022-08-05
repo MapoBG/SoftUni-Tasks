@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { BackgroundImage } from 'react-image-and-background-image-fade';
@@ -10,18 +10,35 @@ import Transition from '../utils/Transition';
 import Button from '../utils/Button';
 import Loading from '../utils/Loading';
 import Carousel from './carousel/Carousel';
-// import getPrice from '../../utils/getPrice';
+import { addToUserLibrary, getItemsFromUserLibrary } from '../../services/userServices';
+import { AuthContext } from '../../contexts/authContext';
 
 
-function GameDetails({ cartItems=[], addToCart }) {
+const GameDetails = () => {
     const params = useParams();
     const gameId = Number(params.gameId);
+
+    const { user } = useContext(AuthContext);
     const [game, setGame] = useState(null);
+    const [libraryItems, setLibraryItems] = useState([]);
+
+    useEffect(() => {
+        if (user) {
+            getItemsFromUserLibrary(user.uid)
+                .then(data => setLibraryItems(data));
+        }
+    }, [user])
 
     useEffect(() => {
         getGameById(gameId)
             .then(result => setGame(result));
     }, [gameId]);
+
+    const addToUserLibraryAndState = () => {
+        addToUserLibrary(user?.uid, gameId)
+            .then(() => setLibraryItems(oldState => ({ ...oldState, games: [...oldState.games, gameId] })))
+            .catch(err => console.log(err))
+    }
 
     return (
         <Transition className="GameDetails" direction="left">
@@ -46,16 +63,18 @@ function GameDetails({ cartItems=[], addToCart }) {
                         ))}
                     </Carousel>
                     <GameInfo game={game} />
-                    <div className="Price">
-                        {cartItems.find((item) => item.id === gameId)
+
+                    {user && <div className="Price">
+                        {libraryItems.games.find((item) => item === gameId)
                             ? <Transition className="Added">
-                                Added <RiCheckLine />
+                                Already in Library <RiCheckLine />
                             </Transition>
-                            : <Button handleClick={() => addToCart(game)}>
+                            : <Button handleClick={addToUserLibraryAndState}>
                                 Add to Library <RiAddLine />
                             </Button>
                         }
                     </div>
+                    }
                 </Transition>
                 : <Loading />
             }

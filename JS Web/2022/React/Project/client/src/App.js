@@ -15,7 +15,6 @@ import { firebaseAuth } from './api/firebase';
 import { useEffect } from 'react';
 
 
-
 function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -23,7 +22,6 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, currentUser => {
       setUser(currentUser);
-      console.log('user: ', currentUser);
     })
   }, []);
 
