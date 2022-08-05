@@ -47,13 +47,12 @@ function GameDetails({ cartItems=[], addToCart }) {
                     </Carousel>
                     <GameInfo game={game} />
                     <div className="Price">
-                        ${game.price}
                         {cartItems.find((item) => item.id === gameId)
                             ? <Transition className="Added">
                                 Added <RiCheckLine />
                             </Transition>
                             : <Button handleClick={() => addToCart(game)}>
-                                Add to cart <RiAddLine />
+                                Add to Library <RiAddLine />
                             </Button>
                         }
                     </div>

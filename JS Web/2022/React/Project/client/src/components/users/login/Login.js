@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { loginUser } from "../../../services/userServices";
+import { AuthContext } from "../../../contexts/authContext";
 
 export const Login = () => {
     const [loginData, setLoginData] = useState({
-        formBasicEmail: '',
-        formBasicPassword: ''
+        email: '',
+        password: ''
     });
+
+    const { navigateToHome } = useContext(AuthContext);
 
     const loginDataHandler = (e) => {
         setLoginData(oldState => ({ ...oldState, [e.target.id]: e.target.value }));
@@ -16,17 +20,19 @@ export const Login = () => {
     const loginHandler = (e) => {
         e.preventDefault();
 
-        console.log(loginData);
+        loginUser(loginData)
+            .then(res => navigateToHome())
+            .catch(err => console.log(err));
     }
 
     return (
         <Form className="AuthForm" onSubmit={(e) => loginHandler(e)} >
-            <Form.Group className="mb-3" controlId="formBasicEmail" onChange={(e) => loginDataHandler(e)}>
+            <Form.Group className="mb-3" controlId="email" onChange={loginDataHandler}>
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword" onChange={(e) => loginDataHandler(e)}>
+            <Form.Group className="mb-3" controlId="password" onChange={loginDataHandler}>
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
             </Form.Group>
