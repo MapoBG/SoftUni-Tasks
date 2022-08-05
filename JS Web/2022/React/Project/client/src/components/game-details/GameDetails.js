@@ -20,7 +20,7 @@ const GameDetails = () => {
 
     const { user } = useContext(AuthContext);
     const [game, setGame] = useState(null);
-    const [libraryItems, setLibraryItems] = useState([]);
+    const [libraryItems, setLibraryItems] = useState({});
 
     useEffect(() => {
         if (user) {
@@ -35,8 +35,8 @@ const GameDetails = () => {
     }, [gameId]);
 
     const addToUserLibraryAndState = () => {
-        addToUserLibrary(user?.uid, gameId)
-            .then(() => setLibraryItems(oldState => ({ ...oldState, games: [...oldState.games, gameId] })))
+        addToUserLibrary(user.uid, gameId)
+            .then(() => setLibraryItems(oldState => ({ ...oldState, games: [gameId] })))
             .catch(err => console.log(err))
     }
 
@@ -65,7 +65,7 @@ const GameDetails = () => {
                     <GameInfo game={game} />
 
                     {user && <div className="Price">
-                        {libraryItems.games.find((item) => item === gameId)
+                        {libraryItems.games?.find((item) => item === gameId)
                             ? <Transition className="Added">
                                 Already in Library <RiCheckLine />
                             </Transition>

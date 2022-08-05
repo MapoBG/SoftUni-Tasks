@@ -27,7 +27,7 @@ function Header() {
                 <Nav className='justify-content-end' >
                     {user
                         ? <>
-                            <Nav.Link as={Link} to={`/user-profile/${user.uid}`}>Welcome, {user.email.split('@')[0]}</Nav.Link>
+                            <Nav.Link as={Link} to={`/user-profile/${user.uid}`}>{user.email.split('@')[0]}'s Game Library</Nav.Link>
                             <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
                         </>
                         : <>

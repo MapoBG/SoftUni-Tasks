@@ -35,6 +35,6 @@ export const getItemsFromUserLibrary = async (userId) => {
     if (dbDocument.exists()) {
         return dbDocument.data();
     } else {
-        return [];
+        return {};
     }
 }
