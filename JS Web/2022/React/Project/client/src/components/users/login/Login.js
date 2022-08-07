@@ -2,8 +2,8 @@ import { useState, useContext } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { loginUser } from "../../../services/userServices";
 import { AuthContext } from "../../../contexts/authContext";
+import { loginUser } from "../../../services/authServices";
 
 export const Login = () => {
     const [loginData, setLoginData] = useState({
