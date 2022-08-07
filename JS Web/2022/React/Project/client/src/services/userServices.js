@@ -1,34 +1,19 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { firebaseAuth, firebaseDB } from "../api/firebase"
+import { arrayRemove, arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { firebaseDB } from "../api/firebase"
 
-export const registerUser = async (userData) => {
-    const response = await createUserWithEmailAndPassword(firebaseAuth, userData.email, userData.password);
-    return response;
-};
-
-export const loginUser = async (userData) => {
-    const response = await signInWithEmailAndPassword(firebaseAuth, userData.email, userData.password);
-    return response;
-};
-
-export const logoutUser = async () => {
-    const response = await signOut(firebaseAuth);
-    return response;
-};
 
 export const addToUserLibrary = async (userId, gameId) => {
     try {
         const userRef = doc(firebaseDB, `users`, userId);
         setDoc(userRef, { latestGameAdded: gameId }, { merge: true });
 
-        await updateDoc(userRef, { games: arrayUnion(gameId) });
+        await updateDoc(userRef, { games: arrayUnion({ id: gameId }) });
     } catch (error) {
         console.log(error);
     }
 };
 
-export const getItemsFromUserLibrary = async (userId) => {
+export const getGamesFromUserLibrary = async (userId) => {
     const userRef = doc(firebaseDB, `users`, userId);
     const dbDocument = await getDoc(userRef);
 
@@ -37,4 +22,10 @@ export const getItemsFromUserLibrary = async (userId) => {
     } else {
         return {};
     }
-}
+};
+
+export const removeGame = async (userId, gameId) => {
+    const userRef = doc(firebaseDB, `users`, userId);
+
+    await updateDoc(userRef, { games: arrayRemove({ id: gameId }) });
+};

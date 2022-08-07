@@ -8,7 +8,7 @@ import {
     RiPlaystationFill,
     RiXboxFill,
     RiAppleFill,
-    RiDeleteBinLine,
+    RiCheckLine,
 } from 'react-icons/ri';
 import { SiIos, SiLinux, SiNintendoswitch, } from 'react-icons/si';
 import Transition from '../../utils/Transition';
@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../utils/Button';
 import { AuthContext } from '../../../contexts/authContext';
 import { useEffect } from 'react';
-import { getItemsFromUserLibrary } from '../../../services/userServices';
 
 
 const platformIcons = {
@@ -31,25 +30,25 @@ const platformIcons = {
     nintendo: <SiNintendoswitch />,
 };
 
-export const GameCard = ({ game }) => {
-    const { user } = useContext(AuthContext);
-    const releasedDate = new Date(game.released).toLocaleDateString();
-    const genreList = game.genres.map(({ name }) => name).join(', ');
+export const GameCard = ({ game, userGameList }) => {
+    let [gamesinUserList, setGamesInUserList] = useState(null);
     const [isHovered, setIsHovered] = useState(false);
+    const { user } = useContext(AuthContext);
+
     const navigate = useNavigate();
     const navigateToGame = () => navigate(`/game-details/${game.id}`);
-    let [inUserList, setInUserList] = useState(null);
+
+    const releasedDate = new Date(game.released).toLocaleDateString();
+    const genreList = game.genres.map(({ name }) => name).join(', ');
 
     useEffect(() => {
         if (user) {
             (async () => {
-                const data = await getItemsFromUserLibrary(user.uid);
-                console.log(data);
-                setInUserList(() => data.games?.some(g => g === game.id))
+                setGamesInUserList(() => userGameList.games?.some(g => g.id === game.id));
             })();
         }
-    }, [user, game.id])
-    // console.log(inUserList);
+    }, [user, game.id, userGameList])
+
     return (
         <div className="GameCard">
             <motion.div
@@ -71,15 +70,16 @@ export const GameCard = ({ game }) => {
                 whileHover={{ height: 150 }}
                 onHoverStart={() => setIsHovered(true)}
                 onHoverEnd={() => setIsHovered(false)}
-
             >
-                {(user && inUserList) && <Button handleClick={() => (game)}>
-                    Remove from Library <RiDeleteBinLine />
-                </Button>}
-
                 <Button className="Name" handleClick={navigateToGame}>
                     {game.name}
                 </Button>
+
+                {(user && gamesinUserList)
+                    && <Transition className="Added">
+                        Already in Your Library <RiCheckLine />
+                    </Transition>
+                }
                 <AnimatePresence>
                     {isHovered && (
                         <Transition className="MoreInfo">

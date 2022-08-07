@@ -2,15 +2,14 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { BackgroundImage } from 'react-image-and-background-image-fade';
-// import NavBar from '../../components/NavBar';
-import { RiAddLine, RiCheckLine } from 'react-icons/ri';
+import { RiAddLine, RiCheckLine, RiDeleteBinLine } from 'react-icons/ri';
 import { getGameById } from '../../services/gamesServices';
 import GameInfo from './game-info/GameInfo';
 import Transition from '../utils/Transition';
 import Button from '../utils/Button';
 import Loading from '../utils/Loading';
 import Carousel from './carousel/Carousel';
-import { addToUserLibrary, getItemsFromUserLibrary } from '../../services/userServices';
+import { addToUserLibrary, getGamesFromUserLibrary, removeGame } from '../../services/userServices';
 import { AuthContext } from '../../contexts/authContext';
 
 
@@ -18,34 +17,43 @@ const GameDetails = () => {
     const params = useParams();
     const gameId = Number(params.gameId);
 
-    const { user } = useContext(AuthContext);
     const [game, setGame] = useState(null);
     const [libraryItems, setLibraryItems] = useState({});
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         if (user) {
-            getItemsFromUserLibrary(user.uid)
-                .then(data => setLibraryItems(data));
+            getGamesFromUserLibrary(user.uid)
+                .then(data => setLibraryItems(data))
+                .catch(err => console.log(err));
         }
-    }, [user])
 
-    useEffect(() => {
         getGameById(gameId)
-            .then(result => setGame(result));
-    }, [gameId]);
+            .then(result => setGame(result))
+            .catch(err => console.log(err));
+
+    }, [gameId, user]);
 
     const addToUserLibraryAndState = () => {
         addToUserLibrary(user.uid, gameId)
-            .then(() => setLibraryItems(oldState => ({ ...oldState, games: [gameId] })))
+            .then(() => setLibraryItems(oldState => ({ ...oldState, games: [{ id: gameId }] })))
             .catch(err => console.log(err))
-    }
+    };
+
+    const removeFromUserLibraryAndState = () => {
+        removeGame(user.uid, gameId)
+            .then(() => setLibraryItems(oldState => {
+                const filteredGames = oldState.games.filter(g => g.id !== gameId);
+                return filteredGames;
+            }))
+            .catch(err => console.log(err));
+    };
 
     return (
         <Transition className="GameDetails" direction="left">
-            {/* <NavBar showStoreButton title={game?.name} /> */}
             {game
                 ? <Transition className="Grid">
-                    <Carousel duration={6}>
+                    <Carousel duration={5}>
                         {game.short_screenshots.map((screenshot) => (
                             <div
                                 key={`img-${screenshot.id}`}
@@ -64,22 +72,28 @@ const GameDetails = () => {
                     </Carousel>
                     <GameInfo game={game} />
 
-                    {user && <div className="Price">
-                        {libraryItems.games?.find((item) => item === gameId)
-                            ? <Transition className="Added">
-                                Already in Library <RiCheckLine />
-                            </Transition>
-                            : <Button handleClick={addToUserLibraryAndState}>
-                                Add to Library <RiAddLine />
-                            </Button>
-                        }
-                    </div>
+                    {user &&
+                        <div className="Price">
+                            {libraryItems.games?.find((game) => game.id === gameId)
+                                ? <>
+                                    <Transition className="Added">
+                                        In Library <RiCheckLine />
+                                    </Transition>
+                                    <Button handleClick={removeFromUserLibraryAndState}>
+                                        Remove from Library <RiDeleteBinLine />
+                                    </Button>
+                                </>
+                                : <Button handleClick={addToUserLibraryAndState}>
+                                    Add to Library <RiAddLine />
+                                </Button>
+                            }
+                        </div>
                     }
                 </Transition>
                 : <Loading />
             }
         </Transition>
     );
-}
+};
 
 export default GameDetails;
