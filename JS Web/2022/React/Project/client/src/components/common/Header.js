@@ -21,13 +21,13 @@ function Header() {
                 distance={20}
             >
                 <Button className="Logo" handleClick={navigateToHome}>
-                    <RiGameFill /> Games
+                    <RiGameFill /> Catalog
                 </Button>
 
                 <Nav className='justify-content-end' >
                     {user
                         ? <>
-                            <Nav.Link as={Link} to={`/user-profile/${user.uid}`}>{user.email.split('@')[0]}'s Game Library</Nav.Link>
+                            <Nav.Link as={Link} to={`/user-library/${user.uid}`}>{user.email.split('@')[0]}'s Game Library</Nav.Link>
                             <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
                         </>
                         : <>

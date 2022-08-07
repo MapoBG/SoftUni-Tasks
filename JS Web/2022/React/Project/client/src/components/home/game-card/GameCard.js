@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BackgroundImage } from 'react-image-and-background-image-fade';
 import {
@@ -8,13 +8,15 @@ import {
     RiPlaystationFill,
     RiXboxFill,
     RiAppleFill,
-    RiAddLine,
-    RiCheckLine,
+    RiDeleteBinLine,
 } from 'react-icons/ri';
 import { SiIos, SiLinux, SiNintendoswitch, } from 'react-icons/si';
 import Transition from '../../utils/Transition';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../utils/Button';
+import { AuthContext } from '../../../contexts/authContext';
+import { useEffect } from 'react';
+import { getItemsFromUserLibrary } from '../../../services/userServices';
 
 
 const platformIcons = {
@@ -29,20 +31,30 @@ const platformIcons = {
     nintendo: <SiNintendoswitch />,
 };
 
-
-export const GameCard = (props) => {
-    const { game, cartItems, addToCart } = props;
+export const GameCard = ({ game }) => {
+    const { user } = useContext(AuthContext);
     const releasedDate = new Date(game.released).toLocaleDateString();
     const genreList = game.genres.map(({ name }) => name).join(', ');
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
     const navigateToGame = () => navigate(`/game-details/${game.id}`);
+    let [inUserList, setInUserList] = useState(null);
 
+    useEffect(() => {
+        if (user) {
+            (async () => {
+                const data = await getItemsFromUserLibrary(user.uid);
+                console.log(data);
+                setInUserList(() => data.games?.some(g => g === game.id))
+            })();
+        }
+    }, [user, game.id])
+    // console.log(inUserList);
     return (
         <div className="GameCard">
             <motion.div
                 className="Image"
-                whileHover={{ height: 180 }}
+                whileHover={{ height: 550 }}
                 onClick={navigateToGame}
             >
                 <BackgroundImage
@@ -56,19 +68,15 @@ export const GameCard = (props) => {
             </motion.div>
             <motion.div
                 className="Info"
-                whileHover={{ height: 180 }}
+                whileHover={{ height: 150 }}
                 onHoverStart={() => setIsHovered(true)}
                 onHoverEnd={() => setIsHovered(false)}
+
             >
-                <div className="Price">
-                    {cartItems.find((item) => item.id === game.id)
-                        ? <Transition className="Added">Added <RiCheckLine /></Transition>
-                        : <Button handleClick={() => addToCart(game)}>
-                            Add to cart <RiAddLine />
-                        </Button>
-                    }
-                    ${game.price}
-                </div>
+                {(user && inUserList) && <Button handleClick={() => (game)}>
+                    Remove from Library <RiDeleteBinLine />
+                </Button>}
+
                 <Button className="Name" handleClick={navigateToGame}>
                     {game.name}
                 </Button>
@@ -90,4 +98,4 @@ export const GameCard = (props) => {
             </motion.div>
         </div>
     );
-}
+};

@@ -23,7 +23,7 @@ export const Home = () => {
             : allGames.length === 0
                 ? <h2 style={{ color: 'white', margin: 'auto', }}>Server is down &#128542; <h5>Please try again later</h5> </h2>
                 : <Transition className="grid-container">
-                    {allGames.map(g => <div className="Column" key={g.id}><GameCard game={g} cartItems={[]} /></div>)}
+                    {allGames.map(g => <div className="Column" key={g.id}><GameCard game={g} /></div>)}
                 </Transition>
     );
 };

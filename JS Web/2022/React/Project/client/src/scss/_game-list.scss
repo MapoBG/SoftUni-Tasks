@@ -47,9 +47,10 @@ $grid-gap: clamp(15px, 2.5vw, 25px);
   color: colors.$text;
   border-radius: 15px;
   overflow: hidden;
+  max-height: 670px;
 
   .Image {
-    height: 140px;
+    height: 400px;
     cursor: pointer;
   }
 
