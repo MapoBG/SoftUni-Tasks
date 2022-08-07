@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { AuthContext } from "../../../contexts/authContext"
-import { logoutUser } from "../../../services/userServices"
+import { logoutUser } from "../../../services/authServices";
 
 
 export const Logout = () => {
