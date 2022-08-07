@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { AuthContext } from "../../../contexts/authContext";
 import { registerUser } from "../../../services/authServices";
-import { checkUserEmail, checkUserPassword, checkUserPasswords, finalValidation } from "../../../services/errorServices";
+import { checkUserEmail, checkUserPasswords, finalValidation } from "../../../services/errorServices";
 
 export const Register = () => {
     const { navigateToHome } = useContext(AuthContext);
