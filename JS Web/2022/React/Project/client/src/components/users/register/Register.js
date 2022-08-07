@@ -25,7 +25,6 @@ export const Register = () => {
     };
 
     const errorHandler = (e) => {
-        console.log(errors);
         switch (e.target.id) {
             case 'email':
                 setErrors(oldState => ({ ...oldState, email: checkUserEmail(registerData) }));
