@@ -20,7 +20,7 @@ export const Login = () => {
         e.preventDefault();
 
         loginUser(loginData)
-            .then(res => navigateTo('/'))
+            .then(({ user }) => navigateTo(`/user-library/${user.uid}`))
             .catch(err => console.log(err));
     };
 
