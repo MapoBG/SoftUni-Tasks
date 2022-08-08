@@ -2,12 +2,14 @@ import { useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
+
 import { registerUser } from "../../../services/authServices";
 import { checkUserEmail, checkUserPasswords, finalValidation } from "../../../services/errorServices";
-import { useCustomNavigate } from "../../../custom-hooks/navigateHooks";
+
 
 export const Register = () => {
-    const navigateTo = useCustomNavigate();
+    const navigateTo = useNavigate();
     const [registerData, setRegisterData] = useState({
         email: '',
         password: '',

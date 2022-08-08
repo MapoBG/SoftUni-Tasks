@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { RiArrowRightLine } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
+
 import { UserGameCard } from "./user-game-card/UserGameCard";
 import Transition from '../utils/Transition';
 import Button from '../utils/Button';
@@ -21,7 +23,8 @@ const cycleArray = (games) => {
 export const UserLibrary = () => {
     const [userGames, setUserGames] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const { user, navigateToHome } = useAuthContext();
+    const { user } = useAuthContext();
+    const navigateTo = useNavigate();
 
     useEffect(() => {
         if (user) {
@@ -66,7 +69,7 @@ export const UserLibrary = () => {
                         ))}
                         <Button
                             className="Store"
-                            handleClick={navigateToHome}
+                            handleClick={() => navigateTo('/')}
                         >
                             Go to Catalog <RiArrowRightLine />
                         </Button>
@@ -75,7 +78,7 @@ export const UserLibrary = () => {
                         <p>There are still no games in your library... &#128542;</p>
                         <Button
                             className="Store"
-                            handleClick={navigateToHome}
+                            handleClick={() => navigateTo('/')}
                         >
                             You can check our Catalog <RiArrowRightLine />
                         </Button>

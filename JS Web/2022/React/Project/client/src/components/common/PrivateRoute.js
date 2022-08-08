@@ -7,7 +7,7 @@ export const PrivateRoute = () => {
     const { user } = useAuthContext();
 
     if (!user) {
-        return <Navigate to={'/login'} />
+        return <Navigate to={'/login'} replace />
     }
     return <Outlet />;
 };

@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-import { useCustomNavigate } from '../../custom-hooks/navigateHooks';
 import Transition from '../utils/Transition';
 
 
 const duration = 5;
 export const NotFound = () => {
-  const navigateTo = useCustomNavigate();
+  const navigateTo = useNavigate();
 
   useEffect(() => {
     const timeout = setTimeout(() => {

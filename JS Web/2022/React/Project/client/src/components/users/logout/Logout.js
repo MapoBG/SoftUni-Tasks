@@ -1,9 +1,10 @@
-import { useCustomNavigate } from "../../../custom-hooks/navigateHooks";
+import { useNavigate } from "react-router-dom";
+
 import { logoutUser } from "../../../services/authServices";
 
 
 export const Logout = () => {
-    const navigateTo = useCustomNavigate();
+    const navigateTo = useNavigate();
 
     logoutUser()
         .then(res => {
