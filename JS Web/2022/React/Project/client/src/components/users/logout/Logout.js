@@ -1,14 +1,13 @@
-import { useContext } from "react"
-import { AuthContext } from "../../../contexts/authContext"
+import { useCustomNavigate } from "../../../custom-hooks/navigateHooks";
 import { logoutUser } from "../../../services/authServices";
 
 
 export const Logout = () => {
-    const { navigateToHome } = useContext(AuthContext);
+    const navigateTo = useCustomNavigate();
 
     logoutUser()
         .then(res => {
-            navigateToHome();
+            navigateTo('/');
         })
         .catch(err => console.log(err));
 }

@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Headroom from 'react-headroom';
@@ -6,12 +5,13 @@ import { RiGameFill } from 'react-icons/ri';
 import Transition from '../utils/Transition';
 import Button from '../utils/Button';
 import { Nav } from 'react-bootstrap';
-import { AuthContext } from '../../contexts/authContext';
+import { useAuthContext } from '../../custom-hooks/userHooks';
+
 
 function Header() {
     const navigate = useNavigate();
     const navigateToHome = () => navigate('/');
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthContext();
 
     return (
         <Headroom upTolerance={1}>

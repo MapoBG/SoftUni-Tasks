@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 
 import { RiArrowRightLine } from 'react-icons/ri';
 import { UserGameCard } from "./user-game-card/UserGameCard";
@@ -7,7 +7,7 @@ import Button from '../utils/Button';
 import Loading from '../utils/Loading';
 import { getGamesFromUserLibrary } from '../../services/userServices';
 import { getGameById } from '../../services/gamesServices';
-import { AuthContext } from '../../contexts/authContext';
+import { useAuthContext } from '../../custom-hooks/userHooks';
 
 
 const cardDuration = 5;
@@ -21,7 +21,7 @@ const cycleArray = (games) => {
 export const UserLibrary = () => {
     const [userGames, setUserGames] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const { user, navigateToHome } = useContext(AuthContext);
+    const { user, navigateToHome } = useAuthContext();
 
     useEffect(() => {
         if (user) {

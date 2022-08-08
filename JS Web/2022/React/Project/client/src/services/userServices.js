@@ -4,7 +4,7 @@ import { firebaseDB } from "../api/firebase"
 
 export const addToUserLibrary = async (userId, gameId) => {
     try {
-        const userRef = doc(firebaseDB, `users`, userId);
+        const userRef = doc(firebaseDB, `usersGames`, userId);
         setDoc(userRef, { latestGameAdded: gameId }, { merge: true });
 
         await updateDoc(userRef, { games: arrayUnion({ id: gameId }) });
@@ -14,7 +14,7 @@ export const addToUserLibrary = async (userId, gameId) => {
 };
 
 export const getGamesFromUserLibrary = async (userId) => {
-    const userRef = doc(firebaseDB, `users`, userId);
+    const userRef = doc(firebaseDB, `usersGames`, userId);
     const dbDocument = await getDoc(userRef);
 
     if (dbDocument.exists()) {
@@ -25,7 +25,7 @@ export const getGamesFromUserLibrary = async (userId) => {
 };
 
 export const removeGame = async (userId, gameId) => {
-    const userRef = doc(firebaseDB, `users`, userId);
+    const userRef = doc(firebaseDB, `usersGames`, userId);
 
     await updateDoc(userRef, { games: arrayRemove({ id: gameId }) });
 };

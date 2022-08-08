@@ -21,12 +21,11 @@ function SearchBar() {
     //     if (!inputValue) return;
     //     const searchParams = createSearchParams({ search: inputValue });
     //     navigate({
-    //         pathname: '/games',
+    //         pathname: '/',
     //         search: searchParams.toString(),
     //     });
     // };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => setInputValue(searchParams.get('search') || ''), []);
 
     return (

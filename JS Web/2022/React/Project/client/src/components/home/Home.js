@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
-import { AuthContext } from "../../contexts/authContext";
+import { useAuthContext } from "../../custom-hooks/userHooks";
 import * as gameServices from '../../services/gamesServices';
 import { getGamesFromUserLibrary } from "../../services/userServices";
 import Loading from "../utils/Loading";
@@ -10,7 +10,7 @@ import { GameCard } from "./game-card/GameCard";
 export const Home = () => {
     const [allGames, setAllGames] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthContext();
     const [userGameList, setUserGameList] = useState({});
 
     useEffect(() => {

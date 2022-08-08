@@ -1,29 +1,28 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { AuthContext } from "../../../contexts/authContext";
 import { loginUser } from "../../../services/authServices";
+import { useCustomNavigate } from "../../../custom-hooks/navigateHooks";
 
 export const Login = () => {
+    const navigateTo = useCustomNavigate();
     const [loginData, setLoginData] = useState({
         email: '',
         password: ''
     });
 
-    const { navigateToHome } = useContext(AuthContext);
-
     const loginDataHandler = (e) => {
         setLoginData(oldState => ({ ...oldState, [e.target.id]: e.target.value }));
-    }
+    };
 
     const loginHandler = (e) => {
         e.preventDefault();
 
         loginUser(loginData)
-            .then(res => navigateToHome())
+            .then(res => navigateTo('/'))
             .catch(err => console.log(err));
-    }
+    };
 
     return (
         <Form className="AuthForm" onSubmit={(e) => loginHandler(e)} >

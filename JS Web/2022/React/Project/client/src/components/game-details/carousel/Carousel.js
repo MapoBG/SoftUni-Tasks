@@ -1,5 +1,5 @@
 import { Children, useRef, useState } from 'react';
-import { motion, PanInfo, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 
 import {
   RiArrowLeftSLine,

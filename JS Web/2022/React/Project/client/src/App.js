@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-// import './App.css';
+import { Routes, Route } from 'react-router-dom';
+
 import './scss/App.scss';
 import { onAuthStateChanged } from 'firebase/auth';
 import { firebaseAuth } from './api/firebase';
@@ -17,7 +17,6 @@ import UserLibrary from './components/user-library/UserLibrary';
 
 function App() {
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, currentUser => {
@@ -25,12 +24,8 @@ function App() {
     })
   }, []);
 
-  const navigateToHome = () => {
-    navigate('/');
-  };
-
   return (
-    <AuthContext.Provider value={{ user, navigateToHome }}>
+    <AuthContext.Provider value={{ user }}>
       <div className="App">
         <Header />
 

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BackgroundImage } from 'react-image-and-background-image-fade';
 import {
@@ -14,8 +14,7 @@ import { SiIos, SiLinux, SiNintendoswitch, } from 'react-icons/si';
 import Transition from '../../utils/Transition';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../utils/Button';
-import { AuthContext } from '../../../contexts/authContext';
-import { useEffect } from 'react';
+import { useAuthContext } from '../../../custom-hooks/userHooks';
 
 
 const platformIcons = {
@@ -33,7 +32,7 @@ const platformIcons = {
 export const GameCard = ({ game, userGameList }) => {
     let [gamesinUserList, setGamesInUserList] = useState(null);
     const [isHovered, setIsHovered] = useState(false);
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthContext();
 
     const navigate = useNavigate();
     const navigateToGame = () => navigate(`/game-details/${game.id}`);
