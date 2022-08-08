@@ -13,6 +13,7 @@ import { Register } from './components/users/register/Register';
 import GameDetails from './components/game-details/GameDetails';
 import { Logout } from './components/users/logout/Logout';
 import UserLibrary from './components/user-library/UserLibrary';
+import { NotFound } from './components/common/NotFound';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path='/logout' element={<Logout />} />
           <Route path='/game-details/:gameId' element={<GameDetails />} />
           <Route path='/user-library/:userId' element={<UserLibrary />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
 
         <Footer />
