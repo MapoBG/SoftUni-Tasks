@@ -10,8 +10,8 @@ import { GameCard } from "./game-card/GameCard";
 export const Home = () => {
     const [allGames, setAllGames] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const { user } = useAuthContext();
     const [userGameList, setUserGameList] = useState({});
+    const { user } = useAuthContext();
 
     useEffect(() => {
         if (user) {

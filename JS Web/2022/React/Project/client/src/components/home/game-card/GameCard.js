@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { BackgroundImage } from 'react-image-and-background-image-fade';
 import {
@@ -11,8 +12,9 @@ import {
     RiCheckLine,
 } from 'react-icons/ri';
 import { SiIos, SiLinux, SiNintendoswitch, } from 'react-icons/si';
-import Transition from '../../utils/Transition';
 import { useNavigate } from 'react-router-dom';
+
+import Transition from '../../utils/Transition';
 import Button from '../../utils/Button';
 import { useAuthContext } from '../../../custom-hooks/userHooks';
 
@@ -52,7 +54,7 @@ export const GameCard = ({ game, userGameList }) => {
         <div className="GameCard">
             <motion.div
                 className="Image"
-                whileHover={{ height: 550 }}
+                whileHover={{ height: 275 }}
                 onClick={navigateToGame}
             >
                 <BackgroundImage
