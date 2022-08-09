@@ -32,7 +32,9 @@ function App() {
         <Header />
 
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home />}>
+            <Route path='page=:pageNumber' element={<Home />} />
+          </Route>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route element={<PrivateRoute />}>

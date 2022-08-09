@@ -10,7 +10,6 @@ import { useAuthContext } from '../../custom-hooks/userHooks';
 
 function Header() {
     const navigate = useNavigate();
-    const navigateToHome = () => navigate('/');
     const { user } = useAuthContext();
 
     return (
@@ -20,7 +19,7 @@ function Header() {
                 direction="down"
                 distance={20}
             >
-                <Button className="Logo" handleClick={navigateToHome}>
+                <Button className="Logo" handleClick={() => navigate('/')}>
                     <RiGameFill /> Catalog
                 </Button>
 

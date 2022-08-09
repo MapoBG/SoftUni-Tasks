@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 import { useAuthContext } from "../../custom-hooks/userHooks";
 import * as gameServices from '../../services/gamesServices';
@@ -8,10 +10,14 @@ import Transition from "../utils/Transition";
 import { GameCard } from "./game-card/GameCard";
 
 export const Home = () => {
-    const [allGames, setAllGames] = useState([]);
+    const [gamesObj, setGamesObj] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [userGameList, setUserGameList] = useState({});
     const { user } = useAuthContext();
+    const params = useParams();
+    const currentPage = Number(params.pageNumber) || 1;
+    // const [currentPage, setCurrentPage] = useState(pageNum);
+    const navigateTo = useNavigate();
 
     useEffect(() => {
         if (user) {
@@ -23,21 +29,40 @@ export const Home = () => {
     }, [user]);
 
     useEffect(() => {
-        gameServices.getAll()
+        gameServices.getNewPage(currentPage)
             .then(result => {
-                setAllGames(result.results);
+                setGamesObj(result);
                 setIsLoading(false);
             })
-            .catch(() => setIsLoading(false));
-    }, []);
+            .catch(() => {
+                setGamesObj(null);
+                setIsLoading(false);
+            });
+    }, [currentPage]);
+
+    const pageCount = Math.ceil(gamesObj?.count / 20);
+
+    const changePage = ({ selected }) => {
+        setIsLoading(true);
+        navigateTo(`/page=${selected + 1}`);
+    };
 
     return (
         isLoading
             ? <Loading />
-            : allGames.length === 0
-                ? <h1 className="NotFound">Server is down &#128542; <h3>Please try again later</h3> </h1>
-                : <Transition className="grid-container">
-                    {allGames.map(g => <div className="Column" key={g.id}><GameCard game={g} userGameList={userGameList} /></div>)}
-                </Transition>
+            : gamesObj === null
+                ? <h1 className="NotFound">Server is down &#128542; <p>Please try again later</p> </h1>
+                : <>
+                    <Transition className="grid-container">
+                        {gamesObj?.results?.map(g => <div className="Column" key={g.id}><GameCard game={g} userGameList={userGameList} /></div>)}
+                    </Transition>
+                    <ReactPaginate
+                        previousLabel='Previous Page'
+                        nextLabel='Next Page'
+                        pageCount={pageCount}
+                        onPageChange={changePage}
+                        forcePage={currentPage - 1}
+                    />
+                </>
     );
 };
