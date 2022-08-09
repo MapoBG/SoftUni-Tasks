@@ -32,7 +32,7 @@ const platformIcons = {
 };
 
 export const GameCard = ({ game, userGameList }) => {
-    let [gamesinUserList, setGamesInUserList] = useState(null);
+    let [gamesinUserList, setGamesInUserList] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const { user } = useAuthContext();
 
@@ -44,9 +44,7 @@ export const GameCard = ({ game, userGameList }) => {
 
     useEffect(() => {
         if (user) {
-            (async () => {
-                setGamesInUserList(() => userGameList.games?.some(g => g.id === game.id));
-            })();
+            setGamesInUserList(() => userGameList?.some(g => g.id === game.id));
         }
     }, [user, game.id, userGameList])
 
@@ -76,10 +74,9 @@ export const GameCard = ({ game, userGameList }) => {
                     {game.name}
                 </Button>
 
-                {(user && gamesinUserList)
-                    && <Transition className="Added">
-                        Already in Your Library <RiCheckLine />
-                    </Transition>
+                {gamesinUserList && <Transition className="Added">
+                    Already in your Library <RiCheckLine />
+                </Transition>
                 }
                 <AnimatePresence>
                     {isHovered && (

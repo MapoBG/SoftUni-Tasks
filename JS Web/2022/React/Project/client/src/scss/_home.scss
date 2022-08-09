@@ -92,14 +92,7 @@ $min-card-height: 125px;
 }
 
 footer {
-  margin: {
-    block: 20px 30px;
-  }
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  margin:auto;
 
   a.Button {
     padding: 0;
@@ -124,4 +117,37 @@ footer {
       grid-column: 1 / 4;
     }
   }
+}
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+  --bs-pagination-color: black;
+  --bs-pagination-active-color: white;
+  --bs-pagination-active-bg: black;
+  --bs-pagination-hover-color: black;
+  --bs-pagination-hover-bg: grey;
+  --bs-pagination-disabled-bg: black;
+  --bs-pagination-active-border-color: #dee2e6;
+  --bs-pagination-disabled-border-color: grey;
+}
+
+li a {
+  border-radius: 7px;
+  padding: 0.1rem 1rem;
+  border: 1px solid;
+  cursor: pointer;
+}
+
+li.previous a,
+li.next a,
+li.break a {
+  border-color: transparent;
+}
+
+li.break {
+  border-color: transparent;
+  color: white;
 }

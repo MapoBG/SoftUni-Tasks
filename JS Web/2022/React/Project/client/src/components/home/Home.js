@@ -13,10 +13,12 @@ export const Home = () => {
     const [gamesObj, setGamesObj] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [userGameList, setUserGameList] = useState({});
+
     const { user } = useAuthContext();
+
     const params = useParams();
     const currentPage = Number(params.pageNumber) || 1;
-    // const [currentPage, setCurrentPage] = useState(pageNum);
+
     const navigateTo = useNavigate();
 
     useEffect(() => {
@@ -54,7 +56,7 @@ export const Home = () => {
                 ? <h1 className="NotFound">Server is down &#128542; <p>Please try again later</p> </h1>
                 : <>
                     <Transition className="grid-container">
-                        {gamesObj?.results?.map(g => <div className="Column" key={g.id}><GameCard game={g} userGameList={userGameList} /></div>)}
+                        {gamesObj.results.map(g => <div className="Column" key={g.id}><GameCard game={g} userGameList={userGameList.games} /></div>)}
                     </Transition>
                     <ReactPaginate
                         previousLabel='Previous Page'
@@ -62,6 +64,15 @@ export const Home = () => {
                         pageCount={pageCount}
                         onPageChange={changePage}
                         forcePage={currentPage - 1}
+                        renderOnZeroPageCount={null}
+                        containerClassName="pagination justify-content-center"
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        activeClassName="active"
                     />
                 </>
     );
