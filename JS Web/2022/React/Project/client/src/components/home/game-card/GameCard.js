@@ -52,7 +52,7 @@ export const GameCard = ({ game, userGameList }) => {
         <div className="GameCard">
             <motion.div
                 className="Image"
-                whileHover={{ height: 275 }}
+                whileHover={{ height: 300 }}
                 onClick={navigateToGame}
             >
                 <BackgroundImage
@@ -66,7 +66,7 @@ export const GameCard = ({ game, userGameList }) => {
             </motion.div>
             <motion.div
                 className="Info"
-                whileHover={{ height: 150 }}
+                whileHover={{ height: 170 }}
                 onHoverStart={() => setIsHovered(true)}
                 onHoverEnd={() => setIsHovered(false)}
             >
