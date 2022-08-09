@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { RiArrowRightLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 import { UserGameCard } from "./user-game-card/UserGameCard";
 import Transition from '../utils/Transition';
@@ -67,6 +68,22 @@ export const UserLibrary = () => {
                                 big={i === 0}
                             />
                         ))}
+                        <ReactPaginate
+                            previousLabel='Previous Page'
+                            nextLabel='Next Page'
+                            pageCount={5}
+                            // onPageChange={changePage}
+                            // forcePage={currentPage - 1}
+                            renderOnZeroPageCount={null}
+                            containerClassName="pagination justify-content-center"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            activeClassName="active"
+                        />
                         <Button
                             className="Store"
                             handleClick={() => navigateTo('/')}

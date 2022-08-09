@@ -38,7 +38,7 @@ const GameDetails = () => {
     const addToUserLibraryAndState = () => {
         addToUserLibrary(user.uid, gameId)
             .then(() => setLibraryItems(oldState => ({ ...oldState, games: [{ id: gameId }] })))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
     };
 
     const removeFromUserLibraryAndState = () => {
@@ -81,8 +81,8 @@ const GameDetails = () => {
                                         In Library <RiCheckLine />
                                     </Transition>
                                     <Button handleClick={removeFromUserLibraryAndState}>
-                                        Remove from Library <RiDeleteBinLine />
-                                    </Button>
+                                            Remove from Library <RiDeleteBinLine />
+                                        </Button>
                                 </>
                                 : <Button handleClick={addToUserLibraryAndState}>
                                     Add to Library <RiAddLine />
