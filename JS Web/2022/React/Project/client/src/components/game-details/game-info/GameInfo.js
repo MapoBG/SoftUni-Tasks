@@ -1,12 +1,14 @@
 import { useState } from 'react';
+
 import { motion } from 'framer-motion';
 import { useScrollTo } from 'framer-motion-scroll-to-hook';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
+
 import Transition from '../../utils/Transition';
 import Button from '../../utils/Button';
 
 
-const GameInfo = ({ game }) => {
+export const GameInfo = ({ game }) => {
   const {
     name,
     description_raw,
@@ -24,9 +26,9 @@ const GameInfo = ({ game }) => {
     <Transition className="Info">
       <div className="About">
         <h4>About</h4>
-        {description_raw.split(/\r?\n/).map((p, index) => (
-          <p key={index}>{p}</p>
-        ))}
+        {description_raw
+          .split(/\r?\n/)
+          .map((p, index) => (<p key={index}>{p}</p>))}
       </div>
       <motion.div
         className="MoreInfo"
@@ -69,5 +71,3 @@ const GameInfo = ({ game }) => {
     </Transition>
   );
 };
-
-export default GameInfo;

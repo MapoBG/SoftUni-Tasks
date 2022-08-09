@@ -1,16 +1,17 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { BackgroundImage } from 'react-image-and-background-image-fade';
 import { RiAddLine, RiCheckLine, RiDeleteBinLine } from 'react-icons/ri';
+
 import { getGameById } from '../../services/gamesServices';
-import GameInfo from './game-info/GameInfo';
+import { GameInfo } from './game-info/GameInfo';
 import Transition from '../utils/Transition';
 import Button from '../utils/Button';
 import Loading from '../utils/Loading';
 import Carousel from './carousel/Carousel';
 import { addToUserLibrary, getGamesFromUserLibrary, removeGame } from '../../services/userServices';
-import { AuthContext } from '../../contexts/authContext';
+import { useAuthContext } from '../../custom-hooks/userHooks';
 
 
 const GameDetails = () => {
@@ -19,7 +20,7 @@ const GameDetails = () => {
 
     const [game, setGame] = useState(null);
     const [libraryItems, setLibraryItems] = useState({});
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthContext();
 
     useEffect(() => {
         if (user) {

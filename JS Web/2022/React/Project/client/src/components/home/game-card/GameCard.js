@@ -74,7 +74,7 @@ export const GameCard = ({ game, userGameList }) => {
                     {game.name}
                 </Button>
 
-                {gamesinUserList && <Transition className="Added">
+                {gamesinUserList && <Transition className="added">
                     Already in your Library <RiCheckLine />
                 </Transition>
                 }
