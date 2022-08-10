@@ -22,15 +22,24 @@ const cycleArray = (games) => {
 };
 
 export const UserLibrary = () => {
-    const [userGames, setUserGames] = useState([]);
+    const [allGames, setAllGames] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [currentGames, setCurrentGames] = useState([]);
+
     const { user } = useAuthContext();
     const navigateTo = useNavigate();
 
+    const gamesPerPage = 5;
+    const gamesDisplayed = currentPage * gamesPerPage;
+    let pageCount = 0;
+
+    if (allGames.length > 5) {
+        pageCount = Math.ceil(allGames.length / gamesPerPage);
+    }
+
     useEffect(() => {
         if (user) {
-            let interval;
-
             (async () => {
                 const userGameList = await getGamesFromUserLibrary(user.uid);
 
@@ -38,32 +47,47 @@ export const UserLibrary = () => {
                     setIsLoading(false);
                     return null;
                 } else {
-                    const allUserGames = await Promise.all(userGameList.games.map(g => getGameById(g.id)));
-                    setUserGames(() => allUserGames);
+                    const allUserGames = await Promise.all(userGameList.games
+                        .reverse()
+                        .map(g => getGameById(g.id)));
 
-                    interval = setInterval(() => {
-                        if (allUserGames.length > 1) {
-                            setUserGames((oldState) => cycleArray(oldState));
-                        }
-                    }, cardDuration * 1000);
-                    setIsLoading(false);
+                    setAllGames(() => allUserGames);
                 }
             })();
-
-            return () => clearInterval(interval);
         }
     }, [user]);
 
+    useEffect(() => {
+        if (allGames.length > 0) {
+            setCurrentGames(() => allGames.slice(gamesDisplayed, gamesDisplayed + gamesPerPage));
+            setIsLoading(false);
+        }
+    }, [allGames, gamesDisplayed]);
+
+    useEffect(() => {
+        let interval;
+
+        if (currentGames.length > 1) {
+            interval = setInterval(() => {
+                setCurrentGames((oldState) => cycleArray(oldState));
+            }, cardDuration * 1000);
+        }
+        return () => clearInterval(interval);
+
+    }, [currentGames]);
+
+    const changePage = ({ selected }) => {
+        setCurrentPage(selected);
+    };
     return (
         !isLoading
             ? <Transition className="Home" direction="left">
-                {userGames.length > 0
+                {currentGames.length > 0
                     ? < Transition className="Grid">
-                        {userGames.map((game, i) => (
+                        {currentGames.map((game, i) => (
                             <UserGameCard
                                 key={game.id}
                                 game={game}
-                                userGameList={userGames}
                                 duration={cardDuration}
                                 big={i === 0}
                             />
@@ -71,9 +95,8 @@ export const UserLibrary = () => {
                         <ReactPaginate
                             previousLabel='Previous Page'
                             nextLabel='Next Page'
-                            pageCount={5}
-                            // onPageChange={changePage}
-                            // forcePage={currentPage - 1}
+                            pageCount={pageCount}
+                            onPageChange={changePage}
                             renderOnZeroPageCount={null}
                             containerClassName="pagination justify-content-center"
                             pageClassName="page-item"
