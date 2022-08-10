@@ -30,11 +30,11 @@ export const UserLibrary = () => {
     const { user } = useAuthContext();
     const navigateTo = useNavigate();
 
-    const gamesPerPage = 5;
+    const gamesPerPage = 3;
     const gamesDisplayed = currentPage * gamesPerPage;
     let pageCount = 0;
 
-    if (allGames.length > 5) {
+    if (allGames.length > 3) {
         pageCount = Math.ceil(allGames.length / gamesPerPage);
     }
 
