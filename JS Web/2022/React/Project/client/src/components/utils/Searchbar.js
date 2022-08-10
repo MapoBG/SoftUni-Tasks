@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     createSearchParams,
     useNavigate,
@@ -8,7 +8,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { RiSearchLine } from 'react-icons/ri';
 import Button from './Button';
 
-function SearchBar() {
+export const SearchBar = () => {
     const [inputValue, setInputValue] = useState('');
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
@@ -16,24 +16,26 @@ function SearchBar() {
     const setFormMaxWidth = (width) => {
         formControls.start({ maxWidth: width });
     };
-    // const search = (event: FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    //     if (!inputValue) return;
-    //     const searchParams = createSearchParams({ search: inputValue });
-    //     navigate({
-    //         pathname: '/',
-    //         search: searchParams.toString(),
-    //     });
-    // };
 
-    useEffect(() => setInputValue(searchParams.get('search') || ''), []);
+    const search = (e) => {
+        e.preventDefault();
+
+        if (!inputValue) return;
+        const searchParams = createSearchParams({ search: inputValue });
+        navigate({
+            pathname: '/',
+            search: searchParams.toString(),
+        });
+    };
+
+    useEffect(() => setInputValue(searchParams.get('search') || ''), [searchParams]);
 
     return (
         <motion.form
             className="SearchBar"
             initial={{ maxWidth: 400 }}
             animate={formControls}
-            // onSubmit={search}
+            onSubmit={search}
         >
             <input
                 type="text"
@@ -48,6 +50,4 @@ function SearchBar() {
             </Button>
         </motion.form>
     );
-}
-
-export default SearchBar;
+};

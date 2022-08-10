@@ -11,6 +11,7 @@ import Loading from '../utils/Loading';
 import { getGamesFromUserLibrary } from '../../services/userServices';
 import { getGameById } from '../../services/gamesServices';
 import { useAuthContext } from '../../custom-hooks/userHooks';
+import { SearchBar } from '../utils/Searchbar';
 
 
 const cardDuration = 5;
@@ -82,6 +83,7 @@ export const UserLibrary = () => {
     return (
         !isLoading
             ? <Transition className="Home" direction="left">
+                <SearchBar />
                 {currentGames.length > 0
                     ? < Transition className="Grid">
                         {currentGames.map((game, i) => (

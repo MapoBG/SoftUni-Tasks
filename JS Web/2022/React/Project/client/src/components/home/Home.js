@@ -8,6 +8,7 @@ import { getGamesFromUserLibrary } from "../../services/userServices";
 import Loading from "../utils/Loading";
 import Transition from "../utils/Transition";
 import { GameCard } from "./game-card/GameCard";
+import { SearchBar } from "../utils/Searchbar";
 
 export const Home = () => {
     const [gamesObj, setGamesObj] = useState({});
@@ -55,6 +56,7 @@ export const Home = () => {
             : gamesObj === null
                 ? <h1 className="NotFound">Server is down &#128542; <p>Please try again later</p> </h1>
                 : <>
+                    <SearchBar />
                     <Transition className="grid-container">
                         {gamesObj.results.map(g => <div className="Column" key={g.id}><GameCard game={g} userGameList={userGameList.games} /></div>)}
                     </Transition>
