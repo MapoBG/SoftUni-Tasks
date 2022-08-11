@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { RiArrowRightLine } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 
 import { UserGameCard } from "./user-game-card/UserGameCard";
@@ -27,17 +27,16 @@ export const UserLibrary = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(0);
     const [currentGames, setCurrentGames] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
 
     const { user } = useAuthContext();
+
     const navigateTo = useNavigate();
+    const [searchParams] = useSearchParams();
+    const searchWord = searchParams.get('search') || '';
 
     const gamesPerPage = 3;
     const gamesDisplayed = currentPage * gamesPerPage;
-    let pageCount = 0;
-
-    if (allGames.length > 3) {
-        pageCount = Math.ceil(allGames.length / gamesPerPage);
-    }
 
     useEffect(() => {
         if (user) {
@@ -52,6 +51,7 @@ export const UserLibrary = () => {
                         .reverse()
                         .map(g => getGameById(g.id)));
 
+                    setPageCount(Math.ceil(userGameList.games.length / gamesPerPage));
                     setAllGames(() => allUserGames);
                 }
             })();
@@ -80,6 +80,19 @@ export const UserLibrary = () => {
     const changePage = ({ selected }) => {
         setCurrentPage(selected);
     };
+
+    useEffect(() => {
+        if (searchWord !== '') {
+            const filteredGames = allGames.filter((game) => game.name.toLowerCase().includes(searchWord.toLowerCase()));
+
+            setCurrentGames(() => filteredGames);
+            setPageCount(Math.ceil(filteredGames.length / 3));
+        } else {
+            setCurrentGames(() => allGames.slice(gamesDisplayed, gamesDisplayed + gamesPerPage));
+            setPageCount(Math.ceil(allGames.length / 3));
+        }
+    }, [searchWord, allGames, gamesDisplayed]);
+
     return (
         !isLoading
             ? <Transition className="Home" direction="left">

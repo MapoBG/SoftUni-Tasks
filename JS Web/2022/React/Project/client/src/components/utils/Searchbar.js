@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
     createSearchParams,
+    useLocation,
     useNavigate,
     useSearchParams,
 } from 'react-router-dom';
@@ -11,7 +12,10 @@ import Button from './Button';
 export const SearchBar = () => {
     const [inputValue, setInputValue] = useState('');
     const [searchParams] = useSearchParams();
+
+    const path = useLocation.pathname;
     const navigate = useNavigate();
+
     const formControls = useAnimation();
     const setFormMaxWidth = (width) => {
         formControls.start({ maxWidth: width });
@@ -20,10 +24,9 @@ export const SearchBar = () => {
     const search = (e) => {
         e.preventDefault();
 
-        if (!inputValue) return;
         const searchParams = createSearchParams({ search: inputValue });
         navigate({
-            pathname: '/',
+            pathname: path,
             search: searchParams.toString(),
         });
     };
