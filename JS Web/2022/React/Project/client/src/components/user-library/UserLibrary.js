@@ -12,15 +12,8 @@ import { getGamesFromUserLibrary } from '../../services/userServices';
 import { getGameById } from '../../services/gamesServices';
 import { useAuthContext } from '../../custom-hooks/userHooks';
 import { SearchBar } from '../utils/Searchbar';
+import { cardDuration, cycleArray } from '../../services/utilServices';
 
-
-const cardDuration = 5;
-const cycleArray = (games) => {
-    const newArray = [...games];
-    newArray.push(newArray.shift());
-
-    return newArray;
-};
 
 export const UserLibrary = () => {
     const [allGames, setAllGames] = useState([]);
@@ -28,6 +21,7 @@ export const UserLibrary = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [currentGames, setCurrentGames] = useState([]);
     const [pageCount, setPageCount] = useState(0);
+    const [message, setMessage] = useState('');
 
     const { user } = useAuthContext();
 
@@ -44,6 +38,7 @@ export const UserLibrary = () => {
                 const userGameList = await getGamesFromUserLibrary(user.uid);
 
                 if (!userGameList.games || userGameList.games.length < 1) {
+                    setMessage('There are still no games in your library...');
                     setIsLoading(false);
                     return null;
                 } else {
@@ -85,6 +80,7 @@ export const UserLibrary = () => {
         if (searchWord !== '') {
             const filteredGames = allGames.filter((game) => game.name.toLowerCase().includes(searchWord.toLowerCase()));
 
+            setMessage(`No such game found in your library...`);
             setCurrentGames(() => filteredGames);
             setPageCount(Math.ceil(filteredGames.length / 3));
         } else {
@@ -130,7 +126,7 @@ export const UserLibrary = () => {
                         </Button>
                     </Transition>
                     : <h1 className='NotFound' >
-                        <p>There are still no games in your library... &#128542;</p>
+                        <p>{message}&#128542;</p>
                         <Button
                             className="Store"
                             handleClick={() => navigateTo('/')}
