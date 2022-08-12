@@ -9,7 +9,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { RiSearchLine } from 'react-icons/ri';
 import Button from './Button';
 
-export const SearchBar = () => {
+export const SearchBar = ({ changePage }) => {
     const [inputValue, setInputValue] = useState('');
     const [searchParams] = useSearchParams();
 
@@ -24,6 +24,8 @@ export const SearchBar = () => {
     const search = (e) => {
         e.preventDefault();
 
+        if (changePage) changePage();
+        
         const searchParams = createSearchParams({ search: inputValue });
         navigate({
             pathname: path,
