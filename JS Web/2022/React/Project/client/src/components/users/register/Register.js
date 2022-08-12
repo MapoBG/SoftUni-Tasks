@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 import { registerUser } from "../../../services/authServices";
-import { checkUserEmail, checkUserPasswords, finalValidation } from "../../../services/errorServices";
+import { useError } from "../../../custom-hooks/errorHook";
 
 
 export const Register = () => {
@@ -15,61 +15,42 @@ export const Register = () => {
         password: '',
         rePassword: ''
     });
-    const [errors, setErrors] = useState({
-        firebase: '',
-        email: '',
-        password: '',
-        rePassword: '',
-    });
+
+    const { errors, errorHandler, finalValidation } = useError(registerData);
 
     const registerDataHandler = (e) => {
         setRegisterData(oldState => ({ ...oldState, [e.target.id]: e.target.value }));
     };
 
-    const errorHandler = (e) => {
-        switch (e.target.id) {
-            case 'email':
-                setErrors(oldState => ({ ...oldState, email: checkUserEmail(registerData) }));
-                break;
-            case 'password':
-            case 'rePassword':
-                setErrors(oldState => ({ ...oldState, [e.target.id]: checkUserPasswords(registerData) }));
-                break;
-            default:
-                break;
-        }
-    };
-
     const registerHandler = (e) => {
         e.preventDefault();
-        const isValid = finalValidation(errors);
+        finalValidation(registerData);
 
-        if (!isValid.email || !isValid.password) {
-            errors.firebase = '';
+        if (errors.email || errors.password || errors.rePassword) {
             return;
         }
+
         registerUser(registerData)
-            .then(() => navigateTo('/'))
-            .catch(err => setErrors(oldState => ({ ...oldState, firebase: err.code.split('/')[1] })));
+            .then(({ user }) => navigateTo(`/user-library/${user.uid}`))
+            .catch(err => errorHandler(null, err.code.split('/')[1]));
     };
 
     return (
-        <Form className="AuthForm" onSubmit={(e) => registerHandler(e)}>
-            {errors.firebase && <Form.Text className="Error">{errors.firebase}</Form.Text>}
+        <Form className="AuthForm" onSubmit={registerHandler}>
 
-            <Form.Group className="mb-3" controlId="email" onChange={registerDataHandler} onBlur={(e) => errorHandler(e)}>
+            <Form.Group className="mb-3" controlId="email" onChange={registerDataHandler} onBlur={errorHandler}>
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" />
                 {errors.email && <Form.Text className="Error">{errors.email}</Form.Text>}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="password" onChange={registerDataHandler} onBlur={(e) => errorHandler(e)} >
+            <Form.Group className="mb-3" controlId="password" onChange={registerDataHandler} onBlur={errorHandler} >
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
                 {errors.password && <Form.Text className="Error">{errors.password}</Form.Text>}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="rePassword" onChange={registerDataHandler} onBlur={(e) => errorHandler(e)}>
+            <Form.Group className="mb-3" controlId="rePassword" onChange={registerDataHandler} onBlur={errorHandler}>
                 <Form.Label>Repeat password</Form.Label>
                 <Form.Control type="password" placeholder="Repeat password" />
                 {errors.rePassword && <Form.Text className="Error">{errors.rePassword}</Form.Text>}
