@@ -27,7 +27,7 @@ export const Login = () => {
 
         finalValidation(loginData);
 
-        if (errors.email || errors.password) {
+        if (errors.email || errors.password || !loginData.email || !loginData.password) {
             return;
         }
 

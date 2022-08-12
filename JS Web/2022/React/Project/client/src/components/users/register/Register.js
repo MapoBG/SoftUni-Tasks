@@ -26,7 +26,8 @@ export const Register = () => {
         e.preventDefault();
         finalValidation(registerData);
 
-        if (errors.email || errors.password || errors.rePassword) {
+        if (errors.email || errors.password || errors.rePassword
+            || !registerData.email || !registerData.password || !registerData.rePassword) {
             return;
         }
 
