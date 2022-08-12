@@ -35,28 +35,30 @@ export const UserLibrary = () => {
     useEffect(() => {
         if (user) {
             (async () => {
-                const userGameList = await getGamesFromUserLibrary(user.uid);
+                try {
+                    const userGameList = await getGamesFromUserLibrary(user.uid);
 
-                if (!userGameList.games || userGameList.games.length < 1) {
-                    setMessage('There are still no games in your library...');
-                    setIsLoading(false);
-                    return null;
-                } else {
-                    const allUserGames = await Promise.all(userGameList.games
-                        .reverse()
-                        .map(g => getGameById(g.id)));
+                    if (!userGameList.games || userGameList.games.length < 1) {
+                        setMessage('There are still no games in your library...');
+                    } else {
+                        const allUserGames = await Promise.all(userGameList.games
+                            .reverse()
+                            .map(g => getGameById(g.id)));
 
-                    setPageCount(Math.ceil(userGameList.games.length / gamesPerPage));
-                    setAllGames(() => allUserGames);
+                        setPageCount(Math.ceil(userGameList.games.length / gamesPerPage));
+                        setAllGames(() => allUserGames);
+                    }
+                } catch (error) {
+                    setAllGames(null);
                 }
+                setIsLoading(false);
             })();
         }
     }, [user]);
 
     useEffect(() => {
-        if (allGames.length > 0) {
+        if (allGames && allGames.length > 0) {
             setCurrentGames(() => allGames.slice(gamesDisplayed, gamesDisplayed + gamesPerPage));
-            setIsLoading(false);
         }
     }, [allGames, gamesDisplayed]);
 
@@ -78,12 +80,13 @@ export const UserLibrary = () => {
 
     useEffect(() => {
         if (searchWord !== '') {
-            const filteredGames = allGames.filter((game) => game.name.toLowerCase().includes(searchWord.toLowerCase()));
+            const filteredGames = allGames
+                .filter((game) => game.name.toLowerCase().includes(searchWord.toLowerCase()));
 
             setMessage(`No such game found in your library...`);
             setCurrentGames(() => filteredGames);
             setPageCount(Math.ceil(filteredGames.length / 3));
-        } else {
+        } else if (allGames) {
             setCurrentGames(() => allGames.slice(gamesDisplayed, gamesDisplayed + gamesPerPage));
             setPageCount(Math.ceil(allGames.length / 3));
         }
@@ -91,51 +94,48 @@ export const UserLibrary = () => {
 
     return (
         !isLoading
-            ? <Transition className="Home" direction="left">
-                <SearchBar />
-                {currentGames.length > 0
-                    ? < Transition className="Grid">
-                        {currentGames.map((game, i) => (
-                            <UserGameCard
-                                key={game.id}
-                                game={game}
-                                duration={cardDuration}
-                                big={i === 0}
+            ? allGames === null
+                ? <h1 className="NotFound">Server is down &#128542; <p>Please try again later</p> </h1>
+                : <Transition className="Home" direction="left">
+                    {allGames.length > 0 && <SearchBar />}
+
+                    {currentGames.length > 0
+                        ? < Transition className="Grid">
+                            {currentGames.map((game, i) => (
+                                <UserGameCard
+                                    key={game.id}
+                                    game={game}
+                                    duration={cardDuration}
+                                    big={i === 0}
+                                />
+                            ))}
+                            <ReactPaginate
+                                previousLabel='Previous Page'
+                                nextLabel='Next Page'
+                                pageCount={pageCount}
+                                onPageChange={changePage}
+                                renderOnZeroPageCount={null}
+                                containerClassName="pagination justify-content-center"
+                                pageClassName="page-item"
+                                pageLinkClassName="page-link"
+                                previousClassName="page-item"
+                                previousLinkClassName="page-link"
+                                nextClassName="page-item"
+                                nextLinkClassName="page-link"
+                                activeClassName="active"
                             />
-                        ))}
-                        <ReactPaginate
-                            previousLabel='Previous Page'
-                            nextLabel='Next Page'
-                            pageCount={pageCount}
-                            onPageChange={changePage}
-                            renderOnZeroPageCount={null}
-                            containerClassName="pagination justify-content-center"
-                            pageClassName="page-item"
-                            pageLinkClassName="page-link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-link"
-                            activeClassName="active"
-                        />
-                        <Button
-                            className="Store"
-                            handleClick={() => navigateTo('/')}
-                        >
-                            Go to Catalog <RiArrowRightLine />
-                        </Button>
-                    </Transition>
-                    : <h1 className='NotFound' >
-                        <p>{message}&#128542;</p>
-                        <Button
-                            className="Store"
-                            handleClick={() => navigateTo('/')}
-                        >
-                            You can check our Catalog <RiArrowRightLine />
-                        </Button>
-                    </h1>
-                }
-            </Transition >
+                            <Button className="Store" handleClick={() => navigateTo('/')}>
+                                Go to Catalog <RiArrowRightLine />
+                            </Button>
+                        </Transition>
+                        : <h1 className='NotFound' >
+                            <p>{message}&#128542;</p>
+                            <Button className="Store" handleClick={() => navigateTo('/')}>
+                                You can check our Catalog <RiArrowRightLine />
+                            </Button>
+                        </h1>
+                    }
+                </Transition >
             : <Loading />
     );
 };
