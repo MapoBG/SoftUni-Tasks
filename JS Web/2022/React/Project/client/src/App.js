@@ -23,6 +23,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, currentUser => {
       setUser(currentUser);
+      // localStorage.setItem('userToken', currentUser.accessToken);
     })
   }, []);
 
@@ -33,7 +34,6 @@ function App() {
 
         <Routes>
           <Route path='/' element={<Home />}>
-            <Route path='page=:pageNumber' element={<Home />} />
           </Route>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
