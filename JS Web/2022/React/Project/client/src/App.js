@@ -23,7 +23,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, currentUser => {
       setUser(currentUser);
-      // localStorage.setItem('userToken', currentUser.accessToken);
+      localStorage.setItem('userToken', currentUser?.accessToken);
     })
   }, []);
 

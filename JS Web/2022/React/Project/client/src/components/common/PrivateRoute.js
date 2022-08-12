@@ -1,13 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { useAuthContext } from "../../custom-hooks/userHooks"
-
 
 export const PrivateRoute = () => {
-    const { user } = useAuthContext();
+    const token = localStorage.getItem('userToken');
 
-    if (!user) {
-        return <Navigate to={'/login'} replace />
+    if (!token) {
+        return <Navigate to={'/login'} replace />;
     }
     return <Outlet />;
 };

@@ -8,6 +8,7 @@ export const Logout = () => {
 
     logoutUser()
         .then(res => {
+            localStorage.removeItem('userToken');
             navigateTo('/');
         })
         .catch(err => console.log(err));
