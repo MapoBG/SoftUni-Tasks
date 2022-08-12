@@ -14,6 +14,12 @@ export const Login = () => {
         password: ''
     });
 
+    const [errors, setErrors] = useState({
+        firebase: '',
+        email: '',
+        password: '',
+    });
+
     const loginDataHandler = (e) => {
         setLoginData(oldState => ({ ...oldState, [e.target.id]: e.target.value }));
     };

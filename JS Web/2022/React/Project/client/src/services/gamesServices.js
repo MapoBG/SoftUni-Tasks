@@ -15,14 +15,15 @@ export const getGameById = async (gameId) => {
     return result;
 };
 
-export const getNewPage = async (pageNum) => {
+export const getNewPage = async (pageNum, searchWord) => {
     const page = pageNum ? `&page=${pageNum}` : '';
-    
-    const res = await fetch(api.url + api.key + page);
+    const searchQuery = searchWord ? `&search=${searchWord}` : '';
+
+    const res = await fetch(api.url + api.key + page + searchQuery);
     const result = await res.json();
 
     return result;
-}
+};
 
 const getScreenshots = (gameId) => {
     return fetch(api.url + `/${gameId}/screenshots` + api.key)
