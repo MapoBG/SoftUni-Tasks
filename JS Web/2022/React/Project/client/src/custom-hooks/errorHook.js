@@ -12,7 +12,7 @@ export const useError = (registerData) => {
 
     const errorHandler = (e, firebaseError) => {
         const inputField = e ? e.target.id : 'firebase';
-
+        
         switch (inputField) {
             case 'email':
                 setErrors(oldState => ({ ...oldState, email: checkUserEmail(registerData) }));
@@ -32,6 +32,12 @@ export const useError = (registerData) => {
                         break;
                     case 'wrong-password':
                         setErrors(oldState => ({ ...oldState, password: 'Invalid email or password' }));
+                        break;
+                    case 'email-already-in-use':
+                        setErrors(oldState => ({ ...oldState, email: 'Email is already registered' }));
+                        break;
+                    case 'user-not-found':
+                        setErrors(oldState => ({ ...oldState, email: 'User not found. Are you sure this is the correct email you used for registration?' }));
                         break;
                     default:
                         break;
