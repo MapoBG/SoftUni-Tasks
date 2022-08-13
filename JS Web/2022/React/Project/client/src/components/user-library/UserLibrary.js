@@ -4,6 +4,7 @@ import { RiArrowRightLine } from 'react-icons/ri';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 
+import { SearchBar } from '../utils/Searchbar';
 import { UserGameCard } from "./user-game-card/UserGameCard";
 import Transition from '../utils/Transition';
 import Button from '../utils/Button';
@@ -11,7 +12,6 @@ import Loading from '../utils/Loading';
 import { getGamesFromUserLibrary } from '../../services/userServices';
 import { getGameById } from '../../services/gamesServices';
 import { useAuthContext } from '../../custom-hooks/userHooks';
-import { SearchBar } from '../utils/Searchbar';
 import { cardDuration, cycleArray } from '../../services/utilServices';
 
 

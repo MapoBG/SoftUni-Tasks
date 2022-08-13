@@ -8,7 +8,7 @@ export const addToUserLibrary = async (userId, gameId) => {
 
         await updateDoc(userRefFunc(userId), { games: arrayUnion({ id: gameId }) });
     } catch (error) {
-        console.log(error);
+        return error;
     }
 };
 

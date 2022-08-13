@@ -11,5 +11,8 @@ export const Logout = () => {
             localStorage.removeItem('userToken');
             navigateTo('/');
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            localStorage.removeItem('userToken');
+            return err;
+        });
 }
