@@ -1,14 +1,17 @@
 <h1 align="center">Games Library</h1>
 
+## Short Description
+My first attempt at creating a Steam like app :)
+
 ## Demo
 🌑 [Live Demo](https://game-library-fce1b.firebaseapp.com)
 
 ## Built with
 * React
-* Framer Motion
 * React Router
-* React Bootstrap
 * Firebase
+* Framer Motion
+* React Bootstrap
 * Sass
 
 ## Features
