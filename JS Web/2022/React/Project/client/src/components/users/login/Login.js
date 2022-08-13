@@ -14,9 +14,7 @@ export const Login = () => {
         email: '',
         password: ''
     });
-
     const { errors, errorHandler, finalValidation } = useError(loginData);
-
 
     const loginDataHandler = (e) => {
         setLoginData(oldState => ({ ...oldState, [e.target.id]: e.target.value }));

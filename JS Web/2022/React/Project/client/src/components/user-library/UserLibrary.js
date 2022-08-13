@@ -84,7 +84,7 @@ export const UserLibrary = () => {
                 .filter((game) => game.name.toLowerCase().includes(searchWord.toLowerCase()));
 
             setMessage(`No such game found in your library...`);
-            setCurrentGames(() => filteredGames);
+            setCurrentGames(() => filteredGames.slice(gamesDisplayed, gamesDisplayed + gamesPerPage));
             setPageCount(Math.ceil(filteredGames.length / 3));
         } else if (allGames) {
             setCurrentGames(() => allGames.slice(gamesDisplayed, gamesDisplayed + gamesPerPage));
